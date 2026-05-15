@@ -580,6 +580,7 @@ PROBLEM_CODE_BY_ISSUE_TITLE = {
     "Mobile Email Setup Issue": "MOBILE_EMAIL_SETUP_ISSUE",
     "Video Conferencing Issue": "VIDEO_CONFERENCING_ISSUE",
     "Keyboard or Mouse Not Working": "KEYBOARD_OR_MOUSE_NOT_WORKING",
+    "Monitor / Display Not Working": "MONITOR_DISPLAY_NOT_WORKING",
 }
 
 
@@ -593,10 +594,10 @@ PROBLEM_CODE_BY_ISSUE_TITLE = {
 # the database for future expansion, but they are hidden from the visible MVP
 # until their content is upgraded to the same depth.
 MVP_CONTENT_FOCUS_ENABLED = True
-MVP_ACTIVE_PROBLEM_CODES = {"PRINTER_FAILURE", "PASSWORD_RESET_REQUEST", "ACCOUNT_LOCKED", "MULTI_FACTOR_AUTHENTICATION_ISSUE", "VPN_CONNECTION_FAILURE", "SHARED_DRIVE_NETWORK_DRIVE_ACCESS_ISSUE", "REMOTE_DESKTOP_CONNECTION_ISSUE", "SLOW_COMPUTER_PERFORMANCE", "APPLICATION_NOT_OPENING", "APPLICATION_CRASHING_FREEZING", "OPERATING_SYSTEM_UPDATE_ISSUE", "DEVICE_RUNNING_OUT_OF_STORAGE", "PHISHING_EMAIL_REPORTED", "MALWARE_OR_VIRUS_SUSPECTED", "EMAIL_ATTACHMENT_NOT_OPENING", "CALENDAR_SYNC_ISSUE", "SOFTWARE_INSTALLATION_REQUEST", "BROWSER_ISSUE", "CERTIFICATE_SECURITY_WARNING", "MOBILE_EMAIL_SETUP_ISSUE", "VIDEO_CONFERENCING_ISSUE", "KEYBOARD_OR_MOUSE_NOT_WORKING"}
+MVP_ACTIVE_PROBLEM_CODES = {"PRINTER_FAILURE", "PASSWORD_RESET_REQUEST", "ACCOUNT_LOCKED", "MULTI_FACTOR_AUTHENTICATION_ISSUE", "VPN_CONNECTION_FAILURE", "SHARED_DRIVE_NETWORK_DRIVE_ACCESS_ISSUE", "REMOTE_DESKTOP_CONNECTION_ISSUE", "SLOW_COMPUTER_PERFORMANCE", "APPLICATION_NOT_OPENING", "APPLICATION_CRASHING_FREEZING", "OPERATING_SYSTEM_UPDATE_ISSUE", "DEVICE_RUNNING_OUT_OF_STORAGE", "PHISHING_EMAIL_REPORTED", "MALWARE_OR_VIRUS_SUSPECTED", "EMAIL_ATTACHMENT_NOT_OPENING", "CALENDAR_SYNC_ISSUE", "SOFTWARE_INSTALLATION_REQUEST", "BROWSER_ISSUE", "CERTIFICATE_SECURITY_WARNING", "MOBILE_EMAIL_SETUP_ISSUE", "VIDEO_CONFERENCING_ISSUE", "KEYBOARD_OR_MOUSE_NOT_WORKING", "MONITOR_DISPLAY_NOT_WORKING"}
 MVP_CONTENT_FOCUS_NOTE = (
     "The visible MVP currently focuses on a small set of high-quality troubleshooting examples: "
-    "Printer Failure, Password Reset Request, Account Locked, Multi-factor Authentication Issue, VPN Connection Failure, Shared Drive / Network Drive Access Issue, Remote Desktop Connection Issue, Slow Computer Performance, Application Not Opening, Application Crashing / Freezing, Operating System Update Issue, Device Running Out of Storage, Phishing Email Reported, Malware or Virus Suspected, Email Attachment Not Opening, Calendar Sync Issue, Software Installation Request, Browser Issue, Certificate / Security Warning, Mobile Email Setup Issue, Video Conferencing Issue, and Keyboard or Mouse Not Working. Other sample issues are hidden until they "
+    "Printer Failure, Password Reset Request, Account Locked, Multi-factor Authentication Issue, VPN Connection Failure, Shared Drive / Network Drive Access Issue, Remote Desktop Connection Issue, Slow Computer Performance, Application Not Opening, Application Crashing / Freezing, Operating System Update Issue, Device Running Out of Storage, Phishing Email Reported, Malware or Virus Suspected, Email Attachment Not Opening, Calendar Sync Issue, Software Installation Request, Browser Issue, Certificate / Security Warning, Mobile Email Setup Issue, Video Conferencing Issue, Keyboard or Mouse Not Working, and Monitor / Display Not Working. Other sample issues are hidden until they "
     "are expanded with detailed symptoms, causes, user steps, and technician steps."
 )
 
@@ -7916,6 +7917,254 @@ def seed_video_conferencing_tree(cursor, audience, tree_code, title, description
                 updated_at=CURRENT_TIMESTAMP
         """, (tree_id, parent_id, problem_id, tree_code, node_key, node_type, node_title, node_desc, prompt, condition_label, condition_value, solution_id, sort_order))
 
+
+# -----------------------------
+# MONITOR / DISPLAY NOT WORKING CONTENT
+# -----------------------------
+MONITOR_DISPLAY_NOT_WORKING_PROBLEM = (
+    'MONITOR_DISPLAY_NOT_WORKING',
+    'Monitor / Display Not Working',
+    'Hardware & Peripherals',
+    'Medium',
+    'The user\'s monitor, laptop screen, second display, projector, or external display is blank, not detected, flickering, showing the wrong resolution, or not extending correctly.'
+)
+
+MONITOR_DISPLAY_NOT_WORKING_KB = {
+    'title': 'Monitor / Display Not Working',
+    'summary': 'Use this guide when an external monitor, laptop screen, projector, or second display is blank, not detected, showing no signal, flickering, or using the wrong resolution/layout.',
+    'difficulty': 'Intermediate',
+    'estimated_time': '5-25 minutes',
+    'escalation_required': 1,
+    'escalation_notes': 'Escalate to Endpoint/Desktop, Hardware/Asset Support, Endpoint Management/Systems, or Facilities/AV depending on whether the issue is graphics driver, dock firmware, hardware failure, driver deployment, or room display equipment.',
+    'tags': ['monitor', 'display', 'external monitor', 'second monitor', 'projector', 'docking station', 'HDMI', 'DisplayPort', 'USB-C', 'graphics driver', 'resolution'],
+    'symptoms': [
+        'External monitor, laptop screen, second display, or projector is blank or black.',
+        'Monitor is powered on but shows No Signal or is not detected in Windows.',
+        'Display flickers, turns on and off, or appears unstable.',
+        'Resolution, scaling, layout, refresh rate, or display mode looks wrong.',
+        'Monitor duplicates instead of extends, or Windows projection mode is incorrect.',
+        'Display works directly on the laptop but not through docking station, USB-C hub, adapter, or conference room connection.',
+        'Issue started after a Windows update, graphics driver update, dock firmware change, new cable, new dock, or workstation move.'
+    ],
+    'causes': [
+        'Common causes include loose power/video cable, wrong monitor input source, incorrect Windows projection mode, monitor disabled in display settings, docking station or adapter issue, unsupported cable/resolution, laptop not fully docked, graphics driver issue, refresh-rate/scaling misconfiguration, or monitor hardware failure.',
+        'Advanced causes include graphics driver corruption, dock firmware issue, USB-C port without display output, DisplayLink or Thunderbolt driver problem, MST/daisy-chain issue, high resolution/refresh rate exceeding cable or dock capability, BIOS/firmware issue, GPU hardware failure, endpoint driver deployment issue, or KVM/AV compatibility problem.'
+    ],
+    'user_steps': [
+        'Confirm the monitor is powered on.',
+        'Check the power cable and video cable on both ends.',
+        'Make sure the monitor input source is correct, such as HDMI, DisplayPort, or USB-C.',
+        'If using a dock, disconnect and reconnect the laptop to the dock.',
+        'Press Windows + P and choose Extend or Duplicate.',
+        'Restart the computer.',
+        'Try another cable or port if available.',
+        'Connect the monitor directly to the laptop instead of through the dock if possible.',
+        'Take a photo of any No Signal, blank-screen, flickering, or error message.',
+        'Contact IT if the display still does not work.'
+    ],
+    'it_steps': [
+        'Confirm the user, device name, monitor model, connection type, dock model, and exact symptom.',
+        'Identify whether the issue affects the laptop screen, external monitor, dual-monitor setup, docking station setup, projector, or conference room display.',
+        'Confirm monitor power, status light, video cable seating, port type, and input source.',
+        'Ask the user to press Windows + P and select the correct projection mode.',
+        'Check Windows Display Settings to confirm whether the monitor is detected.',
+        'Restart the computer and power-cycle the monitor or dock when appropriate.',
+        'Test direct connection versus dock/hub/adapter connection.',
+        'Test another cable, port, adapter, known-good monitor, or known-good dock when available.',
+        'Check whether the issue started after Windows, graphics driver, dock firmware, new cable, or workstation move.',
+        'Check display arrangement, resolution, scaling, orientation, and refresh rate.',
+        'Use Detect display where appropriate.',
+        'Check Device Manager for display adapter, monitor, DisplayLink, Thunderbolt, or dock warnings.',
+        'Update, roll back, or reinstall graphics driver only from approved sources if needed.',
+        'Check dock firmware/driver and DisplayLink/Thunderbolt software if used.',
+        'Confirm USB-C/Thunderbolt port supports video output.',
+        'Confirm cable, adapter, and dock support the required resolution and refresh rate.',
+        'Check whether the issue follows the monitor, cable, dock, laptop, port, or user profile.',
+        'Check for multiple affected users with the same laptop, dock, driver, or hardware model.',
+        'Determine whether root cause is monitor hardware, cable/adapter, dock/hub, Windows display setting, graphics driver, port/hardware failure, or endpoint deployment issue.',
+        'Escalate with device model, dock model, cable/port type, driver version, update history, test matrix, screenshots, and business impact.'
+    ]
+}
+
+MONITOR_DISPLAY_NOT_WORKING_SOLUTIONS = [
+    ('FIX_DISPLAY_POWER_CABLE_INPUT', 'Check Monitor Power, Cable, and Input Source', 'Many display issues are caused by power, cable, or wrong monitor input.', 'Check monitor power, cable seating, video port, and input source.', 0, 'Escalate if power/cable/input checks do not restore the display or physical monitor failure is suspected.', 'medium'),
+    ('FIX_DISPLAY_DIRECT_CONNECTION_TEST', 'Test Direct Connection Instead of Dock', 'The dock, hub, adapter, or USB-C path may be causing the display failure.', 'Compare direct monitor connection with dock/hub connection.', 0, 'Escalate to Endpoint/Desktop or Hardware Support if dock, adapter, firmware, or hub issue is suspected.', 'medium'),
+    ('FIX_DISPLAY_PROJECTION_SETTINGS', 'Check Projection Mode and Display Settings', 'Windows may be set to the wrong projection mode or display arrangement.', 'Use Windows + P and Display Settings to verify projection, arrangement, resolution, scale, and refresh rate.', 0, 'Escalate if display settings are correct but issue persists.', 'medium'),
+    ('FIX_DISPLAY_PROJECTOR_ROOM_INPUT', 'Check Projection Mode and Room Display Input', 'Projector or conference room display issues often involve input source, cable path, or projection mode.', 'Check room display power/input, Windows projection mode, cable/wall plate, and AV path.', 1, 'Escalate to Facilities/AV if room display, projector, wall plate, or shared AV path is affected.', 'medium'),
+    ('FIX_DISPLAY_NO_DISPLAY_AVAILABLE', 'Report No Display Available', 'If no display works, the user may be blocked and hardware/OS review is needed.', 'Treat as blocked user and isolate built-in/external display behavior.', 1, 'Escalate to Endpoint/Desktop or Hardware Support if no display output is available.', 'high'),
+    ('FIX_DISPLAY_DOCK_HUB_ADAPTER_PATH', 'Troubleshoot Dock, Hub, Adapter, or Cable Path', 'Display works directly but not through the dock, hub, adapter, or cable path.', 'Test dock, hub, adapter, cable, DisplayLink/Thunderbolt components, and USB-C video capability.', 1, 'Escalate to Endpoint/Desktop, Hardware, or Endpoint Management if dock firmware/driver or hardware replacement is needed.', 'high'),
+    ('FIX_DISPLAY_DRIVER_PORT_MONITOR_DETECTION', 'Troubleshoot Graphics Driver, Cable, Port, or Monitor Detection', 'Display is not detected even after basic cable/dock checks.', 'Check Device Manager, graphics driver, monitor detection, known-good cable/monitor/port, and recent updates.', 1, 'Escalate if graphics driver, port, GPU, monitor, or OS issue is suspected.', 'high'),
+    ('FIX_DISPLAY_MODE_RESOLUTION_SCALING', 'Correct Display Mode, Resolution, Scaling, or Refresh Rate', 'Display is detected but image, layout, scaling, or refresh rate is incorrect.', 'Correct arrangement, primary display, resolution, scaling, orientation, and refresh rate.', 0, 'Escalate if adapter/cable/dock cannot support required resolution or refresh rate.', 'medium'),
+    ('FIX_DISPLAY_ESCALATE_DRIVER_DOCK_DEPLOYMENT', 'Escalate Driver, Dock Firmware, or Deployment Issue', 'Multiple users or same hardware model affected may indicate driver, firmware, or deployment problem.', 'Collect affected models, update history, and test matrix for endpoint escalation.', 1, 'Escalate to Endpoint Management/Desktop team for driver, dock firmware, or deployment remediation.', 'high'),
+    ('FIX_DISPLAY_ISOLATE_HARDWARE_FAULT', 'Isolate Monitor, Cable, Dock, or Hardware Fault', 'If settings and drivers look correct, isolate the faulty component.', 'Use known-good monitor, cable, dock, adapter, and port to identify failed component.', 1, 'Escalate to Hardware/Asset Support for replacement, warranty, or repair.', 'medium'),
+]
+
+MONITOR_DISPLAY_NOT_WORKING_SOLUTION_STEPS = {
+    'FIX_DISPLAY_POWER_CABLE_INPUT': {
+        'user': ['Confirm the monitor is powered on.', 'Check the power cable.', 'Check the video cable on both ends.', 'Select the correct monitor input, such as HDMI, DisplayPort, or USB-C.', 'Restart the computer if needed.'],
+        'technician': ['Confirm monitor power/status light.', 'Confirm correct input source.', 'Check cable seating and port type.', 'Try known-good cable or port.', 'Document monitor model, cable type, and result.'],
+        'admin': ['Escalate for monitor/cable replacement if basic power and input checks fail.']
+    },
+    'FIX_DISPLAY_DIRECT_CONNECTION_TEST': {
+        'user': ['Disconnect from the dock or hub.', 'Connect the monitor directly to the laptop if possible.', 'Reconnect the dock after testing.', 'Tell IT whether direct connection works.'],
+        'technician': ['Compare direct monitor connection versus dock/hub connection.', 'Check dock power and cable.', 'Test another dock or adapter if available.', 'Check dock firmware/driver if issue follows dock.', 'Escalate if dock hardware or firmware issue is suspected.'],
+        'admin': ['Escalate to Endpoint/Desktop or Hardware Support if dock firmware, driver, or hardware replacement is needed.']
+    },
+    'FIX_DISPLAY_PROJECTION_SETTINGS': {
+        'user': ['Press Windows + P.', 'Select Extend or Duplicate.', 'Open Display Settings if the monitor is detected.', 'Confirm the screen layout looks correct.'],
+        'technician': ['Verify projection mode.', 'Check Display Settings for detection and arrangement.', 'Use Detect display if appropriate.', 'Check resolution, scaling, and refresh rate.', 'Confirm user can move windows between displays.'],
+        'admin': ['Escalate if display mode and settings are correct but output remains unstable or unavailable.']
+    },
+    'FIX_DISPLAY_PROJECTOR_ROOM_INPUT': {
+        'user': ['Confirm the room display/projector is powered on.', 'Select the correct room input.', 'Press Windows + P and choose Duplicate or Extend.', 'Try another cable or wall port if available.', 'Contact IT/AV support if it still fails.'],
+        'technician': ['Confirm projector/display power and input.', 'Test laptop output with known-good display if possible.', 'Test room HDMI/USB-C cable or wall plate.', 'Determine whether issue is laptop, adapter, room equipment, or AV path.', 'Escalate to Facilities/AV if room system is affected.'],
+        'admin': ['Escalate to Facilities/AV for shared projector, conference room display, wall plate, or room-control system issues.']
+    },
+    'FIX_DISPLAY_NO_DISPLAY_AVAILABLE': {
+        'user': ['Do not continue troubleshooting blindly if you cannot see the screen.', 'Check power and restart only if safe.', 'Contact IT immediately.', 'Use another device if available for urgent work.'],
+        'technician': ['Determine whether built-in and external displays both fail.', 'Check power-on behavior and any boot/logo screen.', 'Connect known-good external monitor if possible.', 'Escalate if GPU, panel, motherboard, or OS startup issue is suspected.'],
+        'admin': ['Treat as high priority if the user has no usable display and cannot work.']
+    },
+    'FIX_DISPLAY_DOCK_HUB_ADAPTER_PATH': {
+        'user': ['Use direct connection temporarily if available.', 'Keep the dock powered.', 'Tell IT the dock model and cable type.'],
+        'technician': ['Confirm display works directly.', 'Test known-good dock/hub/adapter/cable.', 'Check dock firmware/driver and DisplayLink/Thunderbolt components.', 'Confirm USB-C/Thunderbolt port supports video output.', 'Escalate if managed dock update or hardware replacement is needed.'],
+        'admin': ['Escalate to Endpoint Management/Desktop team when the issue follows a dock model, firmware, driver, or managed hardware deployment.']
+    },
+    'FIX_DISPLAY_DRIVER_PORT_MONITOR_DETECTION': {
+        'user': ['Restart the computer.', 'Try another cable or port if available.', 'Report whether the monitor works with another computer.'],
+        'technician': ['Check Device Manager for display adapter/monitor detection.', 'Check graphics driver version and recent update history.', 'Update, roll back, or reinstall graphics driver from approved source.', 'Test known-good monitor/cable/port.', 'Escalate if port, GPU, monitor, or OS issue is suspected.'],
+        'admin': ['Escalate with driver version, update history, device model, monitor model, cable/port tests, and screenshots.']
+    },
+    'FIX_DISPLAY_MODE_RESOLUTION_SCALING': {
+        'user': ['Open Display Settings.', 'Confirm displays are arranged correctly.', 'Tell IT if text is blurry, screen is cut off, or resolution looks wrong.', 'Avoid changing advanced settings unless instructed.'],
+        'technician': ['Check display arrangement and primary monitor.', 'Adjust resolution and scale to recommended values.', 'Check refresh rate and orientation.', 'Confirm cable/dock supports desired resolution/refresh rate.', 'Verify user workflow after changes.'],
+        'admin': ['Escalate if required resolution/refresh rate is unsupported by the adapter, cable, dock, or monitor model.']
+    },
+    'FIX_DISPLAY_ESCALATE_DRIVER_DOCK_DEPLOYMENT': {
+        'user': ['Use a temporary workaround if IT provides one.', 'Report device and dock model if known.', 'Wait for IT update.'],
+        'technician': ['Confirm affected device/dock models and update history.', 'Identify driver, firmware, or deployment correlation.', 'Collect logs/screenshots/test matrix.', 'Escalate to Endpoint Management/Desktop team.', 'Track workaround and remediation status.'],
+        'admin': ['Escalate as a deployment or endpoint-management issue when multiple users or same hardware models are affected.']
+    },
+    'FIX_DISPLAY_ISOLATE_HARDWARE_FAULT': {
+        'user': ['Tell IT which cable, dock, monitor, or adapter you are using.', 'Use a temporary working monitor/cable if available.', 'Report physical damage if present.'],
+        'technician': ['Test with known-good cable.', 'Test with known-good monitor.', 'Test with and without dock.', 'Test different laptop port.', 'Replace or escalate the failed component.'],
+        'admin': ['Escalate to Hardware/Asset Support for replacement, asset swap, warranty, or repair tracking.']
+    },
+}
+
+MONITOR_DISPLAY_NOT_WORKING_USER_DIAGNOSTIC_NODES = [
+    ('ROOT', None, 'question', 'Monitor / Display Not Working', 'Start here for blank, no signal, projector, dock, or display layout problems.', 'Which display is not working?', None, None, None, 1),
+    ('ALL_DISPLAYS', 'ROOT', 'solution', 'Report No Display Available', 'No usable display is available.', None, 'All displays', 'all_displays', 'FIX_DISPLAY_NO_DISPLAY_AVAILABLE', 1),
+    ('EXT_Q', 'ROOT', 'question', 'External or Second Monitor', 'Check external display power and signal.', 'Does the monitor show power or a No Signal message?', 'External/second monitor', 'external', None, 2),
+    ('ROOM_DISPLAY', 'ROOT', 'solution', 'Check Projection Mode and Room Display Input', 'Conference room or projector display issue.', None, 'Projector/conference display', 'projector', 'FIX_DISPLAY_PROJECTOR_ROOM_INPUT', 3),
+    ('NO_POWER', 'EXT_Q', 'solution', 'Check Monitor Power, Cable, and Input Source', 'Monitor does not show power.', None, 'No power', 'no_power', 'FIX_DISPLAY_POWER_CABLE_INPUT', 1),
+    ('POWER_Q', 'EXT_Q', 'question', 'Dock or Direct Connection', 'Monitor has power/no signal; check connection path.', 'Are you using a docking station, USB-C hub, or adapter?', 'Power / No Signal', 'power_no_signal', None, 2),
+    ('DOCK_YES', 'POWER_Q', 'solution', 'Test Direct Connection Instead of Dock', 'Dock, hub, adapter, or USB-C path may be failing.', None, 'Yes', 'yes', 'FIX_DISPLAY_DIRECT_CONNECTION_TEST', 1),
+    ('DOCK_NO', 'POWER_Q', 'solution', 'Check Projection Mode and Display Settings', 'Direct external display may need projection/display setting correction.', None, 'No', 'no', 'FIX_DISPLAY_PROJECTION_SETTINGS', 2),
+]
+
+MONITOR_DISPLAY_NOT_WORKING_TECH_DIAGNOSTIC_NODES = [
+    ('ROOT', None, 'question', 'Monitor / Display Not Working - IT Support Specialist', 'Start here for display detection, dock, driver, and hardware isolation.', 'Is the display detected in Windows Display Settings?', None, None, None, 1),
+    ('NOT_DETECTED_Q', 'ROOT', 'question', 'Direct Connection Test', 'Display is not detected; isolate dock/hub path.', 'Does direct connection work without dock/hub?', 'No', 'no', None, 1),
+    ('DETECTED_Q', 'ROOT', 'question', 'Detected Display Behavior', 'Display detected; check settings and scope.', 'Is the issue related to resolution, scaling, refresh rate, or projection mode?', 'Yes', 'yes', None, 2),
+    ('DIRECT_YES', 'NOT_DETECTED_Q', 'solution', 'Troubleshoot Dock, Hub, Adapter, or Cable Path', 'Direct connection works, dock/hub path fails.', None, 'Yes', 'yes', 'FIX_DISPLAY_DOCK_HUB_ADAPTER_PATH', 1),
+    ('DIRECT_NO', 'NOT_DETECTED_Q', 'solution', 'Troubleshoot Graphics Driver, Cable, Port, or Monitor Detection', 'Display is not detected directly either.', None, 'No', 'no', 'FIX_DISPLAY_DRIVER_PORT_MONITOR_DETECTION', 2),
+    ('SETTINGS_YES', 'DETECTED_Q', 'solution', 'Correct Display Mode, Resolution, Scaling, or Refresh Rate', 'Detected display has incorrect layout or visual settings.', None, 'Yes', 'yes', 'FIX_DISPLAY_MODE_RESOLUTION_SCALING', 1),
+    ('MULTI_Q', 'DETECTED_Q', 'question', 'Multiple Users or Same Hardware', 'Settings are not the issue; check scope.', 'Are multiple users or same hardware models affected?', 'No', 'no', None, 2),
+    ('MULTI_YES', 'MULTI_Q', 'solution', 'Escalate Driver, Dock Firmware, or Deployment Issue', 'Multiple users or same hardware model suggests deployment/firmware/driver issue.', None, 'Yes', 'yes', 'FIX_DISPLAY_ESCALATE_DRIVER_DOCK_DEPLOYMENT', 1),
+    ('HARDWARE_ISOLATE', 'MULTI_Q', 'solution', 'Isolate Monitor, Cable, Dock, or Hardware Fault', 'Single-user issue after settings check requires component isolation.', None, 'No', 'no', 'FIX_DISPLAY_ISOLATE_HARDWARE_FAULT', 2),
+]
+
+def seed_monitor_display_issue_content(cursor):
+    """Seed Monitor / Display Not Working KB article, solutions, steps, and diagnostic trees."""
+    code_, title, category, severity, description = MONITOR_DISPLAY_NOT_WORKING_PROBLEM
+    cursor.execute("""
+        INSERT INTO problem (problem_code, title, category, severity, description)
+        VALUES (?, ?, ?, ?, ?)
+        ON CONFLICT(problem_code) DO UPDATE SET
+            title=excluded.title, category=excluded.category, severity=excluded.severity,
+            description=excluded.description, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, MONITOR_DISPLAY_NOT_WORKING_PROBLEM)
+    cursor.execute('SELECT problem_id FROM problem WHERE problem_code = ?', (code_,))
+    row = cursor.fetchone()
+    if not row:
+        return
+    problem_id = row['problem_id']
+    cursor.execute("""
+        INSERT INTO kb_article (problem_id, title, summary, difficulty, estimated_time, escalation_required, escalation_notes, is_active, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, 1, CURRENT_TIMESTAMP)
+        ON CONFLICT(problem_id) DO UPDATE SET
+            title=excluded.title, summary=excluded.summary, difficulty=excluded.difficulty,
+            estimated_time=excluded.estimated_time, escalation_required=excluded.escalation_required,
+            escalation_notes=excluded.escalation_notes, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, (problem_id, MONITOR_DISPLAY_NOT_WORKING_KB['title'], MONITOR_DISPLAY_NOT_WORKING_KB['summary'], MONITOR_DISPLAY_NOT_WORKING_KB['difficulty'], MONITOR_DISPLAY_NOT_WORKING_KB['estimated_time'], MONITOR_DISPLAY_NOT_WORKING_KB['escalation_required'], MONITOR_DISPLAY_NOT_WORKING_KB['escalation_notes']))
+    cursor.execute('SELECT kb_article_id FROM kb_article WHERE problem_id = ?', (problem_id,))
+    article = cursor.fetchone()
+    if article:
+        kb_id = article['kb_article_id']
+        delete_kb_child_rows(cursor, kb_id)
+        insert_kb_child_rows(cursor, 'kb_article_tag', 'tag', kb_id, MONITOR_DISPLAY_NOT_WORKING_KB['tags'])
+        insert_kb_child_rows(cursor, 'kb_article_symptom', 'symptom', kb_id, MONITOR_DISPLAY_NOT_WORKING_KB['symptoms'])
+        insert_kb_child_rows(cursor, 'kb_article_cause', 'cause', kb_id, MONITOR_DISPLAY_NOT_WORKING_KB['causes'])
+        insert_kb_child_rows(cursor, 'kb_article_user_step', 'step_text', kb_id, MONITOR_DISPLAY_NOT_WORKING_KB['user_steps'])
+        insert_kb_child_rows(cursor, 'kb_article_it_step', 'step_text', kb_id, MONITOR_DISPLAY_NOT_WORKING_KB['it_steps'])
+    cursor.executemany("""
+        INSERT INTO solution (solution_code, title, summary, resolution_steps, escalation_required, escalation_notes, priority_recommendation)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(solution_code) DO UPDATE SET
+            title=excluded.title, summary=excluded.summary, resolution_steps=excluded.resolution_steps,
+            escalation_required=excluded.escalation_required, escalation_notes=excluded.escalation_notes,
+            priority_recommendation=excluded.priority_recommendation, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, MONITOR_DISPLAY_NOT_WORKING_SOLUTIONS)
+    for solution_code, audience_steps in MONITOR_DISPLAY_NOT_WORKING_SOLUTION_STEPS.items():
+        solution_id = get_solution_id_by_code(cursor, solution_code)
+        if not solution_id:
+            continue
+        for audience, steps in audience_steps.items():
+            cursor.execute('DELETE FROM solution_step WHERE solution_id = ? AND audience = ?', (solution_id, audience))
+            cursor.executemany('INSERT INTO solution_step (solution_id, audience, step_text, sort_order) VALUES (?, ?, ?, ?)', [(solution_id, audience, step, idx) for idx, step in enumerate(steps, start=1)])
+    seed_monitor_display_tree(cursor, 'user', 'MONITOR_DISPLAY_NOT_WORKING_USER', 'Monitor / Display Not Working - User Diagnostic', 'User-friendly diagnostic tree for blank, no signal, dock, projector, and projection mode problems.', MONITOR_DISPLAY_NOT_WORKING_USER_DIAGNOSTIC_NODES)
+    seed_monitor_display_tree(cursor, 'technician', 'MONITOR_DISPLAY_NOT_WORKING_TECHNICIAN', 'Monitor / Display Not Working - IT Support Specialist Diagnostic', 'IT Support Specialist diagnostic tree for display detection, dock path, graphics drivers, settings, and hardware isolation.', MONITOR_DISPLAY_NOT_WORKING_TECH_DIAGNOSTIC_NODES)
+
+def seed_monitor_display_tree(cursor, audience, tree_code, title, description, nodes):
+    problem_id = get_problem_id_for_tree_code(cursor, 'MONITOR_DISPLAY_NOT_WORKING')
+    cursor.execute("""
+        INSERT INTO diagnostic_tree (problem_id, diagnostic_tree_code, base_tree_code, audience, title, description, is_active, updated_at)
+        VALUES (?, ?, 'MONITOR_DISPLAY_NOT_WORKING', ?, ?, ?, 1, CURRENT_TIMESTAMP)
+        ON CONFLICT(diagnostic_tree_code) DO UPDATE SET
+            problem_id=excluded.problem_id, base_tree_code=excluded.base_tree_code, audience=excluded.audience,
+            title=excluded.title, description=excluded.description, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, (problem_id, tree_code, audience, title, description))
+    tree_id = get_diagnostic_tree_id_by_code(cursor, tree_code)
+    if not tree_id:
+        return
+    cursor.execute('UPDATE diagnostic_node SET is_active = 0, updated_at = CURRENT_TIMESTAMP WHERE diagnostic_tree_id = ?', (tree_id,))
+    for node_key, parent_key, node_type, node_title, node_desc, prompt, condition_label, condition_value, solution_code, sort_order in nodes:
+        parent_id = get_diagnostic_node_id_by_tree_and_key(cursor, tree_id, parent_key) if parent_key else None
+        solution_id = get_solution_id_by_code(cursor, solution_code) if solution_code else None
+        cursor.execute("""
+            INSERT INTO diagnostic_node (
+                diagnostic_tree_id, parent_diagnostic_node_id, problem_id, diagnostic_tree_code,
+                node_key, node_type, title, description, prompt_text,
+                condition_label, condition_value, solution_id, sort_order, is_active, updated_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, CURRENT_TIMESTAMP)
+            ON CONFLICT(diagnostic_tree_code, node_key) DO UPDATE SET
+                diagnostic_tree_id=excluded.diagnostic_tree_id,
+                parent_diagnostic_node_id=excluded.parent_diagnostic_node_id,
+                problem_id=excluded.problem_id,
+                node_type=excluded.node_type,
+                title=excluded.title,
+                description=excluded.description,
+                prompt_text=excluded.prompt_text,
+                condition_label=excluded.condition_label,
+                condition_value=excluded.condition_value,
+                solution_id=excluded.solution_id,
+                sort_order=excluded.sort_order,
+                is_active=1,
+                updated_at=CURRENT_TIMESTAMP
+        """, (tree_id, parent_id, problem_id, tree_code, node_key, node_type, node_title, node_desc, prompt, condition_label, condition_value, solution_id, sort_order))
+
+
 def initialize_database():
     """Create SQLite tables if they do not already exist."""
     connection = get_db_connection()
@@ -7949,6 +8198,7 @@ def initialize_database():
     seed_mobile_email_setup_issue_content(cursor)
     seed_video_conferencing_issue_content(cursor)
     seed_keyboard_mouse_issue_content(cursor)
+    seed_monitor_display_issue_content(cursor)
     seed_existing_issue_role_alignment(cursor)
 
     cursor.execute("""
