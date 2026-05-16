@@ -581,6 +581,7 @@ PROBLEM_CODE_BY_ISSUE_TITLE = {
     "Video Conferencing Issue": "VIDEO_CONFERENCING_ISSUE",
     "Keyboard or Mouse Not Working": "KEYBOARD_OR_MOUSE_NOT_WORKING",
     "Monitor / Display Not Working": "MONITOR_DISPLAY_NOT_WORKING",
+    "Docking Station Not Working": "DOCKING_STATION_NOT_WORKING",
 }
 
 
@@ -594,10 +595,10 @@ PROBLEM_CODE_BY_ISSUE_TITLE = {
 # the database for future expansion, but they are hidden from the visible MVP
 # until their content is upgraded to the same depth.
 MVP_CONTENT_FOCUS_ENABLED = True
-MVP_ACTIVE_PROBLEM_CODES = {"PRINTER_FAILURE", "PASSWORD_RESET_REQUEST", "ACCOUNT_LOCKED", "MULTI_FACTOR_AUTHENTICATION_ISSUE", "VPN_CONNECTION_FAILURE", "SHARED_DRIVE_NETWORK_DRIVE_ACCESS_ISSUE", "REMOTE_DESKTOP_CONNECTION_ISSUE", "SLOW_COMPUTER_PERFORMANCE", "APPLICATION_NOT_OPENING", "APPLICATION_CRASHING_FREEZING", "OPERATING_SYSTEM_UPDATE_ISSUE", "DEVICE_RUNNING_OUT_OF_STORAGE", "PHISHING_EMAIL_REPORTED", "MALWARE_OR_VIRUS_SUSPECTED", "EMAIL_ATTACHMENT_NOT_OPENING", "CALENDAR_SYNC_ISSUE", "SOFTWARE_INSTALLATION_REQUEST", "BROWSER_ISSUE", "CERTIFICATE_SECURITY_WARNING", "MOBILE_EMAIL_SETUP_ISSUE", "VIDEO_CONFERENCING_ISSUE", "KEYBOARD_OR_MOUSE_NOT_WORKING", "MONITOR_DISPLAY_NOT_WORKING"}
+MVP_ACTIVE_PROBLEM_CODES = {"PRINTER_FAILURE", "PASSWORD_RESET_REQUEST", "ACCOUNT_LOCKED", "MULTI_FACTOR_AUTHENTICATION_ISSUE", "VPN_CONNECTION_FAILURE", "SHARED_DRIVE_NETWORK_DRIVE_ACCESS_ISSUE", "REMOTE_DESKTOP_CONNECTION_ISSUE", "SLOW_COMPUTER_PERFORMANCE", "APPLICATION_NOT_OPENING", "APPLICATION_CRASHING_FREEZING", "OPERATING_SYSTEM_UPDATE_ISSUE", "DEVICE_RUNNING_OUT_OF_STORAGE", "PHISHING_EMAIL_REPORTED", "MALWARE_OR_VIRUS_SUSPECTED", "EMAIL_ATTACHMENT_NOT_OPENING", "CALENDAR_SYNC_ISSUE", "SOFTWARE_INSTALLATION_REQUEST", "BROWSER_ISSUE", "CERTIFICATE_SECURITY_WARNING", "MOBILE_EMAIL_SETUP_ISSUE", "VIDEO_CONFERENCING_ISSUE", "KEYBOARD_OR_MOUSE_NOT_WORKING", "MONITOR_DISPLAY_NOT_WORKING", "DOCKING_STATION_NOT_WORKING"}
 MVP_CONTENT_FOCUS_NOTE = (
     "The visible MVP currently focuses on a small set of high-quality troubleshooting examples: "
-    "Printer Failure, Password Reset Request, Account Locked, Multi-factor Authentication Issue, VPN Connection Failure, Shared Drive / Network Drive Access Issue, Remote Desktop Connection Issue, Slow Computer Performance, Application Not Opening, Application Crashing / Freezing, Operating System Update Issue, Device Running Out of Storage, Phishing Email Reported, Malware or Virus Suspected, Email Attachment Not Opening, Calendar Sync Issue, Software Installation Request, Browser Issue, Certificate / Security Warning, Mobile Email Setup Issue, Video Conferencing Issue, Keyboard or Mouse Not Working, and Monitor / Display Not Working. Other sample issues are hidden until they "
+    "Printer Failure, Password Reset Request, Account Locked, Multi-factor Authentication Issue, VPN Connection Failure, Shared Drive / Network Drive Access Issue, Remote Desktop Connection Issue, Slow Computer Performance, Application Not Opening, Application Crashing / Freezing, Operating System Update Issue, Device Running Out of Storage, Phishing Email Reported, Malware or Virus Suspected, Email Attachment Not Opening, Calendar Sync Issue, Software Installation Request, Browser Issue, Certificate / Security Warning, Mobile Email Setup Issue, Video Conferencing Issue, Keyboard or Mouse Not Working, Monitor / Display Not Working, and Docking Station Not Working. Other sample issues are hidden until they "
     "are expanded with detailed symptoms, causes, user steps, and technician steps."
 )
 
@@ -8165,6 +8166,279 @@ def seed_monitor_display_tree(cursor, audience, tree_code, title, description, n
         """, (tree_id, parent_id, problem_id, tree_code, node_key, node_type, node_title, node_desc, prompt, condition_label, condition_value, solution_id, sort_order))
 
 
+
+# -----------------------------
+# DOCKING STATION NOT WORKING CONTENT
+# -----------------------------
+DOCKING_STATION_NOT_WORKING_PROBLEM = (
+    'DOCKING_STATION_NOT_WORKING',
+    'Docking Station Not Working',
+    'Hardware & Peripherals',
+    'Medium',
+    'The user\'s docking station is not charging the laptop, not detecting monitors, not recognizing keyboard/mouse, not connecting to Ethernet, or intermittently disconnecting devices.'
+)
+
+DOCKING_STATION_NOT_WORKING_KB = {
+    'title': 'Docking Station Not Working',
+    'summary': 'Use this guide when a docking station does not charge the laptop, detect monitors, recognize keyboard/mouse/USB devices, connect to Ethernet, or works intermittently.',
+    'difficulty': 'Intermediate',
+    'estimated_time': '10-30 minutes',
+    'escalation_required': 1,
+    'escalation_notes': 'Escalate to Endpoint/Desktop, Hardware/Asset Support, Network, or Endpoint Management depending on whether the issue involves dock firmware/drivers, failed hardware, dock Ethernet/network path, or a widespread deployment issue.',
+    'tags': ['docking station', 'USB-C dock', 'Thunderbolt dock', 'DisplayLink', 'external monitors', 'USB devices', 'Ethernet adapter', 'power delivery', 'dock firmware', 'laptop dock'],
+    'symptoms': [
+        'Dock does not charge the laptop or shows slow-charger/power warnings.',
+        'External monitors are not detected or only one monitor works through the dock.',
+        'Keyboard, mouse, headset, or other USB devices fail only through the dock.',
+        'Ethernet through the dock is disconnected, missing, or does not receive valid IP settings.',
+        'Dock devices disconnect and reconnect intermittently.',
+        'Everything works when connected directly to the laptop but not through the dock.',
+        'Issue started after Windows update, BIOS update, dock firmware/driver update, new dock, new laptop, desk move, or USB-C/Thunderbolt warning.'
+    ],
+    'causes': [
+        'Common causes include disconnected dock power, loose or damaged USB-C/Thunderbolt cable, laptop not fully connected, incompatible dock/laptop model, outdated dock firmware or driver, insufficient power adapter, wrong dock port, USB-C port without required display/power capability, display settings, inactive Ethernet wall jack, or a dock that needs power cycling.',
+        'Advanced causes include Thunderbolt authorization/security setting, missing or corrupted DisplayLink/Thunderbolt software, dock firmware bug after OS update, BIOS/chipset/USB controller issue, dock Ethernet MAC pass-through or network policy problem, port security or 802.1X issue, display bandwidth limitation, MST/daisy-chain limit, incompatible managed driver deployment, or hardware failure in dock, cable, power adapter, or laptop USB-C port.'
+    ],
+    'user_steps': [
+        'Confirm the dock has power and the power adapter is connected.',
+        'Disconnect and reconnect the dock cable from the laptop.',
+        'Make sure the dock cable is fully inserted into the correct USB-C or Thunderbolt port.',
+        'Restart the laptop while connected to the dock.',
+        'Unplug dock power for 30 seconds, reconnect power, then reconnect the laptop.',
+        'Test one device at a time, such as monitor, keyboard/mouse, Ethernet, or headset.',
+        'For monitor issues, press Windows + P and choose Extend or Duplicate.',
+        'Try connecting the affected device directly to the laptop if possible.',
+        'Take a photo of the dock connections and any USB-C/Thunderbolt, charging, display, or network error message.',
+        'Contact IT if the dock still does not work after reconnecting and power-cycling.'
+    ],
+    'it_steps': [
+        'Confirm the user, laptop model, dock model, operating system, connection type, power adapter, and exact symptom.',
+        'Identify which dock function is failing: charging, monitors, USB keyboard/mouse, Ethernet, audio, intermittent disconnects, or all dock functions.',
+        'Confirm dock power adapter is connected and correct for the dock model.',
+        'Confirm dock cable is connected to the correct laptop USB-C/Thunderbolt port.',
+        'Power-cycle the dock and restart the laptop while connected.',
+        'Test affected devices directly connected to the laptop.',
+        'Test one peripheral at a time through the dock.',
+        'Check Windows display settings and Windows + P for monitor problems.',
+        'Confirm Ethernet cable, link light, wall jack, IP address, gateway, and DNS if network is affected.',
+        'Ask whether the issue started after Windows, BIOS, dock firmware, or driver update.',
+        'Check Device Manager or system settings for dock, USB, display, audio, and Ethernet adapter detection.',
+        'Check dock firmware and driver version.',
+        'Check Thunderbolt/USB-C controller and authorization status where applicable.',
+        'Check DisplayLink/Thunderbolt software if the dock depends on it.',
+        'Confirm laptop USB-C/Thunderbolt port supports required features: charging/power delivery, display output, data, and Ethernet.',
+        'Check BIOS/UEFI, chipset, USB controller, and Thunderbolt updates if dock detection fails.',
+        'Test with known-good dock, known-good cable, known-good power adapter, and known-good laptop.',
+        'For multi-monitor issues, check resolution, refresh rate, display bandwidth, cable type, and number of displays.',
+        'For dock Ethernet issues, isolate dock NIC, driver, MAC pass-through, DHCP, VLAN, switch port, or network policy symptoms.',
+        'Escalate with laptop model, dock model, firmware/driver versions, test matrix, device detection status, Ethernet/IP results, and business impact.'
+    ]
+}
+
+DOCKING_STATION_NOT_WORKING_SOLUTIONS = [
+    ('FIX_DOCK_POWER_CYCLE_CONNECTION', 'Power-Cycle Dock and Check Connection', 'Docking stations often recover after power-cycle and secure reconnect.', 'Power-cycle dock, check power/cable, reconnect, restart laptop, and verify returned dock functions.', 0, 'Escalate if the dock is still not detected after power, cable, and restart checks.', 'medium'),
+    ('FIX_DOCK_DISPLAY_OUTPUT', 'Troubleshoot Dock Display Output', 'External displays through dock may fail due to cable, projection mode, driver, dock bandwidth, or firmware.', 'Check monitor power/input, Windows + P, direct vs dock connection, display settings, drivers, and dock firmware.', 1, 'Escalate to Endpoint/Desktop or Hardware if dock display path, firmware, or hardware issue is suspected.', 'high'),
+    ('FIX_DOCK_USB_DEVICES', 'Troubleshoot Dock USB Devices', 'Keyboard, mouse, headset, or USB devices may fail because of dock USB path or driver issue.', 'Test USB devices directly and through dock, use known-good device, and check USB/HID errors.', 0, 'Escalate if all dock USB ports fail or driver/hardware issue is suspected.', 'medium'),
+    ('FIX_DOCK_ETHERNET_CONNECTION', 'Troubleshoot Dock Ethernet Connection', 'Dock Ethernet may fail due to cable, wall jack, dock NIC, driver, DHCP, VLAN, or network policy.', 'Check dock Ethernet detection, link light, cable, wall jack, IP, DNS, and gateway.', 1, 'Escalate to Network if DHCP, VLAN, port security, MAC pass-through, or switch port issue is suspected.', 'high'),
+    ('FIX_DOCK_POWER_DELIVERY_CHARGING', 'Check Dock Power Delivery and Charger', 'The dock may not charge the laptop if power adapter, wattage, dock cable, or USB-C power delivery is wrong.', 'Check dock power adapter, original charger, dock cable, USB-C power delivery support, and charging warnings.', 1, 'Escalate to Hardware/Endpoint if dock power adapter, dock, or laptop USB-C port may be faulty.', 'medium'),
+    ('FIX_DOCK_ISOLATE_CABLE_FIRMWARE', 'Isolate Dock, Cable, or Firmware Issue', 'If devices work directly but not through dock, isolate dock hardware, cable, firmware, or driver.', 'Test known-good dock, cable, and laptop; check firmware and driver versions.', 1, 'Escalate if failure follows dock/cable or firmware/driver remediation is required.', 'high'),
+    ('FIX_DOCK_TEST_DIRECT_CONNECTION', 'Test Direct Connection and Report Results', 'Direct connection helps identify whether the problem is the dock or the peripheral/laptop itself.', 'Compare direct connection against dock behavior and document isolation result.', 0, 'Escalate based on whether failure follows dock, peripheral, cable, or laptop.', 'medium'),
+    ('FIX_DOCK_DETECTION_USBC_THUNDERBOLT', 'Troubleshoot Dock Detection, Power, and USB-C/Thunderbolt', 'The computer does not detect the dock or detects it inconsistently.', 'Check power, port capability, Device Manager, Thunderbolt authorization, BIOS/chipset/USB-C components, and dock hardware.', 1, 'Escalate to Endpoint/Desktop or Hardware if dock detection or laptop port issue persists.', 'high'),
+    ('FIX_DOCK_DISPLAY_BANDWIDTH_DRIVER', 'Troubleshoot Dock Display, Bandwidth, and Driver Path', 'Multi-monitor dock setups may fail because of display bandwidth, cable type, resolution, refresh rate, or driver dependency.', 'Check supported monitor count/resolution, DisplayLink/Thunderbolt/graphics drivers, cable type, and refresh rate.', 1, 'Escalate if dock hardware capability, firmware, or driver limitation is confirmed.', 'high'),
+    ('FIX_DOCK_USB_PERIPHERAL_PATH', 'Troubleshoot Dock USB Peripheral Path', 'Dock USB devices fail while other dock functions may still work.', 'Determine whether one or all USB devices fail, check controller/device status, power draw, and known-good devices.', 1, 'Escalate if dock USB controller, hardware, or driver issue is suspected.', 'medium'),
+    ('FIX_DOCK_ETHERNET_ADAPTER_NETWORK_PATH', 'Troubleshoot Dock Ethernet Adapter and Network Path', 'Dock Ethernet may require both endpoint and network troubleshooting.', 'Check dock Ethernet adapter, IP configuration, DHCP, link status, wall jack, and switch path.', 1, 'Escalate to Network with MAC address, IP details, jack/port location, VLAN/DHCP symptoms, and link status.', 'high'),
+    ('FIX_DOCK_POWER_DELIVERY_TECH', 'Troubleshoot Dock Power Delivery', 'Dock works partially but does not charge or provides insufficient power.', 'Confirm dock wattage, compatible laptop power requirements, known-good power adapter, BIOS warnings, and USB-C port.', 1, 'Escalate for dock, power adapter, or laptop port replacement if power delivery issue is confirmed.', 'medium'),
+    ('FIX_DOCK_ESCALATE_FIRMWARE_DRIVER_DEPLOYMENT', 'Escalate Dock Firmware, Driver, or Deployment Issue', 'Multiple devices or same dock model failures may indicate firmware, driver, BIOS, or deployment issue.', 'Collect affected models, versions, update history, and test results for endpoint management escalation.', 1, 'Escalate to Endpoint Management/Desktop team for firmware, driver, BIOS, or deployment remediation.', 'high'),
+    ('FIX_DOCK_ISOLATE_HARDWARE_PORT_FAULT', 'Isolate Dock Hardware, Cable, or Laptop Port Fault', 'Testing indicates physical dock, cable, power adapter, or laptop port failure.', 'Complete known-good dock, cable, power adapter, and laptop testing to identify failed component.', 1, 'Escalate to Hardware/Asset Support for replacement, warranty, or repair.', 'medium'),
+]
+
+DOCKING_STATION_NOT_WORKING_SOLUTION_STEPS = {
+    'FIX_DOCK_POWER_CYCLE_CONNECTION': {
+        'user': ['Disconnect the dock cable from the laptop.', 'Unplug dock power for 30 seconds.', 'Reconnect dock power.', 'Reconnect the dock to the laptop.', 'Restart the laptop if devices are still not detected.'],
+        'technician': ['Confirm dock power adapter is connected.', 'Confirm correct USB-C/Thunderbolt port is used.', 'Power-cycle dock and restart laptop.', 'Check whether dock is detected after reconnect.', 'Document which functions return.'],
+        'admin': ['Escalate if the dock is still not detected after basic power-cycle, cable, and restart checks.']
+    },
+    'FIX_DOCK_DISPLAY_OUTPUT': {
+        'user': ['Confirm monitors are powered on.', 'Check monitor input source.', 'Press Windows + P and choose Extend or Duplicate.', 'Try one monitor at a time.', 'Tell IT whether monitors work directly connected to the laptop.'],
+        'technician': ['Check Windows Display Settings for detected monitors.', 'Test direct display connection versus dock display connection.', 'Check cable type, resolution, refresh rate, and number of displays.', 'Check graphics, DisplayLink, Thunderbolt, or dock driver/firmware.', 'Escalate if bandwidth, firmware, or dock hardware issue is suspected.'],
+        'admin': ['Escalate to Endpoint/Desktop or Hardware if dock display path, firmware, driver, or hardware issue is suspected.']
+    },
+    'FIX_DOCK_USB_DEVICES': {
+        'user': ['Unplug and reconnect the USB device.', 'Try another USB port on the dock.', 'Connect the device directly to the laptop.', 'Restart the laptop if needed.'],
+        'technician': ['Test known-good USB device through dock.', 'Test same device directly on laptop.', 'Check Device Manager for USB/HID errors.', 'Check dock firmware/driver.', 'Determine whether issue follows dock, device, or laptop.'],
+        'admin': ['Escalate if all dock USB ports fail, USB controller errors appear, or dock driver/hardware issue is suspected.']
+    },
+    'FIX_DOCK_ETHERNET_CONNECTION': {
+        'user': ['Confirm Ethernet cable is connected to the dock.', 'Use Wi-Fi as a temporary workaround only if allowed.', 'Tell IT if other people at the same desk or area have network issues.', 'Do not change network settings unless IT instructs you.'],
+        'technician': ['Check dock Ethernet adapter detection.', 'Check link light, cable, and wall jack.', 'Confirm IP address, subnet mask, default gateway, and DNS.', 'Test another cable or wall port if available.', 'Escalate if DHCP, VLAN, port security, or switch port issue is suspected.'],
+        'admin': ['Escalate to Network with port location, dock MAC address, IP configuration, link state, VLAN/DHCP symptoms, and affected scope.']
+    },
+    'FIX_DOCK_POWER_DELIVERY_CHARGING': {
+        'user': ['Confirm dock power is connected.', 'Check whether the laptop charges with its original charger.', 'Reconnect the dock cable.', 'Tell IT if you see a slow-charger or power warning.'],
+        'technician': ['Confirm correct dock power adapter and wattage.', 'Check laptop charging through original charger.', 'Check dock cable and USB-C power delivery support.', 'Check BIOS/firmware if charging warnings persist.', 'Escalate if dock power adapter, dock, or laptop port is faulty.'],
+        'admin': ['Escalate to Hardware/Endpoint for dock power adapter, dock, cable, or laptop USB-C port replacement or repair.']
+    },
+    'FIX_DOCK_ISOLATE_CABLE_FIRMWARE': {
+        'user': ['Use direct connection temporarily if possible.', 'Provide the dock model and cable type if known.', 'Tell IT when the issue started.'],
+        'technician': ['Test known-good dock with user laptop.', 'Test user dock with known-good laptop.', 'Test known-good USB-C/Thunderbolt cable if detachable.', 'Check firmware and driver versions.', 'Replace or escalate dock if failure follows dock.'],
+        'admin': ['Escalate if known-good testing shows dock, cable, firmware, or driver path failure.']
+    },
+    'FIX_DOCK_TEST_DIRECT_CONNECTION': {
+        'user': ['Connect the affected device directly to the laptop if possible.', 'Note whether it works.', 'Report the result to IT.', 'Use direct connection temporarily if needed.'],
+        'technician': ['Compare direct versus dock behavior.', 'If direct fails too, troubleshoot the peripheral or laptop path.', 'If direct works, focus on dock, cable, or firmware path.', 'Document the isolation result.'],
+        'admin': ['Escalate based on whether failure follows dock, peripheral, cable, laptop port, or network path.']
+    },
+    'FIX_DOCK_DETECTION_USBC_THUNDERBOLT': {
+        'user': ['Reconnect the dock firmly.', 'Restart the laptop.', 'Try another compatible USB-C/Thunderbolt port if available.', 'Report any USB-C or Thunderbolt warning.'],
+        'technician': ['Check Device Manager/system settings for dock or Thunderbolt device.', 'Confirm port supports dock features.', 'Check Thunderbolt authorization/security settings where applicable.', 'Update BIOS/chipset/USB-C/Thunderbolt components from approved source.', 'Escalate if laptop port or dock hardware issue is suspected.'],
+        'admin': ['Escalate to Endpoint/Desktop or Hardware if dock detection remains inconsistent after approved firmware/driver checks.']
+    },
+    'FIX_DOCK_DISPLAY_BANDWIDTH_DRIVER': {
+        'user': ['Try one monitor first.', 'Lower resolution only if IT instructs you.', 'Tell IT monitor models and connection types.'],
+        'technician': ['Check supported monitor count and resolution for dock model.', 'Test one display at a time.', 'Check DisplayLink/Thunderbolt/graphics driver status.', 'Check cable type and refresh rate.', 'Escalate if hardware capability or driver limitation is confirmed.'],
+        'admin': ['Escalate to Endpoint/Desktop or Hardware if dock model cannot support the required display configuration.']
+    },
+    'FIX_DOCK_USB_PERIPHERAL_PATH': {
+        'user': ['Try another USB port on the dock.', 'Reconnect keyboard, mouse, or headset.', 'Connect directly to laptop if possible.', 'Report whether one USB device or all USB devices fail.'],
+        'technician': ['Determine whether one USB device or all USB devices fail.', 'Check dock USB controller/device status.', 'Test known-good USB device.', 'Check power draw if many USB devices are connected.', 'Escalate if dock USB hardware or driver issue is suspected.'],
+        'admin': ['Escalate if dock USB controller, driver, power, or hardware issue is suspected after isolation.']
+    },
+    'FIX_DOCK_ETHERNET_ADAPTER_NETWORK_PATH': {
+        'user': ['Keep Wi-Fi connected only if IT allows as workaround.', 'Tell IT whether Ethernet works directly or only fails through dock.', 'Report the desk/location where the dock is connected.'],
+        'technician': ['Check dock Ethernet adapter status.', 'Run IP configuration check: IP, subnet, gateway, and DNS.', 'Test DHCP lease renewal if appropriate.', 'Check wall jack, cable, and switch path.', 'Escalate with MAC address, IP details, port location, VLAN/DHCP symptoms, and link status.'],
+        'admin': ['Escalate to Network if dock Ethernet symptoms point to DHCP, VLAN, 802.1X, switch port, or MAC pass-through issue.']
+    },
+    'FIX_DOCK_POWER_DELIVERY_TECH': {
+        'user': ['Use original laptop charger temporarily if needed.', 'Report slow charging or power warnings.', 'Keep dock power connected.'],
+        'technician': ['Confirm dock wattage and compatible laptop power requirements.', 'Test original charger.', 'Test known-good dock power adapter.', 'Check BIOS/firmware power warnings.', 'Escalate if dock, power adapter, or laptop port replacement is needed.'],
+        'admin': ['Escalate for hardware replacement if power delivery fails with known-good adapter and compatible laptop.']
+    },
+    'FIX_DOCK_ESCALATE_FIRMWARE_DRIVER_DEPLOYMENT': {
+        'user': ['Use a temporary workaround if IT provides one.', 'Report dock and laptop model if known.', 'Wait for IT update.'],
+        'technician': ['Confirm affected dock/laptop models.', 'Identify update or deployment correlation.', 'Collect driver/firmware versions and test results.', 'Escalate to Endpoint Management/Desktop team.', 'Track workaround and remediation.'],
+        'admin': ['Escalate to Endpoint Management/System team for driver, dock firmware, BIOS, or deployment remediation.']
+    },
+    'FIX_DOCK_ISOLATE_HARDWARE_PORT_FAULT': {
+        'user': ['Use alternate dock or cable if provided.', 'Report physical damage.', 'Keep failed equipment available for IT review.'],
+        'technician': ['Complete known-good dock, cable, power adapter, and laptop testing.', 'Determine failed component.', 'Replace dock/cable/power adapter or escalate laptop port repair.', 'Document asset and replacement details.'],
+        'admin': ['Escalate to Hardware/Asset Support for replacement, warranty, or repair.']
+    },
+}
+
+DOCKING_STATION_NOT_WORKING_USER_DIAGNOSTIC_NODES = [
+    ('ROOT', None, 'question', 'Docking Station Not Working', 'Identify what dock function is failing.', 'What is not working through the dock?', None, None, None, 1),
+    ('EVERYTHING', 'ROOT', 'solution', 'Power-Cycle Dock and Check Connection', 'All dock functions are failing.', None, 'Everything', 'everything', 'FIX_DOCK_POWER_CYCLE_CONNECTION', 1),
+    ('MONITORS', 'ROOT', 'solution', 'Troubleshoot Dock Display Output', 'Monitors do not work through the dock.', None, 'Monitors', 'monitors', 'FIX_DOCK_DISPLAY_OUTPUT', 2),
+    ('USB', 'ROOT', 'solution', 'Troubleshoot Dock USB Devices', 'USB peripherals do not work through the dock.', None, 'Keyboard/mouse/USB devices', 'usb', 'FIX_DOCK_USB_DEVICES', 3),
+    ('ETHERNET', 'ROOT', 'solution', 'Troubleshoot Dock Ethernet Connection', 'Ethernet does not work through the dock.', None, 'Ethernet/network', 'ethernet', 'FIX_DOCK_ETHERNET_CONNECTION', 4),
+    ('CHARGING', 'ROOT', 'solution', 'Check Dock Power Delivery and Charger', 'Laptop does not charge through the dock.', None, 'Charging', 'charging', 'FIX_DOCK_POWER_DELIVERY_CHARGING', 5),
+    ('DIRECT_Q', 'ROOT', 'question', 'Direct Connection Test', 'If symptom is unclear, test direct connection.', 'Does the affected device work directly connected to the laptop?', 'Not sure / other', 'other', None, 6),
+    ('DIRECT_YES', 'DIRECT_Q', 'solution', 'Isolate Dock, Cable, or Firmware Issue', 'Direct connection works, so dock path is suspect.', None, 'Yes', 'yes', 'FIX_DOCK_ISOLATE_CABLE_FIRMWARE', 1),
+    ('DIRECT_NO', 'DIRECT_Q', 'solution', 'Test Direct Connection and Report Results', 'Direct behavior needs confirmation or peripheral/laptop path may be affected.', None, 'No / not tried', 'no', 'FIX_DOCK_TEST_DIRECT_CONNECTION', 2),
+]
+
+DOCKING_STATION_NOT_WORKING_TECH_DIAGNOSTIC_NODES = [
+    ('ROOT', None, 'question', 'Docking Station Not Working - IT Support Specialist', 'Start with OS detection of dock.', 'Is the dock detected by the operating system?', None, None, None, 1),
+    ('NO_DETECT', 'ROOT', 'solution', 'Troubleshoot Dock Detection, Power, and USB-C/Thunderbolt', 'Dock is not detected by OS.', None, 'No', 'no', 'FIX_DOCK_DETECTION_USBC_THUNDERBOLT', 1),
+    ('FUNCTION_Q', 'ROOT', 'question', 'Dock Function Failure', 'Dock is detected at least partially.', 'Which dock function is failing?', 'Yes / partially', 'yes', None, 2),
+    ('DISPLAY', 'FUNCTION_Q', 'solution', 'Troubleshoot Dock Display, Bandwidth, and Driver Path', 'Dock display path is failing.', None, 'Display', 'display', 'FIX_DOCK_DISPLAY_BANDWIDTH_DRIVER', 1),
+    ('USB', 'FUNCTION_Q', 'solution', 'Troubleshoot Dock USB Peripheral Path', 'Dock USB path is failing.', None, 'USB', 'usb', 'FIX_DOCK_USB_PERIPHERAL_PATH', 2),
+    ('ETHERNET', 'FUNCTION_Q', 'solution', 'Troubleshoot Dock Ethernet Adapter and Network Path', 'Dock Ethernet path is failing.', None, 'Ethernet', 'ethernet', 'FIX_DOCK_ETHERNET_ADAPTER_NETWORK_PATH', 3),
+    ('CHARGING', 'FUNCTION_Q', 'solution', 'Troubleshoot Dock Power Delivery', 'Dock charging/power delivery is failing.', None, 'Charging', 'charging', 'FIX_DOCK_POWER_DELIVERY_TECH', 4),
+    ('MULTI_Q', 'FUNCTION_Q', 'question', 'Multiple Dock Functions or Multiple Users', 'Multiple dock functions fail; check scope.', 'Are multiple users or same dock/laptop models affected?', 'Multiple functions', 'multiple', None, 5),
+    ('MULTI_YES', 'MULTI_Q', 'solution', 'Escalate Dock Firmware, Driver, or Deployment Issue', 'Multiple users/model correlation suggests deployment issue.', None, 'Yes', 'yes', 'FIX_DOCK_ESCALATE_FIRMWARE_DRIVER_DEPLOYMENT', 1),
+    ('MULTI_NO', 'MULTI_Q', 'solution', 'Isolate Dock Hardware, Cable, or Laptop Port Fault', 'Single-user multiple-function issue suggests hardware/cable/port fault.', None, 'No', 'no', 'FIX_DOCK_ISOLATE_HARDWARE_PORT_FAULT', 2),
+]
+
+def seed_docking_station_issue_content(cursor):
+    """Seed Docking Station Not Working KB article, solutions, steps, and diagnostic trees."""
+    code_, title, category, severity, description = DOCKING_STATION_NOT_WORKING_PROBLEM
+    cursor.execute("""
+        INSERT INTO problem (problem_code, title, category, severity, description)
+        VALUES (?, ?, ?, ?, ?)
+        ON CONFLICT(problem_code) DO UPDATE SET
+            title=excluded.title, category=excluded.category, severity=excluded.severity,
+            description=excluded.description, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, DOCKING_STATION_NOT_WORKING_PROBLEM)
+    cursor.execute('SELECT problem_id FROM problem WHERE problem_code = ?', (code_,))
+    row = cursor.fetchone()
+    if not row:
+        return
+    problem_id = row['problem_id']
+    cursor.execute("""
+        INSERT INTO kb_article (problem_id, title, summary, difficulty, estimated_time, escalation_required, escalation_notes, is_active, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, 1, CURRENT_TIMESTAMP)
+        ON CONFLICT(problem_id) DO UPDATE SET
+            title=excluded.title, summary=excluded.summary, difficulty=excluded.difficulty,
+            estimated_time=excluded.estimated_time, escalation_required=excluded.escalation_required,
+            escalation_notes=excluded.escalation_notes, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, (problem_id, DOCKING_STATION_NOT_WORKING_KB['title'], DOCKING_STATION_NOT_WORKING_KB['summary'], DOCKING_STATION_NOT_WORKING_KB['difficulty'], DOCKING_STATION_NOT_WORKING_KB['estimated_time'], DOCKING_STATION_NOT_WORKING_KB['escalation_required'], DOCKING_STATION_NOT_WORKING_KB['escalation_notes']))
+    cursor.execute('SELECT kb_article_id FROM kb_article WHERE problem_id = ?', (problem_id,))
+    article = cursor.fetchone()
+    if article:
+        kb_id = article['kb_article_id']
+        delete_kb_child_rows(cursor, kb_id)
+        insert_kb_child_rows(cursor, 'kb_article_tag', 'tag', kb_id, DOCKING_STATION_NOT_WORKING_KB['tags'])
+        insert_kb_child_rows(cursor, 'kb_article_symptom', 'symptom', kb_id, DOCKING_STATION_NOT_WORKING_KB['symptoms'])
+        insert_kb_child_rows(cursor, 'kb_article_cause', 'cause', kb_id, DOCKING_STATION_NOT_WORKING_KB['causes'])
+        insert_kb_child_rows(cursor, 'kb_article_user_step', 'step_text', kb_id, DOCKING_STATION_NOT_WORKING_KB['user_steps'])
+        insert_kb_child_rows(cursor, 'kb_article_it_step', 'step_text', kb_id, DOCKING_STATION_NOT_WORKING_KB['it_steps'])
+    cursor.executemany("""
+        INSERT INTO solution (solution_code, title, summary, resolution_steps, escalation_required, escalation_notes, priority_recommendation)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(solution_code) DO UPDATE SET
+            title=excluded.title, summary=excluded.summary, resolution_steps=excluded.resolution_steps,
+            escalation_required=excluded.escalation_required, escalation_notes=excluded.escalation_notes,
+            priority_recommendation=excluded.priority_recommendation, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, DOCKING_STATION_NOT_WORKING_SOLUTIONS)
+    for solution_code, audience_steps in DOCKING_STATION_NOT_WORKING_SOLUTION_STEPS.items():
+        solution_id = get_solution_id_by_code(cursor, solution_code)
+        if not solution_id:
+            continue
+        for audience, steps in audience_steps.items():
+            cursor.execute('DELETE FROM solution_step WHERE solution_id = ? AND audience = ?', (solution_id, audience))
+            cursor.executemany('INSERT INTO solution_step (solution_id, audience, step_text, sort_order) VALUES (?, ?, ?, ?)', [(solution_id, audience, step, idx) for idx, step in enumerate(steps, start=1)])
+    seed_docking_station_tree(cursor, 'user', 'DOCKING_STATION_NOT_WORKING_USER', 'Docking Station Not Working - User Diagnostic', 'User-friendly diagnostic tree for dock charging, display, USB, Ethernet, and direct-connection testing.', DOCKING_STATION_NOT_WORKING_USER_DIAGNOSTIC_NODES)
+    seed_docking_station_tree(cursor, 'technician', 'DOCKING_STATION_NOT_WORKING_TECHNICIAN', 'Docking Station Not Working - IT Support Specialist Diagnostic', 'IT Support Specialist diagnostic tree for dock detection, USB-C/Thunderbolt, display, USB, Ethernet, power delivery, firmware, and hardware isolation.', DOCKING_STATION_NOT_WORKING_TECH_DIAGNOSTIC_NODES)
+
+def seed_docking_station_tree(cursor, audience, tree_code, title, description, nodes):
+    problem_id = get_problem_id_for_tree_code(cursor, 'DOCKING_STATION_NOT_WORKING')
+    cursor.execute("""
+        INSERT INTO diagnostic_tree (problem_id, diagnostic_tree_code, base_tree_code, audience, title, description, is_active, updated_at)
+        VALUES (?, ?, 'DOCKING_STATION_NOT_WORKING', ?, ?, ?, 1, CURRENT_TIMESTAMP)
+        ON CONFLICT(diagnostic_tree_code) DO UPDATE SET
+            problem_id=excluded.problem_id, base_tree_code=excluded.base_tree_code, audience=excluded.audience,
+            title=excluded.title, description=excluded.description, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, (problem_id, tree_code, audience, title, description))
+    tree_id = get_diagnostic_tree_id_by_code(cursor, tree_code)
+    if not tree_id:
+        return
+    cursor.execute('UPDATE diagnostic_node SET is_active = 0, updated_at = CURRENT_TIMESTAMP WHERE diagnostic_tree_id = ?', (tree_id,))
+    for node_key, parent_key, node_type, node_title, node_desc, prompt, condition_label, condition_value, solution_code, sort_order in nodes:
+        parent_id = get_diagnostic_node_id_by_tree_and_key(cursor, tree_id, parent_key) if parent_key else None
+        solution_id = get_solution_id_by_code(cursor, solution_code) if solution_code else None
+        cursor.execute("""
+            INSERT INTO diagnostic_node (
+                diagnostic_tree_id, parent_diagnostic_node_id, problem_id, diagnostic_tree_code,
+                node_key, node_type, title, description, prompt_text,
+                condition_label, condition_value, solution_id, sort_order, is_active, updated_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, CURRENT_TIMESTAMP)
+            ON CONFLICT(diagnostic_tree_code, node_key) DO UPDATE SET
+                diagnostic_tree_id=excluded.diagnostic_tree_id,
+                parent_diagnostic_node_id=excluded.parent_diagnostic_node_id,
+                problem_id=excluded.problem_id,
+                node_type=excluded.node_type,
+                title=excluded.title,
+                description=excluded.description,
+                prompt_text=excluded.prompt_text,
+                condition_label=excluded.condition_label,
+                condition_value=excluded.condition_value,
+                solution_id=excluded.solution_id,
+                sort_order=excluded.sort_order,
+                is_active=1,
+                updated_at=CURRENT_TIMESTAMP
+        """, (tree_id, parent_id, problem_id, tree_code, node_key, node_type, node_title, node_desc, prompt, condition_label, condition_value, solution_id, sort_order))
+
 def initialize_database():
     """Create SQLite tables if they do not already exist."""
     connection = get_db_connection()
@@ -8199,6 +8473,7 @@ def initialize_database():
     seed_video_conferencing_issue_content(cursor)
     seed_keyboard_mouse_issue_content(cursor)
     seed_monitor_display_issue_content(cursor)
+    seed_docking_station_issue_content(cursor)
     seed_existing_issue_role_alignment(cursor)
 
     cursor.execute("""
