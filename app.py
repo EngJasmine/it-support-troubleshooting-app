@@ -583,6 +583,7 @@ PROBLEM_CODE_BY_ISSUE_TITLE = {
     "Monitor / Display Not Working": "MONITOR_DISPLAY_NOT_WORKING",
     "Docking Station Not Working": "DOCKING_STATION_NOT_WORKING",
     "Wi-Fi Connection Issue": "WIFI_CONNECTION_ISSUE",
+    "Ethernet / Wired Network Connection Issue": "ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE",
 }
 
 
@@ -596,10 +597,10 @@ PROBLEM_CODE_BY_ISSUE_TITLE = {
 # the database for future expansion, but they are hidden from the visible MVP
 # until their content is upgraded to the same depth.
 MVP_CONTENT_FOCUS_ENABLED = True
-MVP_ACTIVE_PROBLEM_CODES = {"PRINTER_FAILURE", "PASSWORD_RESET_REQUEST", "ACCOUNT_LOCKED", "MULTI_FACTOR_AUTHENTICATION_ISSUE", "VPN_CONNECTION_FAILURE", "SHARED_DRIVE_NETWORK_DRIVE_ACCESS_ISSUE", "REMOTE_DESKTOP_CONNECTION_ISSUE", "SLOW_COMPUTER_PERFORMANCE", "APPLICATION_NOT_OPENING", "APPLICATION_CRASHING_FREEZING", "OPERATING_SYSTEM_UPDATE_ISSUE", "DEVICE_RUNNING_OUT_OF_STORAGE", "PHISHING_EMAIL_REPORTED", "MALWARE_OR_VIRUS_SUSPECTED", "EMAIL_ATTACHMENT_NOT_OPENING", "CALENDAR_SYNC_ISSUE", "SOFTWARE_INSTALLATION_REQUEST", "BROWSER_ISSUE", "CERTIFICATE_SECURITY_WARNING", "MOBILE_EMAIL_SETUP_ISSUE", "VIDEO_CONFERENCING_ISSUE", "KEYBOARD_OR_MOUSE_NOT_WORKING", "MONITOR_DISPLAY_NOT_WORKING", "DOCKING_STATION_NOT_WORKING", "WIFI_CONNECTION_ISSUE"}
+MVP_ACTIVE_PROBLEM_CODES = {"PRINTER_FAILURE", "PASSWORD_RESET_REQUEST", "ACCOUNT_LOCKED", "MULTI_FACTOR_AUTHENTICATION_ISSUE", "VPN_CONNECTION_FAILURE", "SHARED_DRIVE_NETWORK_DRIVE_ACCESS_ISSUE", "REMOTE_DESKTOP_CONNECTION_ISSUE", "SLOW_COMPUTER_PERFORMANCE", "APPLICATION_NOT_OPENING", "APPLICATION_CRASHING_FREEZING", "OPERATING_SYSTEM_UPDATE_ISSUE", "DEVICE_RUNNING_OUT_OF_STORAGE", "PHISHING_EMAIL_REPORTED", "MALWARE_OR_VIRUS_SUSPECTED", "EMAIL_ATTACHMENT_NOT_OPENING", "CALENDAR_SYNC_ISSUE", "SOFTWARE_INSTALLATION_REQUEST", "BROWSER_ISSUE", "CERTIFICATE_SECURITY_WARNING", "MOBILE_EMAIL_SETUP_ISSUE", "VIDEO_CONFERENCING_ISSUE", "KEYBOARD_OR_MOUSE_NOT_WORKING", "MONITOR_DISPLAY_NOT_WORKING", "DOCKING_STATION_NOT_WORKING", "WIFI_CONNECTION_ISSUE", "ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE"}
 MVP_CONTENT_FOCUS_NOTE = (
     "The visible MVP currently focuses on a small set of high-quality troubleshooting examples: "
-    "Printer Failure, Password Reset Request, Account Locked, Multi-factor Authentication Issue, VPN Connection Failure, Shared Drive / Network Drive Access Issue, Remote Desktop Connection Issue, Slow Computer Performance, Application Not Opening, Application Crashing / Freezing, Operating System Update Issue, Device Running Out of Storage, Phishing Email Reported, Malware or Virus Suspected, Email Attachment Not Opening, Calendar Sync Issue, Software Installation Request, Browser Issue, Certificate / Security Warning, Mobile Email Setup Issue, Video Conferencing Issue, Keyboard or Mouse Not Working, Monitor / Display Not Working, Docking Station Not Working, and Wi-Fi Connection Issue. Other sample issues are hidden until they "
+    "Printer Failure, Password Reset Request, Account Locked, Multi-factor Authentication Issue, VPN Connection Failure, Shared Drive / Network Drive Access Issue, Remote Desktop Connection Issue, Slow Computer Performance, Application Not Opening, Application Crashing / Freezing, Operating System Update Issue, Device Running Out of Storage, Phishing Email Reported, Malware or Virus Suspected, Email Attachment Not Opening, Calendar Sync Issue, Software Installation Request, Browser Issue, Certificate / Security Warning, Mobile Email Setup Issue, Video Conferencing Issue, Keyboard or Mouse Not Working, Monitor / Display Not Working, Docking Station Not Working, Wi-Fi Connection Issue, and Ethernet / Wired Network Connection Issue. Other sample issues are hidden until they "
     "are expanded with detailed symptoms, causes, user steps, and technician steps."
 )
 
@@ -8685,6 +8686,243 @@ def seed_wifi_connection_tree(cursor, audience, tree_code, title, description, n
                 updated_at=CURRENT_TIMESTAMP
         """, (tree_id, parent_id, problem_id, tree_code, node_key, node_type, node_title, node_desc, prompt, condition_label, condition_value, solution_id, sort_order))
 
+
+ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE_PROBLEM = (
+    'ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE',
+    'Ethernet / Wired Network Connection Issue',
+    'Network, Remote Access & Storage',
+    'Medium',
+    'The user cannot connect through a wired Ethernet connection, or the device says connected but has no internet or internal network access.'
+)
+
+ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE_KB = {
+    'title': 'Ethernet / Wired Network Connection Issue',
+    'summary': 'Use this guide when Ethernet is not detected, a wired connection has no internet, internal resources do not open, the dock Ethernet port does not work, or the issue is limited to one wall jack or desk.',
+    'difficulty': 'Intermediate',
+    'estimated_time': '10-30 minutes',
+    'escalation_required': 1,
+    'escalation_notes': 'Escalate to Network, Endpoint/Desktop, Hardware/Asset, or Security/NAC depending on whether the issue involves switch ports, DHCP, DNS, VLANs, dock Ethernet adapters, drivers, port security, NAC, or hardware failure.',
+    'tags': ['Ethernet', 'wired network', 'DHCP', 'DNS', 'default gateway', 'VLAN', 'switch port', 'wall jack', 'dock Ethernet', 'IP address', 'network adapter'],
+    'symptoms': [
+        'Ethernet is not detected or the network cable appears unplugged.',
+        'Device shows connected but has no internet or no internal access.',
+        'Windows shows unidentified network or missing IP configuration.',
+        'Device receives APIPA 169.254.x.x or no DHCP lease.',
+        'Wi-Fi works but Ethernet does not.',
+        'Ethernet works at another desk but not this wall jack or location.',
+        'Dock Ethernet adapter is missing, disconnected, or not receiving valid network settings.'
+    ],
+    'causes': [
+        'Common causes include loose or damaged Ethernet cable, wrong port, inactive wall jack, dock Ethernet adapter issue, disabled network adapter, DHCP failure, DNS issue, missing default gateway, VLAN or switch-port problem, port security/NAC block, driver issue, or upstream network outage.',
+        'Advanced causes include DHCP scope exhaustion, DHCP relay/IP helper issue, VLAN assignment problem, bad switch port, bad patch panel connection, 802.1X/NAC authentication failure, MAC address pass-through issue with dock, duplex/speed negotiation issue, firewall/ACL block, endpoint compliance policy, USB-C dock NIC firmware/driver issue, or closet/floor/site outage.'
+    ],
+    'user_steps': [
+        'Confirm the Ethernet cable is fully connected.',
+        'Check whether the cable is connected to the correct wall jack, dock, or laptop port.',
+        'Unplug and reconnect the Ethernet cable.',
+        'Restart the computer.',
+        'If using a dock, reconnect the dock and confirm it has power.',
+        'Try a different Ethernet cable if available.',
+        'Try Wi-Fi or mobile hotspot as a temporary workaround if allowed.',
+        'Tell IT whether Ethernet works at another desk or through another port.',
+        'Take a screenshot of the network error, such as Unidentified network or No internet.',
+        'Contact IT if Ethernet still does not work.'
+    ],
+    'it_steps': [
+        'Confirm the user, device name, location/desk, connection type, dock model if used, and exact symptom.',
+        'Identify whether the issue is no link/no cable detected, connected but no internet, no internal resources, Wi-Fi works but Ethernet fails, dock Ethernet only, or one desk/location only.',
+        'Confirm physical connection and link light if available.',
+        'Test another Ethernet cable.',
+        'Test another wall jack or known-good port if available.',
+        'If using a dock, test Ethernet directly on the laptop or with a known-good USB Ethernet adapter if available.',
+        'Restart the device and retest.',
+        'Check Ethernet adapter status.',
+        'Check IP configuration: IP address, subnet mask, default gateway, and DNS servers.',
+        'Identify APIPA/no DHCP state.',
+        'Ask whether coworkers in the same area are affected.',
+        'Confirm whether the Ethernet adapter or dock NIC is detected by the OS.',
+        'Check Device Manager/adapter settings for driver or hardware warnings.',
+        'Verify link status and speed/duplex negotiation if tools allow.',
+        'Test DHCP lease renewal where appropriate.',
+        'Test default gateway reachability.',
+        'Test DNS resolution for public and internal names.',
+        'Compare behavior on Wi-Fi, Ethernet, dock Ethernet, and another known-good Ethernet port.',
+        'For dock Ethernet, check MAC address pass-through, dock firmware, USB-C/Thunderbolt driver, and dock NIC status.',
+        'Escalate with device name, username, MAC address if available, wall jack label, switch/port if known, IP config, DHCP/DNS/gateway tests, affected scope, and timestamps.'
+    ]
+}
+
+ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE_SOLUTIONS = [
+    ('FIX_ETHERNET_CABLE_PORT_LINK', 'Check Ethernet Cable, Port, and Link', 'No wired link usually points to cable, port, wall jack, dock, or switch-side issue.', 'Check physical Ethernet path and link status before deeper network troubleshooting.', 1, 'Escalate if wall jack, patch panel, or switch port issue is suspected.', 'medium'),
+    ('FIX_ETHERNET_DOCK_USB_ADAPTER_PATH', 'Test Dock or USB Ethernet Adapter Path', 'Wired issue may be caused by dock NIC, USB Ethernet adapter, driver, or USB-C path.', 'Compare dock/USB adapter behavior against direct laptop or known-good adapter path.', 1, 'Escalate if dock NIC, driver, firmware, or USB-C path is faulty.', 'medium'),
+    ('FIX_ETHERNET_SPECIFIC_ISSUE', 'Report Ethernet-Specific Issue', 'Wi-Fi works but Ethernet fails, narrowing the issue to wired adapter, cable, dock, wall jack, or switch path.', 'Use Wi-Fi temporarily if allowed and isolate the wired path.', 1, 'Escalate with wall jack/location and test results if location or switch path is suspected.', 'medium'),
+    ('FIX_ETHERNET_GENERAL_CONNECTIVITY_REPORT', 'Report Network Connectivity Issue', 'Both wired and wireless connectivity may be affected, suggesting broader device or network issue.', 'Compare Ethernet, Wi-Fi, and hotspot behavior before escalation.', 1, 'Escalate to Endpoint or Network depending on whether the issue follows the device or network.', 'high'),
+    ('FIX_ETHERNET_PHYSICAL_WALL_SWITCH', 'Troubleshoot Physical Cable, Wall Jack, or Switch Port', 'No link after cable/device checks may indicate inactive wall jack, patch panel, or switch port issue.', 'Validate physical layer and location before Network handoff.', 1, 'Network handoff should include wall jack label, location, known-good cable/device result, and affected scope.', 'high'),
+    ('FIX_ETHERNET_DHCP_ASSIGNMENT', 'Troubleshoot Wired DHCP Assignment', 'Link is up but device does not receive a valid IP address.', 'Check APIPA/no IP, DHCP lease renewal, VLAN, and DHCP relay suspicion.', 1, 'Escalate to Network with IP config, MAC address, location, and affected scope.', 'high'),
+    ('FIX_ETHERNET_VLAN_GATEWAY_SWITCH_PATH', 'Troubleshoot VLAN, Gateway, or Switch Path', 'Device has an IP address but cannot reach gateway or expected network path.', 'Validate subnet/gateway/VLAN and switch path.', 1, 'Escalate if switch path, VLAN, routing, or gateway issue is suspected.', 'high'),
+    ('FIX_ETHERNET_DNS_ISSUE', 'Troubleshoot Wired DNS Issue', 'Wired connection is active but name resolution fails.', 'Check DNS server assignment and public/internal DNS resolution.', 1, 'Escalate if DNS server, DHCP option, or network policy issue is suspected.', 'high'),
+    ('FIX_ETHERNET_ENDPOINT_POLICY_APP_PATH', 'Investigate Endpoint, Policy, or Application Path', 'Basic Ethernet connectivity works, but specific apps or resources fail.', 'Check endpoint policy, firewall/NAC, application path, and resource-specific access.', 1, 'Escalate with resource names, tests, endpoint policy evidence, and affected scope.', 'medium'),
+]
+
+ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE_SOLUTION_STEPS = {
+    'FIX_ETHERNET_CABLE_PORT_LINK': {
+        'user': ['Confirm the Ethernet cable is fully plugged in.', 'Unplug and reconnect the cable.', 'Try another cable if available.', 'Try another wall jack or port if available.', 'Tell IT whether any link lights are visible.'],
+        'technician': ['Check physical connection and link light.', 'Test known-good Ethernet cable.', 'Test another wall jack or known-good port.', 'Check adapter status in the operating system.', 'Escalate if wall jack, patch panel, or switch port issue is suspected.'],
+        'admin': ['Network handoff: include location, wall jack label, link-light status, known-good cable/device results, and whether nearby users are affected.']
+    },
+    'FIX_ETHERNET_DOCK_USB_ADAPTER_PATH': {
+        'user': ['Reconnect the dock or USB Ethernet adapter.', 'Confirm the dock has power.', 'Try Wi-Fi temporarily if allowed.', 'Tell IT whether other dock functions work.'],
+        'technician': ['Check whether dock or USB Ethernet adapter is detected.', 'Compare direct laptop Ethernet, dock Ethernet, and USB adapter if available.', 'Check dock NIC driver and firmware.', 'Check MAC address pass-through if relevant.', 'Escalate if dock NIC or USB-C path is faulty.'],
+        'admin': ['Endpoint/Network handoff: include dock model, adapter status, MAC address, driver/firmware version, and direct-vs-dock test results.']
+    },
+    'FIX_ETHERNET_SPECIFIC_ISSUE': {
+        'user': ['Use Wi-Fi temporarily if allowed.', 'Report the desk/location and wall jack if known.', 'Share a screenshot of the Ethernet error.', 'Tell IT whether Ethernet works at another desk.'],
+        'technician': ['Confirm Wi-Fi works but Ethernet fails.', 'Check Ethernet adapter and IP configuration.', 'Test alternate cable/port/dock path.', 'Determine whether issue follows device or location.', 'Escalate with wall jack/location and test results.'],
+        'admin': ['Network/Endpoint handoff: include Wi-Fi comparison, Ethernet IP config, desk/wall jack, and whether the issue follows the device or location.']
+    },
+    'FIX_ETHERNET_GENERAL_CONNECTIVITY_REPORT': {
+        'user': ['Restart the computer.', 'Try a trusted hotspot if available.', 'Submit screenshots and describe which networks fail.', 'Do not change advanced network settings unless IT instructs you.'],
+        'technician': ['Compare Ethernet, Wi-Fi, and hotspot behavior.', 'Check IP/DNS/gateway on each network.', 'Determine whether issue is device network stack, endpoint policy, or network outage.', 'Continue with endpoint or network escalation based on evidence.'],
+        'admin': ['Escalation handoff: include network comparison matrix, adapter statuses, IP config, and whether the issue follows the endpoint.']
+    },
+    'FIX_ETHERNET_PHYSICAL_WALL_SWITCH': {
+        'user': ['Provide desk/room number and wall jack label if visible.', 'Use Wi-Fi or another desk temporarily if allowed.', 'Wait for IT or Network team to check the port.'],
+        'technician': ['Confirm no link with known-good cable/device.', 'Document wall jack label and location.', 'Check whether nearby users are affected.', 'Coordinate switch port/patch panel validation if you have access or escalate to Network.', 'Provide test results and affected scope.'],
+        'admin': ['Network handoff: include wall jack label, room/desk, link status, known-good cable/device results, switch/port if known, and affected scope.']
+    },
+    'FIX_ETHERNET_DHCP_ASSIGNMENT': {
+        'user': ['Restart the computer.', 'Keep the Ethernet cable connected.', 'Tell IT whether coworkers nearby have network access.'],
+        'technician': ['Confirm IP address is missing or APIPA.', 'Renew DHCP lease if appropriate.', 'Compare with another device on same port/VLAN.', 'Check DHCP scope/relay/VLAN suspicion.', 'Escalate to Network with IP config, MAC address, location, and affected scope.'],
+        'admin': ['Network handoff: include MAC address, APIPA/no-IP evidence, VLAN/location, DHCP lease result, and whether other clients on the same port/VLAN work.']
+    },
+    'FIX_ETHERNET_VLAN_GATEWAY_SWITCH_PATH': {
+        'user': ['Use an alternate network if IT provides one.', 'Report whether issue happens only at this desk or area.', 'Keep device connected for testing if needed.'],
+        'technician': ['Confirm IP/subnet/gateway are expected.', 'Test default gateway reachability.', 'Compare with another device on same wall jack or VLAN.', 'Check whether device appears on expected VLAN.', 'Escalate if switch path, VLAN, routing, or gateway issue is suspected.'],
+        'admin': ['Network handoff: include IP/subnet/gateway, gateway ping result, VLAN expectation, wall jack/switch path, and affected scope.']
+    },
+    'FIX_ETHERNET_DNS_ISSUE': {
+        'user': ['Provide the website or internal resource name that fails.', 'Tell IT whether IP-based access works if known.', 'Avoid changing DNS settings yourself.'],
+        'technician': ['Check DNS server assignment.', 'Test public and internal DNS resolution.', 'Compare DNS results on Wi-Fi versus Ethernet.', 'Check DHCP DNS options if multiple wired clients are affected.', 'Escalate if DNS server, DHCP option, or network policy issue is suspected.'],
+        'admin': ['Network/DNS handoff: include assigned DNS servers, failed names, public/internal lookup results, Ethernet-vs-Wi-Fi comparison, and affected scope.']
+    },
+    'FIX_ETHERNET_ENDPOINT_POLICY_APP_PATH': {
+        'user': ['Report which websites, apps, or internal resources fail.', 'Include screenshots and time of issue.', 'Try approved alternate access if IT provides one.'],
+        'technician': ['Confirm IP, gateway, and DNS are working.', 'Test affected internal and external resources.', 'Check firewall/NAC/endpoint policy if access is blocked.', 'Determine whether issue is application-specific, permission-related, or network ACL-related.', 'Escalate with resource names, tests, and affected scope.'],
+        'admin': ['Network/Security/App handoff: include resource URLs/names, IP/DNS/gateway validation, firewall/NAC/policy indicators, and affected user/device scope.']
+    },
+}
+
+ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE_USER_DIAGNOSTIC_NODES = [
+    ('ROOT', None, 'question', 'Ethernet / Wired Network Connection Issue', 'Start by identifying whether dock Ethernet or direct Ethernet is involved.', 'Are you using a dock or USB Ethernet adapter?', None, None, None, 1),
+    ('DOCK_PATH', 'ROOT', 'solution', 'Test Dock or USB Ethernet Adapter Path', 'Dock or USB Ethernet adapter may be the failing path.', None, 'Yes', 'yes', 'FIX_ETHERNET_DOCK_USB_ADAPTER_PATH', 1),
+    ('LINK_Q', 'ROOT', 'question', 'Ethernet Link State', 'Check whether the operating system shows Ethernet as connected.', 'Does the device show Ethernet connected?', 'No', 'no', None, 2),
+    ('NO_LINK', 'LINK_Q', 'solution', 'Check Ethernet Cable, Port, and Link', 'No link or no cable detected.', None, 'No', 'no', 'FIX_ETHERNET_CABLE_PORT_LINK', 1),
+    ('WIFI_Q', 'LINK_Q', 'question', 'Wi-Fi Comparison', 'Ethernet shows connected; compare other network paths.', 'Does Wi-Fi work on the same device?', 'Yes', 'yes', None, 2),
+    ('ETH_ONLY', 'WIFI_Q', 'solution', 'Report Ethernet-Specific Issue', 'Wi-Fi works but Ethernet fails.', None, 'Yes', 'yes', 'FIX_ETHERNET_SPECIFIC_ISSUE', 1),
+    ('GENERAL_CONN', 'WIFI_Q', 'solution', 'Report Network Connectivity Issue', 'Both wired and wireless may be affected.', None, 'No / Not tried', 'no', 'FIX_ETHERNET_GENERAL_CONNECTIVITY_REPORT', 2),
+]
+
+ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE_TECH_DIAGNOSTIC_NODES = [
+    ('ROOT', None, 'question', 'Ethernet / Wired Network Connection Issue - IT Support Specialist', 'Start at Layer 1 by checking physical link.', 'Is there physical link/link light?', None, None, None, 1),
+    ('NO_LINK', 'ROOT', 'solution', 'Troubleshoot Physical Cable, Wall Jack, or Switch Port', 'No link after basic cable/device checks.', None, 'No', 'no', 'FIX_ETHERNET_PHYSICAL_WALL_SWITCH', 1),
+    ('IP_Q', 'ROOT', 'question', 'IP Assignment', 'Link is present; check whether DHCP assigned a valid IP.', 'Does the device receive a valid IP address?', 'Yes', 'yes', None, 2),
+    ('DHCP_FAIL', 'IP_Q', 'solution', 'Troubleshoot Wired DHCP Assignment', 'Device has APIPA, no IP, or invalid lease.', None, 'No / APIPA', 'no', 'FIX_ETHERNET_DHCP_ASSIGNMENT', 1),
+    ('GW_Q', 'IP_Q', 'question', 'Gateway Reachability', 'Device has IP; test local gateway.', 'Can the device reach the default gateway?', 'Yes', 'yes', None, 2),
+    ('GW_FAIL', 'GW_Q', 'solution', 'Troubleshoot VLAN, Gateway, or Switch Path', 'Gateway is unreachable.', None, 'No', 'no', 'FIX_ETHERNET_VLAN_GATEWAY_SWITCH_PATH', 1),
+    ('DNS_Q', 'GW_Q', 'question', 'DNS Resolution', 'Gateway works; check DNS.', 'Does DNS resolution work?', 'Yes', 'yes', None, 2),
+    ('DNS_FAIL', 'DNS_Q', 'solution', 'Troubleshoot Wired DNS Issue', 'DNS resolution fails.', None, 'No', 'no', 'FIX_ETHERNET_DNS_ISSUE', 1),
+    ('APP_PATH', 'DNS_Q', 'solution', 'Investigate Endpoint, Policy, or Application Path', 'Basic network connectivity works, but specific resources may still fail.', None, 'Yes', 'yes', 'FIX_ETHERNET_ENDPOINT_POLICY_APP_PATH', 2),
+]
+
+def seed_ethernet_wired_network_issue_content(cursor):
+    """Seed Ethernet / Wired Network Connection Issue KB article, solutions, steps, and diagnostic trees."""
+    code_, title, category, severity, description = ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE_PROBLEM
+    cursor.execute("""
+        INSERT INTO problem (problem_code, title, category, severity, description)
+        VALUES (?, ?, ?, ?, ?)
+        ON CONFLICT(problem_code) DO UPDATE SET
+            title=excluded.title, category=excluded.category, severity=excluded.severity,
+            description=excluded.description, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE_PROBLEM)
+    cursor.execute('SELECT problem_id FROM problem WHERE problem_code = ?', (code_,))
+    row = cursor.fetchone()
+    if not row:
+        return
+    problem_id = row['problem_id']
+    cursor.execute("""
+        INSERT INTO kb_article (problem_id, title, summary, difficulty, estimated_time, escalation_required, escalation_notes, is_active, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, 1, CURRENT_TIMESTAMP)
+        ON CONFLICT(problem_id) DO UPDATE SET
+            title=excluded.title, summary=excluded.summary, difficulty=excluded.difficulty,
+            estimated_time=excluded.estimated_time, escalation_required=excluded.escalation_required,
+            escalation_notes=excluded.escalation_notes, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, (problem_id, ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE_KB['title'], ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE_KB['summary'], ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE_KB['difficulty'], ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE_KB['estimated_time'], ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE_KB['escalation_required'], ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE_KB['escalation_notes']))
+    cursor.execute('SELECT kb_article_id FROM kb_article WHERE problem_id = ?', (problem_id,))
+    article = cursor.fetchone()
+    if article:
+        kb_id = article['kb_article_id']
+        delete_kb_child_rows(cursor, kb_id)
+        insert_kb_child_rows(cursor, 'kb_article_tag', 'tag', kb_id, ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE_KB['tags'])
+        insert_kb_child_rows(cursor, 'kb_article_symptom', 'symptom', kb_id, ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE_KB['symptoms'])
+        insert_kb_child_rows(cursor, 'kb_article_cause', 'cause', kb_id, ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE_KB['causes'])
+        insert_kb_child_rows(cursor, 'kb_article_user_step', 'step_text', kb_id, ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE_KB['user_steps'])
+        insert_kb_child_rows(cursor, 'kb_article_it_step', 'step_text', kb_id, ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE_KB['it_steps'])
+    cursor.executemany("""
+        INSERT INTO solution (solution_code, title, summary, resolution_steps, escalation_required, escalation_notes, priority_recommendation)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(solution_code) DO UPDATE SET
+            title=excluded.title, summary=excluded.summary, resolution_steps=excluded.resolution_steps,
+            escalation_required=excluded.escalation_required, escalation_notes=excluded.escalation_notes,
+            priority_recommendation=excluded.priority_recommendation, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE_SOLUTIONS)
+    for solution_code, audience_steps in ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE_SOLUTION_STEPS.items():
+        solution_id = get_solution_id_by_code(cursor, solution_code)
+        if not solution_id:
+            continue
+        for audience, steps in audience_steps.items():
+            cursor.execute('DELETE FROM solution_step WHERE solution_id = ? AND audience = ?', (solution_id, audience))
+            cursor.executemany('INSERT INTO solution_step (solution_id, audience, step_text, sort_order) VALUES (?, ?, ?, ?)', [(solution_id, audience, step, idx) for idx, step in enumerate(steps, start=1)])
+    seed_ethernet_wired_network_tree(cursor, 'user', 'ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE_USER', 'Ethernet / Wired Network Connection Issue - User Diagnostic', 'User-friendly diagnostic tree for dock Ethernet, direct Ethernet link, Wi-Fi comparison, and general connectivity.', ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE_USER_DIAGNOSTIC_NODES)
+    seed_ethernet_wired_network_tree(cursor, 'technician', 'ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE_TECHNICIAN', 'Ethernet / Wired Network Connection Issue - IT Support Specialist Diagnostic', 'IT Support Specialist diagnostic tree for link, DHCP, gateway, DNS, and endpoint/policy/application path issues.', ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE_TECH_DIAGNOSTIC_NODES)
+
+def seed_ethernet_wired_network_tree(cursor, audience, tree_code, title, description, nodes):
+    problem_id = get_problem_id_for_tree_code(cursor, 'ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE')
+    cursor.execute("""
+        INSERT INTO diagnostic_tree (problem_id, diagnostic_tree_code, base_tree_code, audience, title, description, is_active, updated_at)
+        VALUES (?, ?, 'ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE', ?, ?, ?, 1, CURRENT_TIMESTAMP)
+        ON CONFLICT(diagnostic_tree_code) DO UPDATE SET
+            problem_id=excluded.problem_id, base_tree_code=excluded.base_tree_code, audience=excluded.audience,
+            title=excluded.title, description=excluded.description, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, (problem_id, tree_code, audience, title, description))
+    tree_id = get_diagnostic_tree_id_by_code(cursor, tree_code)
+    if not tree_id:
+        return
+    cursor.execute('UPDATE diagnostic_node SET is_active = 0, updated_at = CURRENT_TIMESTAMP WHERE diagnostic_tree_id = ?', (tree_id,))
+    for node_key, parent_key, node_type, node_title, node_desc, prompt, condition_label, condition_value, solution_code, sort_order in nodes:
+        parent_id = get_diagnostic_node_id_by_tree_and_key(cursor, tree_id, parent_key) if parent_key else None
+        solution_id = get_solution_id_by_code(cursor, solution_code) if solution_code else None
+        cursor.execute("""
+            INSERT INTO diagnostic_node (
+                diagnostic_tree_id, parent_diagnostic_node_id, problem_id, diagnostic_tree_code,
+                node_key, node_type, title, description, prompt_text,
+                condition_label, condition_value, solution_id, sort_order, is_active, updated_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, CURRENT_TIMESTAMP)
+            ON CONFLICT(diagnostic_tree_code, node_key) DO UPDATE SET
+                diagnostic_tree_id=excluded.diagnostic_tree_id,
+                parent_diagnostic_node_id=excluded.parent_diagnostic_node_id,
+                problem_id=excluded.problem_id,
+                node_type=excluded.node_type,
+                title=excluded.title,
+                description=excluded.description,
+                prompt_text=excluded.prompt_text,
+                condition_label=excluded.condition_label,
+                condition_value=excluded.condition_value,
+                solution_id=excluded.solution_id,
+                sort_order=excluded.sort_order,
+                is_active=1,
+                updated_at=CURRENT_TIMESTAMP
+        """, (tree_id, parent_id, problem_id, tree_code, node_key, node_type, node_title, node_desc, prompt, condition_label, condition_value, solution_id, sort_order))
+
 def initialize_database():
     """Create SQLite tables if they do not already exist."""
     connection = get_db_connection()
@@ -8721,6 +8959,7 @@ def initialize_database():
     seed_monitor_display_issue_content(cursor)
     seed_docking_station_issue_content(cursor)
     seed_wifi_connection_issue_content(cursor)
+    seed_ethernet_wired_network_issue_content(cursor)
     seed_existing_issue_role_alignment(cursor)
 
     cursor.execute("""
