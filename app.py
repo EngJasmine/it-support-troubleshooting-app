@@ -582,6 +582,7 @@ PROBLEM_CODE_BY_ISSUE_TITLE = {
     "Keyboard or Mouse Not Working": "KEYBOARD_OR_MOUSE_NOT_WORKING",
     "Monitor / Display Not Working": "MONITOR_DISPLAY_NOT_WORKING",
     "Docking Station Not Working": "DOCKING_STATION_NOT_WORKING",
+    "Wi-Fi Connection Issue": "WIFI_CONNECTION_ISSUE",
 }
 
 
@@ -595,10 +596,10 @@ PROBLEM_CODE_BY_ISSUE_TITLE = {
 # the database for future expansion, but they are hidden from the visible MVP
 # until their content is upgraded to the same depth.
 MVP_CONTENT_FOCUS_ENABLED = True
-MVP_ACTIVE_PROBLEM_CODES = {"PRINTER_FAILURE", "PASSWORD_RESET_REQUEST", "ACCOUNT_LOCKED", "MULTI_FACTOR_AUTHENTICATION_ISSUE", "VPN_CONNECTION_FAILURE", "SHARED_DRIVE_NETWORK_DRIVE_ACCESS_ISSUE", "REMOTE_DESKTOP_CONNECTION_ISSUE", "SLOW_COMPUTER_PERFORMANCE", "APPLICATION_NOT_OPENING", "APPLICATION_CRASHING_FREEZING", "OPERATING_SYSTEM_UPDATE_ISSUE", "DEVICE_RUNNING_OUT_OF_STORAGE", "PHISHING_EMAIL_REPORTED", "MALWARE_OR_VIRUS_SUSPECTED", "EMAIL_ATTACHMENT_NOT_OPENING", "CALENDAR_SYNC_ISSUE", "SOFTWARE_INSTALLATION_REQUEST", "BROWSER_ISSUE", "CERTIFICATE_SECURITY_WARNING", "MOBILE_EMAIL_SETUP_ISSUE", "VIDEO_CONFERENCING_ISSUE", "KEYBOARD_OR_MOUSE_NOT_WORKING", "MONITOR_DISPLAY_NOT_WORKING", "DOCKING_STATION_NOT_WORKING"}
+MVP_ACTIVE_PROBLEM_CODES = {"PRINTER_FAILURE", "PASSWORD_RESET_REQUEST", "ACCOUNT_LOCKED", "MULTI_FACTOR_AUTHENTICATION_ISSUE", "VPN_CONNECTION_FAILURE", "SHARED_DRIVE_NETWORK_DRIVE_ACCESS_ISSUE", "REMOTE_DESKTOP_CONNECTION_ISSUE", "SLOW_COMPUTER_PERFORMANCE", "APPLICATION_NOT_OPENING", "APPLICATION_CRASHING_FREEZING", "OPERATING_SYSTEM_UPDATE_ISSUE", "DEVICE_RUNNING_OUT_OF_STORAGE", "PHISHING_EMAIL_REPORTED", "MALWARE_OR_VIRUS_SUSPECTED", "EMAIL_ATTACHMENT_NOT_OPENING", "CALENDAR_SYNC_ISSUE", "SOFTWARE_INSTALLATION_REQUEST", "BROWSER_ISSUE", "CERTIFICATE_SECURITY_WARNING", "MOBILE_EMAIL_SETUP_ISSUE", "VIDEO_CONFERENCING_ISSUE", "KEYBOARD_OR_MOUSE_NOT_WORKING", "MONITOR_DISPLAY_NOT_WORKING", "DOCKING_STATION_NOT_WORKING", "WIFI_CONNECTION_ISSUE"}
 MVP_CONTENT_FOCUS_NOTE = (
     "The visible MVP currently focuses on a small set of high-quality troubleshooting examples: "
-    "Printer Failure, Password Reset Request, Account Locked, Multi-factor Authentication Issue, VPN Connection Failure, Shared Drive / Network Drive Access Issue, Remote Desktop Connection Issue, Slow Computer Performance, Application Not Opening, Application Crashing / Freezing, Operating System Update Issue, Device Running Out of Storage, Phishing Email Reported, Malware or Virus Suspected, Email Attachment Not Opening, Calendar Sync Issue, Software Installation Request, Browser Issue, Certificate / Security Warning, Mobile Email Setup Issue, Video Conferencing Issue, Keyboard or Mouse Not Working, Monitor / Display Not Working, and Docking Station Not Working. Other sample issues are hidden until they "
+    "Printer Failure, Password Reset Request, Account Locked, Multi-factor Authentication Issue, VPN Connection Failure, Shared Drive / Network Drive Access Issue, Remote Desktop Connection Issue, Slow Computer Performance, Application Not Opening, Application Crashing / Freezing, Operating System Update Issue, Device Running Out of Storage, Phishing Email Reported, Malware or Virus Suspected, Email Attachment Not Opening, Calendar Sync Issue, Software Installation Request, Browser Issue, Certificate / Security Warning, Mobile Email Setup Issue, Video Conferencing Issue, Keyboard or Mouse Not Working, Monitor / Display Not Working, Docking Station Not Working, and Wi-Fi Connection Issue. Other sample issues are hidden until they "
     "are expanded with detailed symptoms, causes, user steps, and technician steps."
 )
 
@@ -8439,6 +8440,251 @@ def seed_docking_station_tree(cursor, audience, tree_code, title, description, n
                 updated_at=CURRENT_TIMESTAMP
         """, (tree_id, parent_id, problem_id, tree_code, node_key, node_type, node_title, node_desc, prompt, condition_label, condition_value, solution_id, sort_order))
 
+
+# -----------------------------
+# WI-FI CONNECTION ISSUE CONTENT
+# -----------------------------
+WIFI_CONNECTION_ISSUE_PROBLEM = (
+    'WIFI_CONNECTION_ISSUE',
+    'Wi-Fi Connection Issue',
+    'Network, Remote Access & Storage',
+    'Medium',
+    'The user cannot connect to Wi-Fi, Wi-Fi keeps disconnecting, the connection is slow, or the device says connected but has no internet.'
+)
+
+WIFI_CONNECTION_ISSUE_KB = {
+    'title': 'Wi-Fi Connection Issue',
+    'summary': 'Use this guide when Wi-Fi does not connect, the network is missing, the device says connected but no internet, Wi-Fi is slow, or the connection keeps dropping.',
+    'difficulty': 'Intermediate',
+    'estimated_time': '10-30 minutes',
+    'escalation_required': 1,
+    'escalation_notes': 'Escalate to Network, Endpoint/Desktop, Identity, or Security/NAC depending on whether the issue involves AP coverage, DHCP, DNS, RADIUS/802.1X authentication, wireless drivers, device compliance, or network access policy.',
+    'tags': ['Wi-Fi', 'wireless', 'SSID', 'DHCP', 'DNS', 'default gateway', 'access point', 'RADIUS', '802.1X', 'signal strength', 'roaming'],
+    'symptoms': [
+        'Wi-Fi network is missing or not visible to the user.',
+        'Device cannot connect to the company Wi-Fi network.',
+        'Wi-Fi says connected but there is no internet or no internal access.',
+        'Wi-Fi is slow, unstable, or works only in certain areas.',
+        'Connection frequently disconnects or drops while moving between rooms.',
+        'Device repeatedly asks for password or credentials.',
+        'Issue affects one device, one SSID, one location, or multiple users.'
+    ],
+    'causes': [
+        'Common causes include disabled Wi-Fi, airplane mode, wrong SSID, stale saved profile, changed password, weak signal, captive portal, DHCP failure, DNS issue, gateway issue, wireless driver problem, AP outage, authentication/RADIUS issue, VLAN/DHCP scope issue, or interference.',
+        'Advanced causes include RADIUS/802.1X failure, certificate-based Wi-Fi authentication issue, VLAN assignment problem, DHCP scope exhaustion, DHCP relay/IP helper issue, AP/controller issue, RF interference, roaming problem, MAC filtering, NAC policy block, endpoint compliance policy, driver/firmware bug, or firewall/ACL issue after association.'
+    ],
+    'user_steps': [
+        'Confirm Wi-Fi is turned on.',
+        'Make sure Airplane Mode is off.',
+        'Confirm you are connecting to the correct company Wi-Fi network.',
+        'Move closer to the access point or try another area.',
+        'Forget the Wi-Fi network and reconnect if IT instructs you.',
+        'Restart the computer.',
+        'If your password recently changed, reconnect using the current password.',
+        'Try another trusted network or mobile hotspot to compare.',
+        'If connected but no internet, check whether other devices have internet.',
+        'Take a screenshot of the Wi-Fi error and submit a ticket if the issue continues.'
+    ],
+    'it_steps': [
+        'Confirm the user, device name, location, SSID, network type, and exact symptom.',
+        'Identify whether the issue is cannot see SSID, cannot connect, connected but no internet, slow Wi-Fi, frequent disconnects, or one-location-only behavior.',
+        'Confirm Wi-Fi is enabled and Airplane Mode is off.',
+        'Confirm the correct SSID and credentials.',
+        'Ask whether the password was recently changed.',
+        'Forget and reconnect to the Wi-Fi profile if appropriate.',
+        'Restart the device and retest.',
+        'Compare behavior on another trusted network or hotspot.',
+        'Ask whether coworkers in the same area are affected.',
+        'Check whether the user has a valid IP address, subnet mask, gateway, and DNS.',
+        'Check whether the device received APIPA 169.254.x.x or no IP address.',
+        'Check wireless adapter status and driver health.',
+        'Test default gateway reachability.',
+        'Test DNS resolution.',
+        'Compare connection on different SSIDs, locations, and AP coverage areas.',
+        'If enterprise Wi-Fi is used, check authentication failure reason where available.',
+        'Check RADIUS/802.1X/certificate-related failure if applicable.',
+        'Check DHCP lease assignment and whether DHCP scope or relay is suspected.',
+        'Check AP/controller status if multiple users in one area are affected.',
+        'Escalate with username, device name, MAC address if available, SSID, location/AP area, IP config, authentication result, DHCP/DNS tests, affected scope, and timestamps.'
+    ]
+}
+
+WIFI_CONNECTION_ISSUE_SOLUTIONS = [
+    ('FIX_WIFI_ADAPTER_NETWORK_AVAILABILITY', 'Check Wi-Fi Adapter and Network Availability', 'If the Wi-Fi network is not visible, the adapter, airplane mode, SSID broadcast, or local coverage may be the issue.', 'Confirm Wi-Fi adapter status, SSID availability, and local coverage before deeper troubleshooting.', 0, 'Escalate if AP/SSID broadcast or coverage issue is suspected.', 'medium'),
+    ('FIX_WIFI_RECONNECT_CORRECT_SSID', 'Reconnect to Correct Wi-Fi Network', 'Incorrect SSID, stale saved profile, or changed password may prevent connection.', 'Reconnect to the correct SSID and recreate the saved Wi-Fi profile when appropriate.', 0, 'Escalate to Identity or Network if enterprise authentication continues to fail.', 'medium'),
+    ('FIX_WIFI_CONNECTED_NO_INTERNET', 'Report Connected Wi-Fi with No Internet', 'Device may be connected to Wi-Fi but missing valid IP, gateway, DNS, or upstream internet path.', 'Validate IP configuration, gateway reachability, and DNS to isolate the problem.', 1, 'Escalate if DHCP, gateway, DNS, or upstream network issue affects more users.', 'high'),
+    ('FIX_WIFI_SIGNAL_CONGESTION', 'Improve Wi-Fi Signal and Reduce Congestion', 'Slow Wi-Fi is often caused by weak signal, distance from AP, interference, or congestion.', 'Move closer to AP and check location-specific performance and congestion indicators.', 1, 'Escalate to Network if AP coverage or RF issue is suspected.', 'medium'),
+    ('FIX_WIFI_DISCONNECTS_LOCATION_PATTERN', 'Report Wi-Fi Disconnects and Location Pattern', 'Frequent disconnects may indicate weak signal, roaming, driver, AP, or power-management issue.', 'Collect timing/location pattern and check roaming, AP, and driver behavior.', 1, 'Escalate if roaming/AP issue or driver/power-management defect is suspected.', 'medium'),
+    ('FIX_WIFI_DHCP_ASSIGNMENT', 'Troubleshoot Wi-Fi DHCP Assignment', 'Device connects to Wi-Fi but does not receive a valid IP address.', 'Check for APIPA/no IP, renew DHCP when appropriate, and compare with other devices.', 1, 'Escalate to Network with IP config, SSID, location, and affected scope.', 'high'),
+    ('FIX_WIFI_VLAN_AP_GATEWAY_PATH', 'Troubleshoot Wi-Fi VLAN, AP, or Gateway Path', 'Device has an IP address but cannot reach the gateway or local network path.', 'Check gateway reachability, VLAN/subnet, AP area, and network path.', 1, 'Escalate to Network with SSID, AP/location, IP details, and gateway test results.', 'high'),
+    ('FIX_WIFI_DNS_ISSUE', 'Troubleshoot Wi-Fi DNS Issue', 'Wi-Fi has network connectivity, but websites or internal names fail because DNS is not working.', 'Check DNS server assignment and name resolution for public and internal resources.', 1, 'Escalate if DNS server, DHCP option, or network policy issue is suspected.', 'high'),
+    ('FIX_WIFI_ESCALATE_AP_COVERAGE_NETWORK', 'Escalate Wireless AP, Coverage, or Network Issue', 'Multiple users or location-based failures suggest access point, coverage, RF, DHCP, VLAN, or upstream network issue.', 'Collect scope and network test evidence for Network team handoff.', 1, 'Escalate to Network with affected users, SSID, location/AP area, DHCP/DNS/gateway results, and timestamps.', 'high'),
+    ('FIX_WIFI_PROFILE_DRIVER', 'Troubleshoot Device Wi-Fi Profile or Driver', 'If only one device is affected, the issue may be saved profile, wireless driver, adapter, or OS setting.', 'Recreate the Wi-Fi profile, check wireless adapter driver, and review update history.', 1, 'Escalate to Endpoint/Desktop if adapter hardware, driver rollback, or OS repair is suspected.', 'medium'),
+]
+
+WIFI_CONNECTION_ISSUE_SOLUTION_STEPS = {
+    'FIX_WIFI_ADAPTER_NETWORK_AVAILABILITY': {
+        'user': ['Confirm Wi-Fi is turned on.', 'Confirm Airplane Mode is off.', 'Move closer to a known Wi-Fi area.', 'Restart the computer.', 'Tell IT whether coworkers can see the same network.'],
+        'technician': ['Check Wi-Fi adapter status.', 'Confirm SSID availability in the user location.', 'Check whether other users can see the SSID.', 'Check driver status if adapter is missing.', 'Escalate if AP/SSID broadcast or coverage issue is suspected.'],
+        'admin': ['Network handoff: provide SSID, location/AP area, affected devices, whether SSID is visible, and adapter status.']
+    },
+    'FIX_WIFI_RECONNECT_CORRECT_SSID': {
+        'user': ['Select the correct company Wi-Fi network.', 'Enter the current password or credentials.', 'If instructed, forget the network and reconnect.', 'Avoid repeated attempts if account lockout is possible.'],
+        'technician': ['Confirm SSID and credential type.', 'Ask whether password changed recently.', 'Forget/recreate Wi-Fi profile if appropriate.', 'Check authentication error if enterprise Wi-Fi is used.', 'Route to account/MFA/certificate support if needed.'],
+        'admin': ['Identity/Network handoff: include username, SSID, authentication method, password-change timing, and authentication error if available.']
+    },
+    'FIX_WIFI_CONNECTED_NO_INTERNET': {
+        'user': ['Confirm Wi-Fi says connected.', 'Try opening another website.', 'Check whether coworkers have internet.', 'Submit a ticket with screenshot and location.'],
+        'technician': ['Check IP address, gateway, and DNS.', 'Identify APIPA/no DHCP condition.', 'Test gateway reachability.', 'Test DNS resolution.', 'Determine whether issue is DHCP, gateway, DNS, or upstream network.'],
+        'admin': ['Network handoff: include IP configuration, gateway test, DNS test, SSID, location, affected scope, and timestamps.']
+    },
+    'FIX_WIFI_SIGNAL_CONGESTION': {
+        'user': ['Move closer to the Wi-Fi access point.', 'Avoid areas with weak signal if possible.', 'Close large downloads or streaming.', 'Try wired Ethernet if available.', 'Report location and time of slowness.'],
+        'technician': ['Check signal strength and location.', 'Compare performance in another area.', 'Ask whether multiple users in the area are affected.', 'Check for interference/congestion indicators if tools are available.', 'Escalate if AP coverage or RF issue is suspected.'],
+        'admin': ['Network handoff: provide affected area, signal/RSSI if available, user count, time pattern, and performance symptoms.']
+    },
+    'FIX_WIFI_DISCONNECTS_LOCATION_PATTERN': {
+        'user': ['Note where disconnects happen.', 'Note whether the issue happens while moving between rooms.', 'Restart the computer.', 'Submit the time, location, and error if disconnects continue.'],
+        'technician': ['Identify disconnect timing and location pattern.', 'Check Wi-Fi adapter power management.', 'Check driver version/update history.', 'Compare with other devices in same area.', 'Escalate if roaming/AP issue is suspected.'],
+        'admin': ['Network/Endpoint handoff: include locations, roam/disconnect timing, driver version, affected users, and power-management state.']
+    },
+    'FIX_WIFI_DHCP_ASSIGNMENT': {
+        'user': ['Restart Wi-Fi or reconnect.', 'Restart the computer.', 'Tell IT whether other users have the same issue.'],
+        'technician': ['Check whether IP is APIPA or missing.', 'Renew DHCP lease if appropriate.', 'Compare with another device on same SSID/location.', 'Check whether DHCP scope/relay/VLAN is suspected.', 'Escalate to Network team with IP config, SSID, location, and affected scope.'],
+        'admin': ['Network handoff: include DHCP symptoms, APIPA/no-IP status, SSID, VLAN/subnet if known, location, and affected scope.']
+    },
+    'FIX_WIFI_VLAN_AP_GATEWAY_PATH': {
+        'user': ['Stay in the affected location for testing if safe.', 'Tell IT whether Wi-Fi works in another area.', 'Use another network temporarily if provided.'],
+        'technician': ['Confirm assigned VLAN/subnet if available.', 'Test gateway reachability.', 'Compare same SSID in another area/AP.', 'Check AP/controller or switch path if multiple users affected.', 'Escalate with SSID, AP/location, IP details, and gateway test results.'],
+        'admin': ['Network handoff: include VLAN/subnet, gateway reachability, AP/location, SSID, affected scope, and any switch/controller observations.']
+    },
+    'FIX_WIFI_DNS_ISSUE': {
+        'user': ['Try more than one website.', 'Tell IT whether IP-based apps work but names fail if known.', 'Provide the website or internal resource name that fails.'],
+        'technician': ['Check DNS server assignment.', 'Test DNS resolution for public and internal names.', 'Compare DNS on Wi-Fi vs Ethernet/hotspot.', 'Check VPN/split DNS if internal resources are involved.', 'Escalate if DNS server, DHCP option, or network policy issue is suspected.'],
+        'admin': ['Network/DNS handoff: include DNS servers assigned, failed names, public/internal lookup results, SSID, and whether issue is Wi-Fi-only.']
+    },
+    'FIX_WIFI_ESCALATE_AP_COVERAGE_NETWORK': {
+        'user': ['Report your exact location.', 'Ask whether coworkers are affected.', 'Use Ethernet or another area temporarily if available.'],
+        'technician': ['Confirm affected users, SSID, location, AP area, and time.', 'Collect IP/DHCP/DNS/gateway test results.', 'Identify whether issue is coverage, AP, DHCP, VLAN, or upstream path.', 'Escalate to Network team with evidence.', 'Track workaround and business impact.'],
+        'admin': ['Network handoff: provide affected users, SSID, location/AP area, DHCP/DNS/gateway evidence, business impact, and timestamps.']
+    },
+    'FIX_WIFI_PROFILE_DRIVER': {
+        'user': ['Restart the computer.', 'Try another trusted network or hotspot.', 'Tell IT if Wi-Fi stopped after an update.'],
+        'technician': ['Forget/recreate Wi-Fi profile if appropriate.', 'Check wireless adapter driver and Device Manager.', 'Check Windows update/driver history.', 'Update/rollback driver from approved source if needed.', 'Escalate if adapter hardware or OS repair is suspected.'],
+        'admin': ['Endpoint handoff: include adapter model, driver version, update history, profile reset result, hotspot comparison, and Device Manager status.']
+    },
+}
+
+WIFI_CONNECTION_ISSUE_USER_DIAGNOSTIC_NODES = [
+    ('ROOT', None, 'question', 'Wi-Fi Connection Issue', 'Start by identifying the user-visible Wi-Fi symptom.', 'What is the Wi-Fi problem?', None, None, None, 1),
+    ('NO_SSID', 'ROOT', 'solution', 'Check Wi-Fi Adapter and Network Availability', 'The Wi-Fi network is not visible.', None, 'I cannot see the Wi-Fi network', 'no_ssid', 'FIX_WIFI_ADAPTER_NETWORK_AVAILABILITY', 1),
+    ('CANNOT_CONNECT', 'ROOT', 'solution', 'Reconnect to Correct Wi-Fi Network', 'The device sees the SSID but cannot connect.', None, 'I cannot connect', 'cannot_connect', 'FIX_WIFI_RECONNECT_CORRECT_SSID', 2),
+    ('NO_INTERNET', 'ROOT', 'solution', 'Report Connected Wi-Fi with No Internet', 'The device is connected but no internet/internal access works.', None, 'Connected but no internet', 'connected_no_internet', 'FIX_WIFI_CONNECTED_NO_INTERNET', 3),
+    ('SLOW_WIFI', 'ROOT', 'solution', 'Improve Wi-Fi Signal and Reduce Congestion', 'Wi-Fi is slow or unstable.', None, 'Slow Wi-Fi', 'slow', 'FIX_WIFI_SIGNAL_CONGESTION', 4),
+    ('DROPS', 'ROOT', 'solution', 'Report Wi-Fi Disconnects and Location Pattern', 'Wi-Fi frequently disconnects.', None, 'Keeps disconnecting', 'disconnects', 'FIX_WIFI_DISCONNECTS_LOCATION_PATTERN', 5),
+]
+
+WIFI_CONNECTION_ISSUE_TECH_DIAGNOSTIC_NODES = [
+    ('ROOT', None, 'question', 'Wi-Fi Connection Issue - IT Support Specialist', 'Start by checking IP assignment.', 'Does the device receive a valid IP address?', None, None, None, 1),
+    ('DHCP_FAIL', 'ROOT', 'solution', 'Troubleshoot Wi-Fi DHCP Assignment', 'Device has APIPA, no IP, or invalid lease.', None, 'No / APIPA', 'no', 'FIX_WIFI_DHCP_ASSIGNMENT', 1),
+    ('GATEWAY_Q', 'ROOT', 'question', 'Gateway Reachability', 'Device has an IP address; check local gateway.', 'Can the device reach the default gateway?', 'Yes', 'yes', None, 2),
+    ('GATEWAY_FAIL', 'GATEWAY_Q', 'solution', 'Troubleshoot Wi-Fi VLAN, AP, or Gateway Path', 'Gateway is not reachable.', None, 'No', 'no', 'FIX_WIFI_VLAN_AP_GATEWAY_PATH', 1),
+    ('DNS_Q', 'GATEWAY_Q', 'question', 'DNS Resolution', 'Gateway works; check DNS.', 'Does DNS resolution work?', 'Yes', 'yes', None, 2),
+    ('DNS_FAIL', 'DNS_Q', 'solution', 'Troubleshoot Wi-Fi DNS Issue', 'DNS resolution fails.', None, 'No', 'no', 'FIX_WIFI_DNS_ISSUE', 1),
+    ('SCOPE_Q', 'DNS_Q', 'question', 'Scope and Location', 'Network basics work; check scope.', 'Are multiple users or one location affected?', 'Yes', 'yes', None, 2),
+    ('SCOPE_YES', 'SCOPE_Q', 'solution', 'Escalate Wireless AP, Coverage, or Network Issue', 'Multiple users or location-based symptoms suggest wireless infrastructure issue.', None, 'Yes', 'yes', 'FIX_WIFI_ESCALATE_AP_COVERAGE_NETWORK', 1),
+    ('SCOPE_NO', 'SCOPE_Q', 'solution', 'Troubleshoot Device Wi-Fi Profile or Driver', 'Single-device issue likely profile, driver, adapter, or OS.', None, 'No', 'no', 'FIX_WIFI_PROFILE_DRIVER', 2),
+]
+
+def seed_wifi_connection_issue_content(cursor):
+    """Seed Wi-Fi Connection Issue KB article, solutions, steps, and diagnostic trees."""
+    code_, title, category, severity, description = WIFI_CONNECTION_ISSUE_PROBLEM
+    cursor.execute("""
+        INSERT INTO problem (problem_code, title, category, severity, description)
+        VALUES (?, ?, ?, ?, ?)
+        ON CONFLICT(problem_code) DO UPDATE SET
+            title=excluded.title, category=excluded.category, severity=excluded.severity,
+            description=excluded.description, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, WIFI_CONNECTION_ISSUE_PROBLEM)
+    cursor.execute('SELECT problem_id FROM problem WHERE problem_code = ?', (code_,))
+    row = cursor.fetchone()
+    if not row:
+        return
+    problem_id = row['problem_id']
+    cursor.execute("""
+        INSERT INTO kb_article (problem_id, title, summary, difficulty, estimated_time, escalation_required, escalation_notes, is_active, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, 1, CURRENT_TIMESTAMP)
+        ON CONFLICT(problem_id) DO UPDATE SET
+            title=excluded.title, summary=excluded.summary, difficulty=excluded.difficulty,
+            estimated_time=excluded.estimated_time, escalation_required=excluded.escalation_required,
+            escalation_notes=excluded.escalation_notes, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, (problem_id, WIFI_CONNECTION_ISSUE_KB['title'], WIFI_CONNECTION_ISSUE_KB['summary'], WIFI_CONNECTION_ISSUE_KB['difficulty'], WIFI_CONNECTION_ISSUE_KB['estimated_time'], WIFI_CONNECTION_ISSUE_KB['escalation_required'], WIFI_CONNECTION_ISSUE_KB['escalation_notes']))
+    cursor.execute('SELECT kb_article_id FROM kb_article WHERE problem_id = ?', (problem_id,))
+    article = cursor.fetchone()
+    if article:
+        kb_id = article['kb_article_id']
+        delete_kb_child_rows(cursor, kb_id)
+        insert_kb_child_rows(cursor, 'kb_article_tag', 'tag', kb_id, WIFI_CONNECTION_ISSUE_KB['tags'])
+        insert_kb_child_rows(cursor, 'kb_article_symptom', 'symptom', kb_id, WIFI_CONNECTION_ISSUE_KB['symptoms'])
+        insert_kb_child_rows(cursor, 'kb_article_cause', 'cause', kb_id, WIFI_CONNECTION_ISSUE_KB['causes'])
+        insert_kb_child_rows(cursor, 'kb_article_user_step', 'step_text', kb_id, WIFI_CONNECTION_ISSUE_KB['user_steps'])
+        insert_kb_child_rows(cursor, 'kb_article_it_step', 'step_text', kb_id, WIFI_CONNECTION_ISSUE_KB['it_steps'])
+    cursor.executemany("""
+        INSERT INTO solution (solution_code, title, summary, resolution_steps, escalation_required, escalation_notes, priority_recommendation)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(solution_code) DO UPDATE SET
+            title=excluded.title, summary=excluded.summary, resolution_steps=excluded.resolution_steps,
+            escalation_required=excluded.escalation_required, escalation_notes=excluded.escalation_notes,
+            priority_recommendation=excluded.priority_recommendation, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, WIFI_CONNECTION_ISSUE_SOLUTIONS)
+    for solution_code, audience_steps in WIFI_CONNECTION_ISSUE_SOLUTION_STEPS.items():
+        solution_id = get_solution_id_by_code(cursor, solution_code)
+        if not solution_id:
+            continue
+        for audience, steps in audience_steps.items():
+            cursor.execute('DELETE FROM solution_step WHERE solution_id = ? AND audience = ?', (solution_id, audience))
+            cursor.executemany('INSERT INTO solution_step (solution_id, audience, step_text, sort_order) VALUES (?, ?, ?, ?)', [(solution_id, audience, step, idx) for idx, step in enumerate(steps, start=1)])
+    seed_wifi_connection_tree(cursor, 'user', 'WIFI_CONNECTION_ISSUE_USER', 'Wi-Fi Connection Issue - User Diagnostic', 'User-friendly diagnostic tree for missing SSID, cannot connect, connected with no internet, slow Wi-Fi, and disconnects.', WIFI_CONNECTION_ISSUE_USER_DIAGNOSTIC_NODES)
+    seed_wifi_connection_tree(cursor, 'technician', 'WIFI_CONNECTION_ISSUE_TECHNICIAN', 'Wi-Fi Connection Issue - IT Support Specialist Diagnostic', 'IT Support Specialist diagnostic tree for DHCP, gateway, DNS, AP/location scope, and device Wi-Fi profile or driver issues.', WIFI_CONNECTION_ISSUE_TECH_DIAGNOSTIC_NODES)
+
+def seed_wifi_connection_tree(cursor, audience, tree_code, title, description, nodes):
+    problem_id = get_problem_id_for_tree_code(cursor, 'WIFI_CONNECTION_ISSUE')
+    cursor.execute("""
+        INSERT INTO diagnostic_tree (problem_id, diagnostic_tree_code, base_tree_code, audience, title, description, is_active, updated_at)
+        VALUES (?, ?, 'WIFI_CONNECTION_ISSUE', ?, ?, ?, 1, CURRENT_TIMESTAMP)
+        ON CONFLICT(diagnostic_tree_code) DO UPDATE SET
+            problem_id=excluded.problem_id, base_tree_code=excluded.base_tree_code, audience=excluded.audience,
+            title=excluded.title, description=excluded.description, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, (problem_id, tree_code, audience, title, description))
+    tree_id = get_diagnostic_tree_id_by_code(cursor, tree_code)
+    if not tree_id:
+        return
+    cursor.execute('UPDATE diagnostic_node SET is_active = 0, updated_at = CURRENT_TIMESTAMP WHERE diagnostic_tree_id = ?', (tree_id,))
+    for node_key, parent_key, node_type, node_title, node_desc, prompt, condition_label, condition_value, solution_code, sort_order in nodes:
+        parent_id = get_diagnostic_node_id_by_tree_and_key(cursor, tree_id, parent_key) if parent_key else None
+        solution_id = get_solution_id_by_code(cursor, solution_code) if solution_code else None
+        cursor.execute("""
+            INSERT INTO diagnostic_node (
+                diagnostic_tree_id, parent_diagnostic_node_id, problem_id, diagnostic_tree_code,
+                node_key, node_type, title, description, prompt_text,
+                condition_label, condition_value, solution_id, sort_order, is_active, updated_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, CURRENT_TIMESTAMP)
+            ON CONFLICT(diagnostic_tree_code, node_key) DO UPDATE SET
+                diagnostic_tree_id=excluded.diagnostic_tree_id,
+                parent_diagnostic_node_id=excluded.parent_diagnostic_node_id,
+                problem_id=excluded.problem_id,
+                node_type=excluded.node_type,
+                title=excluded.title,
+                description=excluded.description,
+                prompt_text=excluded.prompt_text,
+                condition_label=excluded.condition_label,
+                condition_value=excluded.condition_value,
+                solution_id=excluded.solution_id,
+                sort_order=excluded.sort_order,
+                is_active=1,
+                updated_at=CURRENT_TIMESTAMP
+        """, (tree_id, parent_id, problem_id, tree_code, node_key, node_type, node_title, node_desc, prompt, condition_label, condition_value, solution_id, sort_order))
+
 def initialize_database():
     """Create SQLite tables if they do not already exist."""
     connection = get_db_connection()
@@ -8474,6 +8720,7 @@ def initialize_database():
     seed_keyboard_mouse_issue_content(cursor)
     seed_monitor_display_issue_content(cursor)
     seed_docking_station_issue_content(cursor)
+    seed_wifi_connection_issue_content(cursor)
     seed_existing_issue_role_alignment(cursor)
 
     cursor.execute("""
