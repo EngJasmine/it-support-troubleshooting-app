@@ -585,6 +585,7 @@ PROBLEM_CODE_BY_ISSUE_TITLE = {
     "Wi-Fi Connection Issue": "WIFI_CONNECTION_ISSUE",
     "Ethernet / Wired Network Connection Issue": "ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE",
     "Computer Will Not Start / No Power": "COMPUTER_WILL_NOT_START_NO_POWER",
+    "Sound / Audio Not Working": "SOUND_AUDIO_NOT_WORKING",
 }
 
 
@@ -598,10 +599,10 @@ PROBLEM_CODE_BY_ISSUE_TITLE = {
 # the database for future expansion, but they are hidden from the visible MVP
 # until their content is upgraded to the same depth.
 MVP_CONTENT_FOCUS_ENABLED = True
-MVP_ACTIVE_PROBLEM_CODES = {"PRINTER_FAILURE", "PASSWORD_RESET_REQUEST", "ACCOUNT_LOCKED", "MULTI_FACTOR_AUTHENTICATION_ISSUE", "VPN_CONNECTION_FAILURE", "SHARED_DRIVE_NETWORK_DRIVE_ACCESS_ISSUE", "REMOTE_DESKTOP_CONNECTION_ISSUE", "SLOW_COMPUTER_PERFORMANCE", "APPLICATION_NOT_OPENING", "APPLICATION_CRASHING_FREEZING", "OPERATING_SYSTEM_UPDATE_ISSUE", "DEVICE_RUNNING_OUT_OF_STORAGE", "PHISHING_EMAIL_REPORTED", "MALWARE_OR_VIRUS_SUSPECTED", "EMAIL_ATTACHMENT_NOT_OPENING", "CALENDAR_SYNC_ISSUE", "SOFTWARE_INSTALLATION_REQUEST", "BROWSER_ISSUE", "CERTIFICATE_SECURITY_WARNING", "MOBILE_EMAIL_SETUP_ISSUE", "VIDEO_CONFERENCING_ISSUE", "KEYBOARD_OR_MOUSE_NOT_WORKING", "MONITOR_DISPLAY_NOT_WORKING", "DOCKING_STATION_NOT_WORKING", "WIFI_CONNECTION_ISSUE", "ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE", "COMPUTER_WILL_NOT_START_NO_POWER"}
+MVP_ACTIVE_PROBLEM_CODES = {"PRINTER_FAILURE", "PASSWORD_RESET_REQUEST", "ACCOUNT_LOCKED", "MULTI_FACTOR_AUTHENTICATION_ISSUE", "VPN_CONNECTION_FAILURE", "SHARED_DRIVE_NETWORK_DRIVE_ACCESS_ISSUE", "REMOTE_DESKTOP_CONNECTION_ISSUE", "SLOW_COMPUTER_PERFORMANCE", "APPLICATION_NOT_OPENING", "APPLICATION_CRASHING_FREEZING", "OPERATING_SYSTEM_UPDATE_ISSUE", "DEVICE_RUNNING_OUT_OF_STORAGE", "PHISHING_EMAIL_REPORTED", "MALWARE_OR_VIRUS_SUSPECTED", "EMAIL_ATTACHMENT_NOT_OPENING", "CALENDAR_SYNC_ISSUE", "SOFTWARE_INSTALLATION_REQUEST", "BROWSER_ISSUE", "CERTIFICATE_SECURITY_WARNING", "MOBILE_EMAIL_SETUP_ISSUE", "VIDEO_CONFERENCING_ISSUE", "KEYBOARD_OR_MOUSE_NOT_WORKING", "MONITOR_DISPLAY_NOT_WORKING", "DOCKING_STATION_NOT_WORKING", "WIFI_CONNECTION_ISSUE", "ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE", "COMPUTER_WILL_NOT_START_NO_POWER", "SOUND_AUDIO_NOT_WORKING"}
 MVP_CONTENT_FOCUS_NOTE = (
     "The visible MVP currently focuses on a small set of high-quality troubleshooting examples: "
-    "Printer Failure, Password Reset Request, Account Locked, Multi-factor Authentication Issue, VPN Connection Failure, Shared Drive / Network Drive Access Issue, Remote Desktop Connection Issue, Slow Computer Performance, Application Not Opening, Application Crashing / Freezing, Operating System Update Issue, Device Running Out of Storage, Phishing Email Reported, Malware or Virus Suspected, Email Attachment Not Opening, Calendar Sync Issue, Software Installation Request, Browser Issue, Certificate / Security Warning, Mobile Email Setup Issue, Video Conferencing Issue, Keyboard or Mouse Not Working, Monitor / Display Not Working, Docking Station Not Working, Wi-Fi Connection Issue, Ethernet / Wired Network Connection Issue, and Computer Will Not Start / No Power. Other sample issues are hidden until they "
+    "Printer Failure, Password Reset Request, Account Locked, Multi-factor Authentication Issue, VPN Connection Failure, Shared Drive / Network Drive Access Issue, Remote Desktop Connection Issue, Slow Computer Performance, Application Not Opening, Application Crashing / Freezing, Operating System Update Issue, Device Running Out of Storage, Phishing Email Reported, Malware or Virus Suspected, Email Attachment Not Opening, Calendar Sync Issue, Software Installation Request, Browser Issue, Certificate / Security Warning, Mobile Email Setup Issue, Video Conferencing Issue, Keyboard or Mouse Not Working, Monitor / Display Not Working, Docking Station Not Working, Wi-Fi Connection Issue, Ethernet / Wired Network Connection Issue, Computer Will Not Start / No Power, and Sound / Audio Not Working. Other sample issues are hidden until they "
     "are expanded with detailed symptoms, causes, user steps, and technician steps."
 )
 
@@ -9166,6 +9167,244 @@ def seed_computer_no_power_tree(cursor, audience, tree_code, title, description,
         """, (tree_id, parent_id, problem_id, tree_code, node_key, node_type, node_title, node_desc, prompt, condition_label, condition_value, solution_id, sort_order))
 
 
+
+SOUND_AUDIO_NOT_WORKING_PROBLEM = (
+    'SOUND_AUDIO_NOT_WORKING',
+    'Sound / Audio Not Working',
+    'Hardware & Peripherals',
+    'Medium',
+    'The user cannot hear audio, microphone does not work, audio is too low, distorted, coming from the wrong device, or headset/speaker is not detected.'
+)
+
+SOUND_AUDIO_NOT_WORKING_KB = {
+    'title': 'Sound / Audio Not Working',
+    'summary': 'Use this guide when speakers, microphone, headset, Bluetooth audio, USB audio, dock audio, or app-specific audio is not working correctly.',
+    'difficulty': 'Intermediate',
+    'estimated_time': '5-25 minutes',
+    'escalation_required': 0,
+    'escalation_notes': 'Escalate to Endpoint/Desktop when Windows does not detect the audio device, drivers/services require repair, or dock/USB audio path persists. Escalate to Hardware/Asset for damaged headset, speaker, microphone, audio jack, or confirmed hardware failure. Escalate to Collaboration/App Support when audio works in Windows but fails for one meeting platform or multiple users are affected. Escalate to Security/Endpoint Management when microphone access is blocked by policy, privacy baseline disables input, or suspicious virtual audio devices appear.',
+    'tags': ['audio', 'sound', 'microphone', 'speaker', 'headset', 'Bluetooth audio', 'USB headset', 'dock audio', 'Windows audio', 'Teams audio', 'Zoom audio'],
+    'symptoms': [
+        'No sound from speakers or headset.',
+        'Microphone is not working or other people cannot hear the user.',
+        'Sound comes from the laptop instead of the headset or selected device.',
+        'Volume is very low, distorted, crackling, or intermittent.',
+        'Bluetooth headset connects but has no sound or microphone input.',
+        'USB headset, dock audio, or monitor audio is not detected.',
+        'Audio works in one application but not another, such as browser, Teams, or Zoom.'
+    ],
+    'causes': [
+        'Common causes include muted volume, wrong input/output device, disconnected headset, Bluetooth pairing problem, app-specific audio settings, blocked microphone permissions, outdated or corrupted audio drivers, Windows audio service issue, dock/USB path problems, or hardware failure.',
+        'Advanced causes include Windows Audio service failure, corrupted audio driver after update, USB/Bluetooth controller issue, Bluetooth profile limitation, endpoint policy blocking microphone, dock firmware issue, virtual audio driver conflict, audio enhancement/noise suppression conflict, hardware failure, or platform-wide meeting app policy issue.'
+    ],
+    'user_steps': [
+        'Check the volume and confirm the computer is not muted.',
+        'Confirm the headset, speakers, or microphone are connected.',
+        'Select the correct speaker/headset as the sound output device.',
+        'Select the correct microphone as the input device.',
+        'If using Bluetooth, confirm the headset is powered on, charged, and connected.',
+        'Disconnect and reconnect the headset or audio device.',
+        'Restart the application where audio is not working.',
+        'Test audio in another application, website, or meeting test call.',
+        'Restart the computer if audio is still not working.',
+        'Take a screenshot of any audio/device error and contact IT if the issue continues.'
+    ],
+    'it_steps': [
+        'Confirm the user, device name, operating system, audio device type, meeting app/browser, and exact symptom.',
+        'Classify the issue as no output, microphone/input failure, low/distorted audio, Bluetooth, USB/dock, app-specific, or system-wide.',
+        'Check system volume, mute state, and app volume/mute state in the application and volume mixer.',
+        'Confirm the correct input and output devices in Windows sound settings.',
+        'Confirm the correct input and output devices inside the affected application.',
+        'Test built-in speaker/microphone versus external headset.',
+        'Disconnect/reconnect USB or Bluetooth headset and verify power/battery/pairing state.',
+        'Check microphone privacy permission for desktop apps and browser apps.',
+        'Check Device Manager or system settings for audio device detection and driver status.',
+        'Run the Windows audio troubleshooter/Get Help diagnostic where appropriate.',
+        'Check Windows Audio and related audio services if audio is unavailable system-wide.',
+        'Check recent Windows update or driver update history if issue started after an update.',
+        'Update, roll back, or reinstall audio driver from an approved source if needed.',
+        'Check Bluetooth device profile, pairing state, battery, and whether it is connected to another device.',
+        'Check USB dock/hub path if audio fails only through dock.',
+        'Check meeting app policy, browser permissions, and app cache if audio fails only in one platform.',
+        'Escalate with device model, headset model, selected devices, driver version, app version, test matrix, and business impact.'
+    ]
+}
+
+SOUND_AUDIO_NOT_WORKING_SOLUTIONS = [
+    ('FIX_AUDIO_OUTPUT_VOLUME_DEVICE', 'Check Speaker Output and Volume', 'No sound is often caused by mute status, low volume, or wrong output device.', 'Check mute, volume, output device, and alternate app playback.', 0, 'Endpoint handoff if output device is not detected or driver/service issue is suspected.', 'medium'),
+    ('FIX_AUDIO_MIC_INPUT_PERMISSIONS', 'Check Microphone Input and Permissions', 'Microphone issues often come from wrong input device, mute state, or blocked permissions.', 'Check mic selection, mute state, app permissions, and test call/recording.', 0, 'Security/Endpoint Management handoff if microphone access is blocked by policy.', 'medium'),
+    ('FIX_AUDIO_RECONNECT_REPAIR_DEVICE', 'Reconnect or Re-Pair Audio Device', 'Wired, USB, or Bluetooth devices may need reconnecting or re-pairing.', 'Reconnect device, re-pair Bluetooth, check batteries, and test known-good headset.', 0, 'Hardware handoff if audio device fails known-good testing.', 'medium'),
+    ('FIX_AUDIO_TEST_ALTERNATE_DEVICE_PATH', 'Test Another Device or Audio Path', 'Distortion, crackling, or intermittent sound may be device, cable, port, driver, or dock-related.', 'Test built-in vs external audio, direct vs dock path, and alternate device.', 0, 'Endpoint/Hardware handoff if driver, dock, port, or headset fault is suspected.', 'medium'),
+    ('FIX_AUDIO_APP_SPECIFIC_SETTINGS', 'Check App-Specific Audio Settings', 'Audio may work in Windows but fail in one meeting, browser, or media app.', 'Check app input/output selection, browser permissions, and app cache.', 0, 'Collaboration/App Support handoff if multiple users or a platform policy is involved.', 'medium'),
+    ('FIX_AUDIO_APP_AUDIO_TROUBLESHOOT', 'Troubleshoot Application Audio Settings', 'App-specific issue needs app permissions, device selection, cache, or policy review.', 'Compare Windows audio with app audio and review permissions/settings.', 0, 'Collaboration handoff if one platform is affected across users.', 'medium'),
+    ('FIX_AUDIO_DRIVER_DEVICE_DETECTION', 'Troubleshoot Audio Driver or Device Detection', 'Windows does not detect the audio device or shows driver errors.', 'Check Device Manager, driver history, approved updates/rollback, and diagnostics.', 1, 'Endpoint handoff with driver status, update history, and detection evidence.', 'high'),
+    ('FIX_AUDIO_BLUETOOTH_PAIRING_PROFILE', 'Troubleshoot Bluetooth Audio Pairing/Profile', 'Bluetooth audio can fail because of pairing, battery, range, wrong profile, or another paired device.', 'Check pairing, battery, profile, connected device, and Bluetooth driver state.', 0, 'Endpoint/Hardware handoff if Bluetooth stack or headset fault persists.', 'medium'),
+    ('FIX_AUDIO_USB_DOCK_PATH', 'Troubleshoot USB or Dock Audio Path', 'Audio issues may occur only through docking station, USB hub, USB headset, or monitor audio.', 'Compare direct connection vs dock/USB hub and check dock audio detection.', 0, 'Endpoint/Hardware handoff if dock, USB hub, or USB audio path is faulty.', 'medium'),
+    ('FIX_AUDIO_SERVICE_DRIVER_HARDWARE', 'Check Windows Audio Service, Driver, or Hardware', 'System-wide audio failure may involve Windows audio services, driver corruption, or hardware failure.', 'Check audio services, drivers, known-good devices, and hardware condition.', 1, 'Endpoint/Hardware handoff if Windows audio stack or hardware repair is needed.', 'high'),
+]
+
+SOUND_AUDIO_NOT_WORKING_SOLUTION_STEPS = {
+    'FIX_AUDIO_OUTPUT_VOLUME_DEVICE': {
+        'user': ['Check that volume is not muted.', 'Increase the volume.', 'Select the correct speaker or headset.', 'Disconnect and reconnect the headset.', 'Try playing audio from another app.'],
+        'technician': ['Confirm Windows output device.', 'Check system volume and app volume mixer.', 'Test built-in speaker versus external headset.', 'Confirm audio works in another app.', 'Document selected output and result.'],
+        'admin': ['Endpoint handoff: include selected output device, volume/mixer status, built-in versus headset test result, and whether issue is system-wide.']
+    },
+    'FIX_AUDIO_MIC_INPUT_PERMISSIONS': {
+        'user': ['Confirm microphone is not muted.', 'Select the correct microphone.', 'Check the meeting/browser app has microphone permission.', 'Try a test call or recording if available.', 'Restart the app.'],
+        'technician': ['Confirm Windows input device.', 'Check microphone privacy permissions.', 'Check microphone selection inside the affected app.', 'Test built-in mic versus headset mic.', 'Escalate if policy blocks microphone access.'],
+        'admin': ['Security/Endpoint Management handoff: include privacy permission state, policy block evidence, app name, selected mic, and test call result.']
+    },
+    'FIX_AUDIO_RECONNECT_REPAIR_DEVICE': {
+        'user': ['Disconnect and reconnect the device.', 'If Bluetooth, turn headset off and on.', 'Charge or replace batteries if needed.', 'Reconnect the Bluetooth device.', 'Restart the app.'],
+        'technician': ['Confirm connection type.', 'Check battery/power.', 'Remove and re-pair Bluetooth device if appropriate.', 'Test known-good headset.', 'Determine whether issue follows headset or computer.'],
+        'admin': ['Hardware handoff: include connection type, power/battery result, re-pair result, known-good test, and suspected failed component.']
+    },
+    'FIX_AUDIO_TEST_ALTERNATE_DEVICE_PATH': {
+        'user': ['Try built-in speakers or another headset.', 'Try another USB/audio port if available.', 'Disconnect from dock and test directly.', 'Report whether the issue follows the headset.'],
+        'technician': ['Test built-in audio versus external device.', 'Test direct connection versus dock/USB hub.', 'Check for driver warnings.', 'Check audio enhancements/noise suppression settings if relevant.', 'Escalate if hardware or driver issue is suspected.'],
+        'admin': ['Endpoint/Hardware handoff: include alternate path matrix, dock/direct result, driver warnings, and suspected hardware or driver issue.']
+    },
+    'FIX_AUDIO_APP_SPECIFIC_SETTINGS': {
+        'user': ['Open the affected app audio settings.', 'Select the correct microphone and speaker.', 'Sign out and back in if needed.', 'Try the browser or desktop app alternative.'],
+        'technician': ['Compare Windows audio versus affected app audio.', 'Check app input/output selection.', 'Check browser site permissions if web app is used.', 'Clear app cache or repair app if policy allows.', 'Escalate to Collaboration/App Support if multiple users are affected.'],
+        'admin': ['Collaboration/App Support handoff: include app version, selected devices, browser/desktop comparison, cache/repair result, and affected scope.']
+    },
+    'FIX_AUDIO_APP_AUDIO_TROUBLESHOOT': {
+        'user': ['Confirm audio works elsewhere.', 'Restart the affected app.', 'Try another approved browser/app version.', 'Capture any error message.'],
+        'technician': ['Confirm issue is app-specific.', 'Check app audio settings and permissions.', 'Check app version and update status.', 'Compare another user/device if possible.', 'Escalate if platform policy/service issue is suspected.'],
+        'admin': ['Collaboration handoff: include app-specific evidence, app version, permission state, comparison user/device result, and service/policy suspicion.']
+    },
+    'FIX_AUDIO_DRIVER_DEVICE_DETECTION': {
+        'user': ['Restart the computer.', 'Reconnect external audio device.', 'Do not install drivers from unapproved websites.', 'Tell IT if the issue started after an update.'],
+        'technician': ['Check Device Manager/system settings for audio devices.', 'Check driver status and recent update history.', 'Run audio troubleshooter/Get Help diagnostic where appropriate.', 'Update/rollback/reinstall driver from approved source if needed.', 'Escalate if OS or hardware issue is suspected.'],
+        'admin': ['Endpoint handoff: include Device Manager status, driver version, update history, troubleshooting result, and approved driver actions taken.']
+    },
+    'FIX_AUDIO_BLUETOOTH_PAIRING_PROFILE': {
+        'user': ['Charge the headset.', 'Turn Bluetooth off and on.', 'Disconnect headset from other devices.', 'Re-pair the headset if IT instructs you.', 'Test audio again.'],
+        'technician': ['Check Bluetooth pairing state.', 'Check whether headset is connected to another device.', 'Remove/re-pair device if needed.', 'Confirm correct audio profile/input/output selection.', 'Check Bluetooth driver/update history if issue persists.'],
+        'admin': ['Endpoint/Hardware handoff: include Bluetooth pairing state, connected-device conflicts, profile selection, battery result, and driver/update history.']
+    },
+    'FIX_AUDIO_USB_DOCK_PATH': {
+        'user': ['Connect headset directly to the laptop if possible.', 'Try another USB port.', 'Disconnect and reconnect dock.', 'Tell IT whether audio works without the dock.'],
+        'technician': ['Compare direct versus dock/USB hub audio path.', 'Check dock/USB audio device detection.', 'Test known-good USB headset.', 'Check dock firmware/driver if needed.', 'Escalate if dock/USB path is faulty.'],
+        'admin': ['Endpoint/Hardware handoff: include direct vs dock result, USB device detection, known-good headset test, dock firmware/driver status, and suspected dock path.']
+    },
+    'FIX_AUDIO_SERVICE_DRIVER_HARDWARE': {
+        'user': ['Restart the computer.', 'Report whether no audio works anywhere.', 'Provide screenshot of audio/device errors.', 'Use another device temporarily if needed.'],
+        'technician': ['Confirm system-wide audio failure.', 'Check Windows Audio and related services.', 'Check driver/device status.', 'Test known-good headset/speaker/microphone.', 'Escalate if service, OS, or hardware repair is needed.'],
+        'admin': ['Endpoint/Hardware handoff: include service status, driver/device status, known-good device result, system-wide scope, and business impact.']
+    },
+}
+
+SOUND_AUDIO_NOT_WORKING_USER_DIAGNOSTIC_NODES = [
+    ('ROOT', None, 'question', 'Sound / Audio Not Working', 'Start by identifying which audio function is affected.', 'What audio problem are you having?', None, None, None, 1),
+    ('OUTPUT', 'ROOT', 'solution', 'Check Speaker Output and Volume', 'The user cannot hear sound.', None, 'Cannot hear sound', 'output', 'FIX_AUDIO_OUTPUT_VOLUME_DEVICE', 1),
+    ('MIC', 'ROOT', 'solution', 'Check Microphone Input and Permissions', 'The microphone is not working.', None, 'Microphone not working', 'microphone', 'FIX_AUDIO_MIC_INPUT_PERMISSIONS', 2),
+    ('BT', 'ROOT', 'solution', 'Reconnect or Re-Pair Audio Device', 'Bluetooth/headset issue.', None, 'Bluetooth/headset issue', 'bluetooth', 'FIX_AUDIO_RECONNECT_REPAIR_DEVICE', 3),
+    ('DISTORTED', 'ROOT', 'solution', 'Test Another Device or Audio Path', 'Sound is distorted, crackling, or intermittent.', None, 'Sound is distorted/crackling', 'distorted', 'FIX_AUDIO_TEST_ALTERNATE_DEVICE_PATH', 4),
+    ('APP_ONLY', 'ROOT', 'solution', 'Check App-Specific Audio Settings', 'Audio works in one app but not another.', None, 'Works in one app but not another', 'app_specific', 'FIX_AUDIO_APP_SPECIFIC_SETTINGS', 5),
+]
+
+SOUND_AUDIO_NOT_WORKING_TECH_DIAGNOSTIC_NODES = [
+    ('ROOT', None, 'question', 'Sound / Audio Not Working - IT Support Specialist', 'Classify audio issue by scope before troubleshooting.', 'Is the issue system-wide or app-specific?', None, None, None, 1),
+    ('APP_SPECIFIC', 'ROOT', 'solution', 'Troubleshoot Application Audio Settings', 'Audio works elsewhere but fails in one app.', None, 'App-specific', 'app_specific', 'FIX_AUDIO_APP_AUDIO_TROUBLESHOOT', 1),
+    ('DETECT_Q', 'ROOT', 'question', 'Device Detection', 'System-wide issue; verify device detection.', 'Does Windows detect the audio device?', 'System-wide', 'system_wide', None, 2),
+    ('DRIVER', 'DETECT_Q', 'solution', 'Troubleshoot Audio Driver or Device Detection', 'Audio device is missing or has a warning.', None, 'No / Warning', 'no_warning', 'FIX_AUDIO_DRIVER_DEVICE_DETECTION', 1),
+    ('TYPE_Q', 'DETECT_Q', 'question', 'Audio Path', 'Device is detected; isolate Bluetooth, USB/dock, or built-in path.', 'Is this Bluetooth, USB/dock, or built-in audio?', 'Yes', 'yes', None, 2),
+    ('BLUETOOTH', 'TYPE_Q', 'solution', 'Troubleshoot Bluetooth Audio Pairing/Profile', 'Bluetooth audio path.', None, 'Bluetooth', 'bluetooth', 'FIX_AUDIO_BLUETOOTH_PAIRING_PROFILE', 1),
+    ('USB_DOCK', 'TYPE_Q', 'solution', 'Troubleshoot USB or Dock Audio Path', 'USB or dock audio path.', None, 'USB/dock', 'usb_dock', 'FIX_AUDIO_USB_DOCK_PATH', 2),
+    ('BUILT_IN', 'TYPE_Q', 'solution', 'Check Windows Audio Service, Driver, or Hardware', 'Built-in or system audio path.', None, 'Built-in', 'built_in', 'FIX_AUDIO_SERVICE_DRIVER_HARDWARE', 3),
+]
+
+def seed_sound_audio_not_working_content(cursor):
+    """Seed Sound / Audio Not Working KB article, solutions, steps, and diagnostic trees."""
+    code_, title, category, severity, description = SOUND_AUDIO_NOT_WORKING_PROBLEM
+    cursor.execute("""
+        INSERT INTO problem (problem_code, title, category, severity, description)
+        VALUES (?, ?, ?, ?, ?)
+        ON CONFLICT(problem_code) DO UPDATE SET
+            title=excluded.title, category=excluded.category, severity=excluded.severity,
+            description=excluded.description, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, SOUND_AUDIO_NOT_WORKING_PROBLEM)
+    cursor.execute('SELECT problem_id FROM problem WHERE problem_code = ?', (code_,))
+    row = cursor.fetchone()
+    if not row:
+        return
+    problem_id = row['problem_id']
+    cursor.execute("""
+        INSERT INTO kb_article (problem_id, title, summary, difficulty, estimated_time, escalation_required, escalation_notes, is_active, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, 1, CURRENT_TIMESTAMP)
+        ON CONFLICT(problem_id) DO UPDATE SET
+            title=excluded.title, summary=excluded.summary, difficulty=excluded.difficulty,
+            estimated_time=excluded.estimated_time, escalation_required=excluded.escalation_required,
+            escalation_notes=excluded.escalation_notes, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, (problem_id, SOUND_AUDIO_NOT_WORKING_KB['title'], SOUND_AUDIO_NOT_WORKING_KB['summary'], SOUND_AUDIO_NOT_WORKING_KB['difficulty'], SOUND_AUDIO_NOT_WORKING_KB['estimated_time'], SOUND_AUDIO_NOT_WORKING_KB['escalation_required'], SOUND_AUDIO_NOT_WORKING_KB['escalation_notes']))
+    cursor.execute('SELECT kb_article_id FROM kb_article WHERE problem_id = ?', (problem_id,))
+    article = cursor.fetchone()
+    if article:
+        kb_id = article['kb_article_id']
+        delete_kb_child_rows(cursor, kb_id)
+        insert_kb_child_rows(cursor, 'kb_article_tag', 'tag', kb_id, SOUND_AUDIO_NOT_WORKING_KB['tags'])
+        insert_kb_child_rows(cursor, 'kb_article_symptom', 'symptom', kb_id, SOUND_AUDIO_NOT_WORKING_KB['symptoms'])
+        insert_kb_child_rows(cursor, 'kb_article_cause', 'cause', kb_id, SOUND_AUDIO_NOT_WORKING_KB['causes'])
+        insert_kb_child_rows(cursor, 'kb_article_user_step', 'step_text', kb_id, SOUND_AUDIO_NOT_WORKING_KB['user_steps'])
+        insert_kb_child_rows(cursor, 'kb_article_it_step', 'step_text', kb_id, SOUND_AUDIO_NOT_WORKING_KB['it_steps'])
+    cursor.executemany("""
+        INSERT INTO solution (solution_code, title, summary, resolution_steps, escalation_required, escalation_notes, priority_recommendation)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(solution_code) DO UPDATE SET
+            title=excluded.title, summary=excluded.summary, resolution_steps=excluded.resolution_steps,
+            escalation_required=excluded.escalation_required, escalation_notes=excluded.escalation_notes,
+            priority_recommendation=excluded.priority_recommendation, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, SOUND_AUDIO_NOT_WORKING_SOLUTIONS)
+    for solution_code, audience_steps in SOUND_AUDIO_NOT_WORKING_SOLUTION_STEPS.items():
+        solution_id = get_solution_id_by_code(cursor, solution_code)
+        if not solution_id:
+            continue
+        for audience, steps in audience_steps.items():
+            cursor.execute('DELETE FROM solution_step WHERE solution_id = ? AND audience = ?', (solution_id, audience))
+            cursor.executemany('INSERT INTO solution_step (solution_id, audience, step_text, sort_order) VALUES (?, ?, ?, ?)', [(solution_id, audience, step, idx) for idx, step in enumerate(steps, start=1)])
+    seed_sound_audio_not_working_tree(cursor, 'user', 'SOUND_AUDIO_NOT_WORKING_USER', 'Sound / Audio Not Working - User Diagnostic', 'User-friendly diagnostic tree for speaker output, microphone, Bluetooth/headset, distorted audio, and app-specific audio issues.', SOUND_AUDIO_NOT_WORKING_USER_DIAGNOSTIC_NODES)
+    seed_sound_audio_not_working_tree(cursor, 'technician', 'SOUND_AUDIO_NOT_WORKING_TECHNICIAN', 'Sound / Audio Not Working - IT Support Specialist Diagnostic', 'IT Support Specialist diagnostic tree for app-specific, device detection, Bluetooth, USB/dock, and built-in/system audio paths.', SOUND_AUDIO_NOT_WORKING_TECH_DIAGNOSTIC_NODES)
+
+def seed_sound_audio_not_working_tree(cursor, audience, tree_code, title, description, nodes):
+    problem_id = get_problem_id_for_tree_code(cursor, 'SOUND_AUDIO_NOT_WORKING')
+    cursor.execute("""
+        INSERT INTO diagnostic_tree (problem_id, diagnostic_tree_code, base_tree_code, audience, title, description, is_active, updated_at)
+        VALUES (?, ?, 'SOUND_AUDIO_NOT_WORKING', ?, ?, ?, 1, CURRENT_TIMESTAMP)
+        ON CONFLICT(diagnostic_tree_code) DO UPDATE SET
+            problem_id=excluded.problem_id, base_tree_code=excluded.base_tree_code, audience=excluded.audience,
+            title=excluded.title, description=excluded.description, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, (problem_id, tree_code, audience, title, description))
+    tree_id = get_diagnostic_tree_id_by_code(cursor, tree_code)
+    if not tree_id:
+        return
+    cursor.execute('UPDATE diagnostic_node SET is_active = 0, updated_at = CURRENT_TIMESTAMP WHERE diagnostic_tree_id = ?', (tree_id,))
+    for node_key, parent_key, node_type, node_title, node_desc, prompt, condition_label, condition_value, solution_code, sort_order in nodes:
+        parent_id = get_diagnostic_node_id_by_tree_and_key(cursor, tree_id, parent_key) if parent_key else None
+        solution_id = get_solution_id_by_code(cursor, solution_code) if solution_code else None
+        cursor.execute("""
+            INSERT INTO diagnostic_node (
+                diagnostic_tree_id, parent_diagnostic_node_id, problem_id, diagnostic_tree_code,
+                node_key, node_type, title, description, prompt_text,
+                condition_label, condition_value, solution_id, sort_order, is_active, updated_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, CURRENT_TIMESTAMP)
+            ON CONFLICT(diagnostic_tree_code, node_key) DO UPDATE SET
+                diagnostic_tree_id=excluded.diagnostic_tree_id,
+                parent_diagnostic_node_id=excluded.parent_diagnostic_node_id,
+                problem_id=excluded.problem_id,
+                node_type=excluded.node_type,
+                title=excluded.title,
+                description=excluded.description,
+                prompt_text=excluded.prompt_text,
+                condition_label=excluded.condition_label,
+                condition_value=excluded.condition_value,
+                solution_id=excluded.solution_id,
+                sort_order=excluded.sort_order,
+                is_active=1,
+                updated_at=CURRENT_TIMESTAMP
+        """, (tree_id, parent_id, problem_id, tree_code, node_key, node_type, node_title, node_desc, prompt, condition_label, condition_value, solution_id, sort_order))
+
 def initialize_database():
     """Create SQLite tables if they do not already exist."""
     connection = get_db_connection()
@@ -9204,6 +9443,7 @@ def initialize_database():
     seed_wifi_connection_issue_content(cursor)
     seed_ethernet_wired_network_issue_content(cursor)
     seed_computer_no_power_content(cursor)
+    seed_sound_audio_not_working_content(cursor)
     seed_existing_issue_role_alignment(cursor)
 
     cursor.execute("""
