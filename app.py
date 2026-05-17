@@ -584,6 +584,7 @@ PROBLEM_CODE_BY_ISSUE_TITLE = {
     "Docking Station Not Working": "DOCKING_STATION_NOT_WORKING",
     "Wi-Fi Connection Issue": "WIFI_CONNECTION_ISSUE",
     "Ethernet / Wired Network Connection Issue": "ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE",
+    "Computer Will Not Start / No Power": "COMPUTER_WILL_NOT_START_NO_POWER",
 }
 
 
@@ -597,10 +598,10 @@ PROBLEM_CODE_BY_ISSUE_TITLE = {
 # the database for future expansion, but they are hidden from the visible MVP
 # until their content is upgraded to the same depth.
 MVP_CONTENT_FOCUS_ENABLED = True
-MVP_ACTIVE_PROBLEM_CODES = {"PRINTER_FAILURE", "PASSWORD_RESET_REQUEST", "ACCOUNT_LOCKED", "MULTI_FACTOR_AUTHENTICATION_ISSUE", "VPN_CONNECTION_FAILURE", "SHARED_DRIVE_NETWORK_DRIVE_ACCESS_ISSUE", "REMOTE_DESKTOP_CONNECTION_ISSUE", "SLOW_COMPUTER_PERFORMANCE", "APPLICATION_NOT_OPENING", "APPLICATION_CRASHING_FREEZING", "OPERATING_SYSTEM_UPDATE_ISSUE", "DEVICE_RUNNING_OUT_OF_STORAGE", "PHISHING_EMAIL_REPORTED", "MALWARE_OR_VIRUS_SUSPECTED", "EMAIL_ATTACHMENT_NOT_OPENING", "CALENDAR_SYNC_ISSUE", "SOFTWARE_INSTALLATION_REQUEST", "BROWSER_ISSUE", "CERTIFICATE_SECURITY_WARNING", "MOBILE_EMAIL_SETUP_ISSUE", "VIDEO_CONFERENCING_ISSUE", "KEYBOARD_OR_MOUSE_NOT_WORKING", "MONITOR_DISPLAY_NOT_WORKING", "DOCKING_STATION_NOT_WORKING", "WIFI_CONNECTION_ISSUE", "ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE"}
+MVP_ACTIVE_PROBLEM_CODES = {"PRINTER_FAILURE", "PASSWORD_RESET_REQUEST", "ACCOUNT_LOCKED", "MULTI_FACTOR_AUTHENTICATION_ISSUE", "VPN_CONNECTION_FAILURE", "SHARED_DRIVE_NETWORK_DRIVE_ACCESS_ISSUE", "REMOTE_DESKTOP_CONNECTION_ISSUE", "SLOW_COMPUTER_PERFORMANCE", "APPLICATION_NOT_OPENING", "APPLICATION_CRASHING_FREEZING", "OPERATING_SYSTEM_UPDATE_ISSUE", "DEVICE_RUNNING_OUT_OF_STORAGE", "PHISHING_EMAIL_REPORTED", "MALWARE_OR_VIRUS_SUSPECTED", "EMAIL_ATTACHMENT_NOT_OPENING", "CALENDAR_SYNC_ISSUE", "SOFTWARE_INSTALLATION_REQUEST", "BROWSER_ISSUE", "CERTIFICATE_SECURITY_WARNING", "MOBILE_EMAIL_SETUP_ISSUE", "VIDEO_CONFERENCING_ISSUE", "KEYBOARD_OR_MOUSE_NOT_WORKING", "MONITOR_DISPLAY_NOT_WORKING", "DOCKING_STATION_NOT_WORKING", "WIFI_CONNECTION_ISSUE", "ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE", "COMPUTER_WILL_NOT_START_NO_POWER"}
 MVP_CONTENT_FOCUS_NOTE = (
     "The visible MVP currently focuses on a small set of high-quality troubleshooting examples: "
-    "Printer Failure, Password Reset Request, Account Locked, Multi-factor Authentication Issue, VPN Connection Failure, Shared Drive / Network Drive Access Issue, Remote Desktop Connection Issue, Slow Computer Performance, Application Not Opening, Application Crashing / Freezing, Operating System Update Issue, Device Running Out of Storage, Phishing Email Reported, Malware or Virus Suspected, Email Attachment Not Opening, Calendar Sync Issue, Software Installation Request, Browser Issue, Certificate / Security Warning, Mobile Email Setup Issue, Video Conferencing Issue, Keyboard or Mouse Not Working, Monitor / Display Not Working, Docking Station Not Working, Wi-Fi Connection Issue, and Ethernet / Wired Network Connection Issue. Other sample issues are hidden until they "
+    "Printer Failure, Password Reset Request, Account Locked, Multi-factor Authentication Issue, VPN Connection Failure, Shared Drive / Network Drive Access Issue, Remote Desktop Connection Issue, Slow Computer Performance, Application Not Opening, Application Crashing / Freezing, Operating System Update Issue, Device Running Out of Storage, Phishing Email Reported, Malware or Virus Suspected, Email Attachment Not Opening, Calendar Sync Issue, Software Installation Request, Browser Issue, Certificate / Security Warning, Mobile Email Setup Issue, Video Conferencing Issue, Keyboard or Mouse Not Working, Monitor / Display Not Working, Docking Station Not Working, Wi-Fi Connection Issue, Ethernet / Wired Network Connection Issue, and Computer Will Not Start / No Power. Other sample issues are hidden until they "
     "are expanded with detailed symptoms, causes, user steps, and technician steps."
 )
 
@@ -8923,6 +8924,248 @@ def seed_ethernet_wired_network_tree(cursor, audience, tree_code, title, descrip
                 updated_at=CURRENT_TIMESTAMP
         """, (tree_id, parent_id, problem_id, tree_code, node_key, node_type, node_title, node_desc, prompt, condition_label, condition_value, solution_id, sort_order))
 
+
+COMPUTER_WILL_NOT_START_NO_POWER_PROBLEM = (
+    'COMPUTER_WILL_NOT_START_NO_POWER',
+    'Computer Will Not Start / No Power',
+    'Hardware & Peripherals',
+    'High',
+    'The computer will not turn on, shows no power, gets stuck at startup, shows a black screen, or powers on but Windows does not load.'
+)
+
+COMPUTER_WILL_NOT_START_NO_POWER_KB = {
+    'title': 'Computer Will Not Start / No Power',
+    'summary': 'Use this guide when a computer does not power on, shows no lights or fans, powers on with black screen, gets stuck during startup, enters a repair loop, or shows a boot error.',
+    'difficulty': 'Intermediate',
+    'estimated_time': '10-30 minutes',
+    'escalation_required': 1,
+    'escalation_notes': 'Escalate to Hardware/Asset, Endpoint/Desktop, Endpoint Management/Systems, or Security depending on whether the evidence points to power hardware, Windows startup, update deployment, BitLocker/recovery, storage failure, or suspicious/tampering activity.',
+    'tags': ['no power', 'computer will not start', 'laptop not charging', 'black screen', 'boot failure', 'startup repair', 'no boot device', 'BIOS', 'hardware diagnostics', 'battery'],
+    'symptoms': [
+        'Computer shows no power lights, fan activity, keyboard backlight, or startup response.',
+        'Laptop is not charging or only turns on when connected to charger.',
+        'Power light or fan turns on but the screen remains black.',
+        'Device reaches logo screen but Windows does not load.',
+        'Device is stuck in Automatic Repair, recovery, or repeated restart loop.',
+        'Device shows no boot device, BitLocker recovery, BIOS/UEFI, blink code, beep code, or diagnostic error.',
+        'Issue started after update, drop, spill, new charger, new dock, or hardware change.'
+    ],
+    'causes': [
+        'Common causes include disconnected power, bad wall outlet, faulty charger, fully drained battery, dock power-delivery issue, wrong USB-C charging port, stuck sleep/hibernate state, display issue mistaken for no power, peripheral blocking boot, Windows update problem, boot device issue, or hardware failure.',
+        'Advanced causes include failed AC adapter wattage negotiation, USB-C/Thunderbolt power-delivery problem, BIOS/UEFI firmware issue, CMOS/RTC battery issue, RAM failure, motherboard/power circuit failure, damaged charging port, liquid damage, BitLocker recovery after firmware/boot change, boot configuration corruption, Windows boot manager failure, system file corruption, or SSD/HDD failure.'
+    ],
+    'user_steps': [
+        'Confirm the charger or power cable is firmly connected.',
+        'Try a different known-working wall outlet.',
+        'If using a power strip or dock, connect the charger directly to the laptop or wall outlet.',
+        'Check whether any power light, fan noise, keyboard light, or charging light appears.',
+        'Disconnect external devices such as dock, USB drives, printers, and external monitors.',
+        'Hold the power button for 10-15 seconds, then try powering on again.',
+        'If the laptop battery may be drained, leave it charging for at least 15-30 minutes.',
+        'If the computer powers on but the screen is black, try increasing brightness or connecting an external monitor.',
+        'Take a photo of any error message, light pattern, beep code, or startup screen.',
+        'Contact IT if the computer still does not power on or Windows does not load.'
+    ],
+    'it_steps': [
+        'Confirm the user, device model, asset tag, power source, charger type, dock use, and exact symptom.',
+        'Separate the issue into no power, powers on but no display, powers on but Windows does not load, repair loop, or boot/firmware error.',
+        'Confirm wall outlet or power strip works.',
+        'Confirm charger/cable is connected securely and check charger LED or charging indicator if available.',
+        'Test a known-good charger or power adapter if available.',
+        'Bypass dock and connect charger directly to the device.',
+        'Disconnect external peripherals and retry startup.',
+        'Perform an approved safe power drain/reset according to device policy.',
+        'Check whether an external display works if the built-in screen is black.',
+        'Ask about recent Windows update, driver/firmware update, new dock/charger, drop, spill, or battery issue.',
+        'Capture photos of error screens, LED blink codes, beep codes, charger warnings, and diagnostic messages.',
+        'Check whether the device completes POST or reaches BIOS/UEFI.',
+        'Run vendor hardware diagnostics if the device powers on.',
+        'Check BIOS/UEFI to confirm whether storage drive is detected.',
+        'Check boot order and no-boot-device errors.',
+        'If Windows starts Automatic Repair, document the exact recovery message.',
+        'Check BitLocker/recovery requirements before changing boot or firmware settings.',
+        'Test known-good charger, dock, USB-C port, and external display.',
+        'Check for physical damage, liquid damage, swollen battery, damaged charging port, or overheating signs.',
+        'Escalate with device model, asset tag, power test results, diagnostic/error codes, photos, recent changes, and business impact.'
+    ]
+}
+
+COMPUTER_WILL_NOT_START_NO_POWER_SOLUTIONS = [
+    ('FIX_STARTUP_POWER_SOURCE_CHARGER_BATTERY', 'Check Power Source, Charger, and Battery', 'No power usually requires checking outlet, charger, battery, dock, and power reset first.', 'Check direct power, alternate outlet, dock bypass, charging time, and known-good adapter.', 1, 'Escalate if no power remains after known-good power tests.', 'high'),
+    ('FIX_STARTUP_BLACK_SCREEN_DISPLAY_PATH', 'Check Display or External Monitor', 'The computer may be powered on, but the display path may be failing.', 'Check brightness, power indicators, disconnect dock, and test external display.', 1, 'Escalate if panel, GPU, motherboard, or display output issue is suspected.', 'high'),
+    ('FIX_STARTUP_WINDOWS_BOOT_ISSUE_REPORT', 'Report Windows Startup or Boot Issue', 'Device powers on, but Windows does not load.', 'Capture startup screen, check boot drive, and follow approved Windows startup recovery process.', 1, 'Escalate if startup repair, recovery, or data protection is required.', 'high'),
+    ('FIX_STARTUP_REPAIR_LOOP', 'Report Startup Repair Loop', 'Automatic Repair or restart loops may require endpoint recovery.', 'Capture recovery message and evaluate approved Safe Mode, rollback, or recovery path.', 1, 'Escalate if repair install, reimage, or data recovery is needed.', 'high'),
+    ('FIX_STARTUP_CAPTURE_BOOT_ERROR_CODE', 'Capture Boot Error or Diagnostic Code', 'Boot errors, blink codes, beep codes, and diagnostics guide the next step.', 'Record error text/codes and use vendor diagnostics or support notes.', 1, 'Escalate based on diagnostic result or hardware code.', 'medium'),
+    ('FIX_STARTUP_ISOLATE_POWER_HARDWARE', 'Isolate Power Adapter, Battery, Dock, or Hardware Failure', 'Technician isolates whether the no-power issue follows adapter, dock, battery, port, or device.', 'Test known-good power path and inspect charging port, battery, and physical damage.', 1, 'Escalate for hardware repair or replacement if confirmed.', 'high'),
+    ('FIX_STARTUP_ISOLATE_DISPLAY_GPU_PATH', 'Isolate Display, GPU, or External Monitor Path', 'Device powers on but no usable display appears.', 'Test built-in and external display paths, dock vs direct output, and boot/logo behavior.', 1, 'Escalate if display panel, GPU, motherboard, or output failure is suspected.', 'high'),
+    ('FIX_STARTUP_ESCALATE_POST_FIRMWARE_HARDWARE', 'Escalate POST, Firmware, or Hardware Failure', 'Device powers on but does not reach BIOS/UEFI or diagnostics.', 'Record indicators and route to hardware/endpoint repair path.', 1, 'Escalate to Hardware/Endpoint support for repair or replacement.', 'high'),
+    ('FIX_STARTUP_ESCALATE_STORAGE_FAILURE', 'Escalate Possible Storage Failure', 'Boot drive is missing or not detected.', 'Check BIOS/UEFI storage detection and run diagnostics while preserving recovery options.', 1, 'Escalate for storage replacement or recovery.', 'high'),
+    ('FIX_STARTUP_WINDOWS_RECOVERY_PATH', 'Troubleshoot Windows Startup or Recovery Path', 'Device hardware appears available, but Windows startup is failing.', 'Use approved startup repair, Safe Mode, rollback, or recovery workflow while protecting BitLocker/data.', 1, 'Escalate if reimage, repair install, or advanced recovery is needed.', 'high'),
+]
+
+COMPUTER_WILL_NOT_START_NO_POWER_SOLUTION_STEPS = {
+    'FIX_STARTUP_POWER_SOURCE_CHARGER_BATTERY': {
+        'user': ['Connect the charger directly to the laptop or computer.', 'Try a different known-working outlet.', 'Bypass the dock or power strip.', 'Leave the laptop charging for 15-30 minutes.', 'Contact IT if no lights, fan, or startup activity appears.'],
+        'technician': ['Confirm outlet and charger connection.', 'Test known-good charger or power cable.', 'Bypass dock and test direct power.', 'Perform approved power drain/reset.', 'Escalate if no power remains after known-good power tests.'],
+        'admin': ['Hardware handoff: include outlet/charger tests, dock bypass result, charging indicator, known-good adapter result, and any physical damage signs.']
+    },
+    'FIX_STARTUP_BLACK_SCREEN_DISPLAY_PATH': {
+        'user': ['Check brightness.', 'Look for power lights or fan noise.', 'Disconnect external monitors or dock.', 'Try an external monitor if available.', 'Send IT a photo of the screen.'],
+        'technician': ['Confirm system power indicators.', 'Test external monitor.', 'Check direct display and dock display path.', 'Determine whether this is no display vs no boot.', 'Route to Monitor/Display troubleshooting if appropriate.'],
+        'admin': ['Endpoint/Hardware handoff: include display tests, external monitor result, dock/direct comparison, boot logo/BIOS visibility, and power indicators.']
+    },
+    'FIX_STARTUP_WINDOWS_BOOT_ISSUE_REPORT': {
+        'user': ['Do not repeatedly force power off unless IT instructs you.', 'Take a photo of the startup screen.', 'Note whether this started after an update.', 'Contact IT with the error message.'],
+        'technician': ['Confirm device powers on and reaches boot phase.', 'Capture exact screen or error.', 'Check whether BIOS/UEFI sees the boot drive.', 'Follow approved Windows startup recovery process.', 'Preserve user data and BitLocker requirements before repair.'],
+        'admin': ['Endpoint handoff: include startup screen, boot drive visibility, recent updates, BitLocker status, and recovery steps already attempted.']
+    },
+    'FIX_STARTUP_REPAIR_LOOP': {
+        'user': ['Take a photo of the repair screen.', 'Do not reset the PC unless IT instructs you.', 'Contact IT and keep the device powered if possible.'],
+        'technician': ['Capture repair-loop message.', 'Ask about updates or recent changes.', 'Determine whether Safe Mode, rollback, or recovery tools are appropriate.', 'Check BitLocker recovery requirements.', 'Escalate if repair install, reimage, or data recovery is needed.'],
+        'admin': ['Endpoint Management handoff: include repair-loop text, update/deployment correlation, BitLocker needs, and business impact.']
+    },
+    'FIX_STARTUP_CAPTURE_BOOT_ERROR_CODE': {
+        'user': ['Take a photo of the error message.', 'Note any blinking light pattern or beeps.', 'Do not clear the message before IT reviews it.', 'Contact IT with the photo.'],
+        'technician': ['Record exact error, blink code, beep code, or diagnostic code.', 'Check vendor documentation or internal support notes.', 'Run hardware diagnostics if the device can start them.', 'Escalate based on diagnostic result.'],
+        'admin': ['Hardware handoff: provide diagnostic code, blink/beep pattern, device model, asset tag, and vendor diagnostic result.']
+    },
+    'FIX_STARTUP_ISOLATE_POWER_HARDWARE': {
+        'user': ['Use a known-good charger if IT provides one.', 'Do not use damaged chargers or swollen batteries.', 'Report burning smell, heat, liquid spill, or physical damage.'],
+        'technician': ['Test known-good adapter and outlet.', 'Test without dock.', 'Inspect charging port and power indicators.', 'Check for physical/liquid damage or swollen battery.', 'Escalate for hardware repair or replacement if confirmed.'],
+        'admin': ['Hardware handoff: include known-good adapter/outlet result, dock bypass, charging port condition, battery condition, and safety concerns.']
+    },
+    'FIX_STARTUP_ISOLATE_DISPLAY_GPU_PATH': {
+        'user': ['Do not assume the computer is off if lights/fans are active.', 'Try disconnecting dock and external monitors.', 'Contact IT with any screen/photo evidence.'],
+        'technician': ['Test built-in and external display.', 'Check for boot logo or BIOS screen.', 'Compare dock vs direct display path.', 'Escalate if panel, GPU, motherboard, or display output failure is suspected.'],
+        'admin': ['Endpoint/Hardware handoff: include display test matrix, BIOS/boot-logo visibility, dock/direct results, and suspected failed component.']
+    },
+    'FIX_STARTUP_ESCALATE_POST_FIRMWARE_HARDWARE': {
+        'user': ['Leave the device available for IT.', 'Provide photos of lights or error patterns.', 'Use a loaner device if offered.'],
+        'technician': ['Confirm device cannot reach BIOS/UEFI.', 'Record light/beep indicators.', 'Run vendor diagnostic process if possible.', 'Escalate to Hardware/Endpoint support for repair/replacement.'],
+        'admin': ['Hardware/Endpoint handoff: include POST failure evidence, diagnostic indicators, model/asset tag, and known-good power/display tests.']
+    },
+    'FIX_STARTUP_ESCALATE_STORAGE_FAILURE': {
+        'user': ['Do not attempt resets or reinstall.', 'Report unusual noises, drops, or previous warnings.', 'Wait for IT instructions.'],
+        'technician': ['Check BIOS/UEFI storage detection.', 'Capture No boot device or related error.', 'Run vendor diagnostics if available.', 'Preserve data-recovery possibility if needed.', 'Escalate for storage replacement or recovery.'],
+        'admin': ['Storage/Endpoint handoff: include BIOS storage detection, error photos, diagnostics, user data needs, and recent drop/update history.']
+    },
+    'FIX_STARTUP_WINDOWS_RECOVERY_PATH': {
+        'user': ['Do not reset or reinstall Windows without IT approval.', 'Provide photos of recovery/startup screens.', 'Report recent updates or software changes.'],
+        'technician': ['Confirm boot drive is detected.', 'Check recent updates or driver changes.', 'Use approved startup repair, Safe Mode, rollback, or recovery workflow.', 'Verify BitLocker/recovery key process.', 'Escalate if reimage, repair install, or advanced recovery is needed.'],
+        'admin': ['Endpoint handoff: include detected boot drive, recent update/driver changes, recovery steps attempted, BitLocker status, and user data considerations.']
+    },
+}
+
+COMPUTER_WILL_NOT_START_NO_POWER_USER_DIAGNOSTIC_NODES = [
+    ('ROOT', None, 'question', 'Computer Will Not Start / No Power', 'Start by identifying the visible startup or power symptom.', 'What happens when you press the power button?', None, None, None, 1),
+    ('NO_POWER', 'ROOT', 'solution', 'Check Power Source, Charger, and Battery', 'Nothing happens when power button is pressed.', None, 'Nothing happens', 'no_power', 'FIX_STARTUP_POWER_SOURCE_CHARGER_BATTERY', 1),
+    ('BLACK_SCREEN', 'ROOT', 'solution', 'Check Display or External Monitor', 'Power indicators exist but screen is black.', None, 'Power light/fan turns on but screen is black', 'black_screen', 'FIX_STARTUP_BLACK_SCREEN_DISPLAY_PATH', 2),
+    ('BOOT_FAIL', 'ROOT', 'solution', 'Report Windows Startup or Boot Issue', 'Logo appears but Windows does not load.', None, 'Logo appears but Windows does not load', 'boot_fail', 'FIX_STARTUP_WINDOWS_BOOT_ISSUE_REPORT', 3),
+    ('REPAIR_LOOP', 'ROOT', 'solution', 'Report Startup Repair Loop', 'Device is stuck in repair or restart loop.', None, 'Restart/repair loop', 'repair_loop', 'FIX_STARTUP_REPAIR_LOOP', 4),
+    ('ERROR_CODE', 'ROOT', 'solution', 'Capture Boot Error or Diagnostic Code', 'Device displays boot, firmware, BitLocker, blink, or diagnostic error.', None, 'Error message appears', 'error', 'FIX_STARTUP_CAPTURE_BOOT_ERROR_CODE', 5),
+]
+
+COMPUTER_WILL_NOT_START_NO_POWER_TECH_DIAGNOSTIC_NODES = [
+    ('ROOT', None, 'question', 'Computer Will Not Start / No Power - IT Support Specialist', 'Classify the failure before choosing repair path.', 'Is this no power, no display, or no boot?', None, None, None, 1),
+    ('NO_POWER', 'ROOT', 'solution', 'Isolate Power Adapter, Battery, Dock, or Hardware Failure', 'No power indicators are present.', None, 'No power', 'no_power', 'FIX_STARTUP_ISOLATE_POWER_HARDWARE', 1),
+    ('NO_DISPLAY', 'ROOT', 'solution', 'Isolate Display, GPU, or External Monitor Path', 'Power indicators exist but no display is usable.', None, 'No display', 'no_display', 'FIX_STARTUP_ISOLATE_DISPLAY_GPU_PATH', 2),
+    ('BIOS_Q', 'ROOT', 'question', 'POST / BIOS Check', 'Device powers on but OS does not start.', 'Does device reach BIOS/UEFI or diagnostics?', 'No boot / Windows startup', 'no_boot', None, 3),
+    ('POST_FAIL', 'BIOS_Q', 'solution', 'Escalate POST, Firmware, or Hardware Failure', 'Device does not reach BIOS/UEFI or diagnostics.', None, 'No', 'no', 'FIX_STARTUP_ESCALATE_POST_FIRMWARE_HARDWARE', 1),
+    ('STORAGE_Q', 'BIOS_Q', 'question', 'Boot Drive Detection', 'Device reaches firmware; verify storage.', 'Is boot drive detected?', 'Yes', 'yes', None, 2),
+    ('STORAGE_FAIL', 'STORAGE_Q', 'solution', 'Escalate Possible Storage Failure', 'Boot drive is missing or not detected.', None, 'No', 'no', 'FIX_STARTUP_ESCALATE_STORAGE_FAILURE', 1),
+    ('RECOVERY', 'STORAGE_Q', 'solution', 'Troubleshoot Windows Startup or Recovery Path', 'Hardware appears available but Windows startup fails.', None, 'Yes', 'yes', 'FIX_STARTUP_WINDOWS_RECOVERY_PATH', 2),
+]
+
+def seed_computer_no_power_content(cursor):
+    """Seed Computer Will Not Start / No Power KB article, solutions, steps, and diagnostic trees."""
+    code_, title, category, severity, description = COMPUTER_WILL_NOT_START_NO_POWER_PROBLEM
+    cursor.execute("""
+        INSERT INTO problem (problem_code, title, category, severity, description)
+        VALUES (?, ?, ?, ?, ?)
+        ON CONFLICT(problem_code) DO UPDATE SET
+            title=excluded.title, category=excluded.category, severity=excluded.severity,
+            description=excluded.description, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, COMPUTER_WILL_NOT_START_NO_POWER_PROBLEM)
+    cursor.execute('SELECT problem_id FROM problem WHERE problem_code = ?', (code_,))
+    row = cursor.fetchone()
+    if not row:
+        return
+    problem_id = row['problem_id']
+    cursor.execute("""
+        INSERT INTO kb_article (problem_id, title, summary, difficulty, estimated_time, escalation_required, escalation_notes, is_active, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, 1, CURRENT_TIMESTAMP)
+        ON CONFLICT(problem_id) DO UPDATE SET
+            title=excluded.title, summary=excluded.summary, difficulty=excluded.difficulty,
+            estimated_time=excluded.estimated_time, escalation_required=excluded.escalation_required,
+            escalation_notes=excluded.escalation_notes, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, (problem_id, COMPUTER_WILL_NOT_START_NO_POWER_KB['title'], COMPUTER_WILL_NOT_START_NO_POWER_KB['summary'], COMPUTER_WILL_NOT_START_NO_POWER_KB['difficulty'], COMPUTER_WILL_NOT_START_NO_POWER_KB['estimated_time'], COMPUTER_WILL_NOT_START_NO_POWER_KB['escalation_required'], COMPUTER_WILL_NOT_START_NO_POWER_KB['escalation_notes']))
+    cursor.execute('SELECT kb_article_id FROM kb_article WHERE problem_id = ?', (problem_id,))
+    article = cursor.fetchone()
+    if article:
+        kb_id = article['kb_article_id']
+        delete_kb_child_rows(cursor, kb_id)
+        insert_kb_child_rows(cursor, 'kb_article_tag', 'tag', kb_id, COMPUTER_WILL_NOT_START_NO_POWER_KB['tags'])
+        insert_kb_child_rows(cursor, 'kb_article_symptom', 'symptom', kb_id, COMPUTER_WILL_NOT_START_NO_POWER_KB['symptoms'])
+        insert_kb_child_rows(cursor, 'kb_article_cause', 'cause', kb_id, COMPUTER_WILL_NOT_START_NO_POWER_KB['causes'])
+        insert_kb_child_rows(cursor, 'kb_article_user_step', 'step_text', kb_id, COMPUTER_WILL_NOT_START_NO_POWER_KB['user_steps'])
+        insert_kb_child_rows(cursor, 'kb_article_it_step', 'step_text', kb_id, COMPUTER_WILL_NOT_START_NO_POWER_KB['it_steps'])
+    cursor.executemany("""
+        INSERT INTO solution (solution_code, title, summary, resolution_steps, escalation_required, escalation_notes, priority_recommendation)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(solution_code) DO UPDATE SET
+            title=excluded.title, summary=excluded.summary, resolution_steps=excluded.resolution_steps,
+            escalation_required=excluded.escalation_required, escalation_notes=excluded.escalation_notes,
+            priority_recommendation=excluded.priority_recommendation, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, COMPUTER_WILL_NOT_START_NO_POWER_SOLUTIONS)
+    for solution_code, audience_steps in COMPUTER_WILL_NOT_START_NO_POWER_SOLUTION_STEPS.items():
+        solution_id = get_solution_id_by_code(cursor, solution_code)
+        if not solution_id:
+            continue
+        for audience, steps in audience_steps.items():
+            cursor.execute('DELETE FROM solution_step WHERE solution_id = ? AND audience = ?', (solution_id, audience))
+            cursor.executemany('INSERT INTO solution_step (solution_id, audience, step_text, sort_order) VALUES (?, ?, ?, ?)', [(solution_id, audience, step, idx) for idx, step in enumerate(steps, start=1)])
+    seed_computer_no_power_tree(cursor, 'user', 'COMPUTER_WILL_NOT_START_NO_POWER_USER', 'Computer Will Not Start / No Power - User Diagnostic', 'User-friendly diagnostic tree for no power, black screen, Windows boot failure, repair loop, and boot errors.', COMPUTER_WILL_NOT_START_NO_POWER_USER_DIAGNOSTIC_NODES)
+    seed_computer_no_power_tree(cursor, 'technician', 'COMPUTER_WILL_NOT_START_NO_POWER_TECHNICIAN', 'Computer Will Not Start / No Power - IT Support Specialist Diagnostic', 'IT Support Specialist diagnostic tree for no power, no display, POST/BIOS, boot drive, and Windows recovery path.', COMPUTER_WILL_NOT_START_NO_POWER_TECH_DIAGNOSTIC_NODES)
+
+def seed_computer_no_power_tree(cursor, audience, tree_code, title, description, nodes):
+    problem_id = get_problem_id_for_tree_code(cursor, 'COMPUTER_WILL_NOT_START_NO_POWER')
+    cursor.execute("""
+        INSERT INTO diagnostic_tree (problem_id, diagnostic_tree_code, base_tree_code, audience, title, description, is_active, updated_at)
+        VALUES (?, ?, 'COMPUTER_WILL_NOT_START_NO_POWER', ?, ?, ?, 1, CURRENT_TIMESTAMP)
+        ON CONFLICT(diagnostic_tree_code) DO UPDATE SET
+            problem_id=excluded.problem_id, base_tree_code=excluded.base_tree_code, audience=excluded.audience,
+            title=excluded.title, description=excluded.description, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, (problem_id, tree_code, audience, title, description))
+    tree_id = get_diagnostic_tree_id_by_code(cursor, tree_code)
+    if not tree_id:
+        return
+    cursor.execute('UPDATE diagnostic_node SET is_active = 0, updated_at = CURRENT_TIMESTAMP WHERE diagnostic_tree_id = ?', (tree_id,))
+    for node_key, parent_key, node_type, node_title, node_desc, prompt, condition_label, condition_value, solution_code, sort_order in nodes:
+        parent_id = get_diagnostic_node_id_by_tree_and_key(cursor, tree_id, parent_key) if parent_key else None
+        solution_id = get_solution_id_by_code(cursor, solution_code) if solution_code else None
+        cursor.execute("""
+            INSERT INTO diagnostic_node (
+                diagnostic_tree_id, parent_diagnostic_node_id, problem_id, diagnostic_tree_code,
+                node_key, node_type, title, description, prompt_text,
+                condition_label, condition_value, solution_id, sort_order, is_active, updated_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, CURRENT_TIMESTAMP)
+            ON CONFLICT(diagnostic_tree_code, node_key) DO UPDATE SET
+                diagnostic_tree_id=excluded.diagnostic_tree_id,
+                parent_diagnostic_node_id=excluded.parent_diagnostic_node_id,
+                problem_id=excluded.problem_id,
+                node_type=excluded.node_type,
+                title=excluded.title,
+                description=excluded.description,
+                prompt_text=excluded.prompt_text,
+                condition_label=excluded.condition_label,
+                condition_value=excluded.condition_value,
+                solution_id=excluded.solution_id,
+                sort_order=excluded.sort_order,
+                is_active=1,
+                updated_at=CURRENT_TIMESTAMP
+        """, (tree_id, parent_id, problem_id, tree_code, node_key, node_type, node_title, node_desc, prompt, condition_label, condition_value, solution_id, sort_order))
+
+
 def initialize_database():
     """Create SQLite tables if they do not already exist."""
     connection = get_db_connection()
@@ -8960,6 +9203,7 @@ def initialize_database():
     seed_docking_station_issue_content(cursor)
     seed_wifi_connection_issue_content(cursor)
     seed_ethernet_wired_network_issue_content(cursor)
+    seed_computer_no_power_content(cursor)
     seed_existing_issue_role_alignment(cursor)
 
     cursor.execute("""
