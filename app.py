@@ -587,6 +587,7 @@ PROBLEM_CODE_BY_ISSUE_TITLE = {
     "Computer Will Not Start / No Power": "COMPUTER_WILL_NOT_START_NO_POWER",
     "Sound / Audio Not Working": "SOUND_AUDIO_NOT_WORKING",
     "Cloud Service Access Issue": "CLOUD_SERVICE_ACCESS_ISSUE",
+    "Cloud File Sync Issue": "CLOUD_FILE_SYNC_ISSUE",
 }
 
 
@@ -600,10 +601,10 @@ PROBLEM_CODE_BY_ISSUE_TITLE = {
 # the database for future expansion, but they are hidden from the visible MVP
 # until their content is upgraded to the same depth.
 MVP_CONTENT_FOCUS_ENABLED = True
-MVP_ACTIVE_PROBLEM_CODES = {"PRINTER_FAILURE", "PASSWORD_RESET_REQUEST", "ACCOUNT_LOCKED", "MULTI_FACTOR_AUTHENTICATION_ISSUE", "VPN_CONNECTION_FAILURE", "SHARED_DRIVE_NETWORK_DRIVE_ACCESS_ISSUE", "REMOTE_DESKTOP_CONNECTION_ISSUE", "SLOW_COMPUTER_PERFORMANCE", "APPLICATION_NOT_OPENING", "APPLICATION_CRASHING_FREEZING", "OPERATING_SYSTEM_UPDATE_ISSUE", "DEVICE_RUNNING_OUT_OF_STORAGE", "PHISHING_EMAIL_REPORTED", "MALWARE_OR_VIRUS_SUSPECTED", "EMAIL_ATTACHMENT_NOT_OPENING", "CALENDAR_SYNC_ISSUE", "SOFTWARE_INSTALLATION_REQUEST", "BROWSER_ISSUE", "CERTIFICATE_SECURITY_WARNING", "MOBILE_EMAIL_SETUP_ISSUE", "VIDEO_CONFERENCING_ISSUE", "KEYBOARD_OR_MOUSE_NOT_WORKING", "MONITOR_DISPLAY_NOT_WORKING", "DOCKING_STATION_NOT_WORKING", "WIFI_CONNECTION_ISSUE", "ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE", "COMPUTER_WILL_NOT_START_NO_POWER", "SOUND_AUDIO_NOT_WORKING", "CLOUD_SERVICE_ACCESS_ISSUE"}
+MVP_ACTIVE_PROBLEM_CODES = {"PRINTER_FAILURE", "PASSWORD_RESET_REQUEST", "ACCOUNT_LOCKED", "MULTI_FACTOR_AUTHENTICATION_ISSUE", "VPN_CONNECTION_FAILURE", "SHARED_DRIVE_NETWORK_DRIVE_ACCESS_ISSUE", "REMOTE_DESKTOP_CONNECTION_ISSUE", "SLOW_COMPUTER_PERFORMANCE", "APPLICATION_NOT_OPENING", "APPLICATION_CRASHING_FREEZING", "OPERATING_SYSTEM_UPDATE_ISSUE", "DEVICE_RUNNING_OUT_OF_STORAGE", "PHISHING_EMAIL_REPORTED", "MALWARE_OR_VIRUS_SUSPECTED", "EMAIL_ATTACHMENT_NOT_OPENING", "CALENDAR_SYNC_ISSUE", "SOFTWARE_INSTALLATION_REQUEST", "BROWSER_ISSUE", "CERTIFICATE_SECURITY_WARNING", "MOBILE_EMAIL_SETUP_ISSUE", "VIDEO_CONFERENCING_ISSUE", "KEYBOARD_OR_MOUSE_NOT_WORKING", "MONITOR_DISPLAY_NOT_WORKING", "DOCKING_STATION_NOT_WORKING", "WIFI_CONNECTION_ISSUE", "ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE", "COMPUTER_WILL_NOT_START_NO_POWER", "SOUND_AUDIO_NOT_WORKING", "CLOUD_SERVICE_ACCESS_ISSUE", "CLOUD_FILE_SYNC_ISSUE"}
 MVP_CONTENT_FOCUS_NOTE = (
     "The visible MVP currently focuses on a small set of high-quality troubleshooting examples: "
-    "Printer Failure, Password Reset Request, Account Locked, Multi-factor Authentication Issue, VPN Connection Failure, Shared Drive / Network Drive Access Issue, Remote Desktop Connection Issue, Slow Computer Performance, Application Not Opening, Application Crashing / Freezing, Operating System Update Issue, Device Running Out of Storage, Phishing Email Reported, Malware or Virus Suspected, Email Attachment Not Opening, Calendar Sync Issue, Software Installation Request, Browser Issue, Certificate / Security Warning, Mobile Email Setup Issue, Video Conferencing Issue, Keyboard or Mouse Not Working, Monitor / Display Not Working, Docking Station Not Working, Wi-Fi Connection Issue, Ethernet / Wired Network Connection Issue, Computer Will Not Start / No Power, Sound / Audio Not Working, and Cloud Service Access Issue. Other sample issues are hidden until they "
+    "Printer Failure, Password Reset Request, Account Locked, Multi-factor Authentication Issue, VPN Connection Failure, Shared Drive / Network Drive Access Issue, Remote Desktop Connection Issue, Slow Computer Performance, Application Not Opening, Application Crashing / Freezing, Operating System Update Issue, Device Running Out of Storage, Phishing Email Reported, Malware or Virus Suspected, Email Attachment Not Opening, Calendar Sync Issue, Software Installation Request, Browser Issue, Certificate / Security Warning, Mobile Email Setup Issue, Video Conferencing Issue, Keyboard or Mouse Not Working, Monitor / Display Not Working, Docking Station Not Working, Wi-Fi Connection Issue, Ethernet / Wired Network Connection Issue, Computer Will Not Start / No Power, Sound / Audio Not Working, Cloud Service Access Issue, and Cloud File Sync Issue. Other sample issues are hidden until they "
     "are expanded with detailed symptoms, causes, user steps, and technician steps."
 )
 
@@ -9656,6 +9657,240 @@ def seed_cloud_service_access_issue_tree(cursor, audience, tree_code, title, des
                 updated_at=CURRENT_TIMESTAMP
         """, (tree_id, parent_id, problem_id, tree_code, node_key, node_type, node_title, node_desc, prompt, condition_label, condition_value, solution_id, sort_order))
 
+
+
+CLOUD_FILE_SYNC_ISSUE_PROBLEM = (
+    'CLOUD_FILE_SYNC_ISSUE',
+    'Cloud File Sync Issue',
+    'Email, Calendar & Collaboration / Software & Applications',
+    'Medium',
+    'Cloud files are not syncing correctly between the local device and cloud storage; files may be missing, stuck syncing, duplicated, out of date, unavailable offline, or showing sync errors.'
+)
+
+CLOUD_FILE_SYNC_ISSUE_KB = {
+    'title': 'Cloud File Sync Issue',
+    'summary': 'Use this guide when OneDrive, SharePoint sync, Google Drive for desktop, Dropbox, Box, or another cloud sync client is not uploading, downloading, updating, or showing correct file status.',
+    'difficulty': 'Intermediate',
+    'estimated_time': '10-30 minutes',
+    'escalation_required': 0,
+    'escalation_notes': 'Escalate to Collaboration/Cloud Admin when multiple users, a shared library/site, permissions, quota, service health, or restore/version conflict issues are suspected. Escalate to Endpoint when the sync client cache/profile, local disk, or OS file system appears corrupted. Escalate to Network when DNS, proxy, firewall, VPN, TLS inspection, or a location-specific network path blocks sync. Escalate to Security/Identity when Conditional Access, device compliance, suspicious sign-in, unexpected MFA, or possible data exposure is involved.',
+    'tags': ['cloud sync', 'OneDrive sync', 'SharePoint sync', 'Google Drive for desktop', 'Dropbox', 'files on demand', 'storage quota', 'sync error', 'file conflict', 'offline files'],
+    'symptoms': [
+        'Files are not uploading from the local device to cloud storage.',
+        'Files are visible in the cloud web version but missing or outdated on the computer.',
+        'Sync client shows stuck syncing, pending sync, red X, warning, or conflict errors.',
+        'Duplicate conflict files appear or coworkers see a different file version.',
+        'The sync client asks the user to sign in repeatedly or shows an expired-session message.',
+        'Local disk space or cloud quota is full and sync stops.',
+        'Multiple users have issues with the same shared library, folder, or cloud service.'
+    ],
+    'causes': [
+        'Common causes include paused sync, signed-out sync client, expired session, unstable network, low local disk space, cloud quota limit, file lock, unsupported file name/path, missing permissions, selective sync or files-on-demand settings, and outdated sync client.',
+        'Advanced causes include sync client cache corruption, SharePoint/library sync issue, Conditional Access or device compliance block, DNS/proxy/firewall/TLS inspection issue, version conflict, too many files or large file backlog, endpoint security blocking sync cache operations, service outage, or folder redirection/backup policy conflict.'
+    ],
+    'user_steps': [
+        'Confirm the computer has internet access.',
+        'Check whether the cloud sync app is running.',
+        'Check whether sync is paused and resume it if available.',
+        'Confirm you are signed in with the correct work account.',
+        'Check whether the file appears in the cloud web version.',
+        'Restart the sync app.',
+        'Restart the computer if sync remains stuck.',
+        'Check whether the file name has unusual characters or is very long.',
+        'Make sure the affected file is closed if it is stuck syncing.',
+        'Take a screenshot of the sync error and submit a ticket if the issue continues.'
+    ],
+    'it_steps': [
+        'Confirm the user, device, sync client, cloud provider, affected folder/library, and exact error.',
+        'Determine whether the issue affects one file, one folder, one user, one device, one cloud library/site, or multiple users.',
+        'Confirm internet access and whether the sync client is running, signed in, and not paused.',
+        'Confirm the correct work account is used.',
+        'Compare the cloud web version with the local synced copy.',
+        'Check local disk free space and cloud storage quota if visible.',
+        'Check file name, path length, file size, unsupported characters, and whether the file is locked by an app.',
+        'Confirm the user has permission to the cloud folder, library, or site.',
+        'Check selective sync, files-on-demand, or offline availability settings.',
+        'Check the sync client version and update status.',
+        'Check whether the issue follows the user, device, folder, library, or network path.',
+        'Check Conditional Access, device compliance, or sign-in failures if the sync client cannot authenticate.',
+        'Check DNS, proxy, firewall, VPN, or TLS inspection path if sync fails only on one network.',
+        'Reset, relink, or reinstall the sync client only according to company policy and after preserving unsynced files.',
+        'Escalate with cloud URL, local path, sync client version, error code, affected scope, permission status, network path, and unsynced-file risk.'
+    ]
+}
+
+CLOUD_FILE_SYNC_ISSUE_SOLUTIONS = [
+    ('FIX_CLOUD_SYNC_RESUME_SIGNIN', 'Resume Sync or Sign In to Cloud Sync Client', 'Sync may be paused or blocked because the user is signed out.', 'Resume sync, confirm account sign-in, and verify files start processing.', 0, 'Identity handoff if sign-in, MFA, Conditional Access, or device compliance blocks the client.', 'medium'),
+    ('FIX_CLOUD_SYNC_LOCAL_DOWNLOAD_FILES_ON_DEMAND', 'Troubleshoot Local Download or Files-On-Demand', 'File exists in the cloud but is not available locally due to sync settings or download failure.', 'Compare web and local copies, check selective sync/offline settings, and verify permissions.', 0, 'Collaboration or Endpoint handoff if library permissions or local sync settings cannot be corrected.', 'medium'),
+    ('FIX_CLOUD_SYNC_UPLOAD_ERROR', 'Troubleshoot File Upload Sync Error', 'Local file is not uploading because of file lock, naming issue, storage limit, or connection problem.', 'Check file lock, file name/path, size, quota, and preserve unsynced local changes.', 0, 'Collaboration/Endpoint handoff if unsynced data is at risk or reset/relink is required.', 'high'),
+    ('FIX_CLOUD_SYNC_SUBMIT_ERROR_DETAILS', 'Submit Cloud Sync Error Details', 'IT needs exact sync status, file path, cloud URL, and error text.', 'Collect error screenshot, local path, cloud URL, sync client, and affected scope.', 0, 'Escalation depends on evidence: Collaboration, Endpoint, Network, Identity, or Security.', 'medium'),
+    ('FIX_CLOUD_SYNC_RESTORE_CLIENT_SESSION', 'Restore Sync Client Session', 'Sync client is not running, paused, signed out, or blocked by authentication.', 'Restart client, sign in, complete MFA, and verify client session.', 0, 'Identity/Security handoff if authentication or policy blocks sync.', 'medium'),
+    ('FIX_CLOUD_SYNC_STORAGE_LIMIT', 'Resolve Local Disk or Cloud Storage Limit', 'Sync can fail when local disk space or cloud quota is full.', 'Check local free space and cloud quota, clean up or route quota request, then retest.', 0, 'Endpoint/Cloud Admin handoff if cleanup or quota/policy change is needed.', 'medium'),
+    ('FIX_CLOUD_SYNC_FILE_PATH_LOCK_PERMISSION', 'Fix File, Path, Lock, or Permission Issue', 'File-specific sync errors often involve unsupported names, long paths, locked files, or missing permissions.', 'Check path/name restrictions, file locks, permissions, and conflict state.', 0, 'Collaboration Admin handoff if permissions, library settings, or version conflicts persist.', 'medium'),
+    ('FIX_CLOUD_SYNC_ESCALATE_LIBRARY_SERVICE', 'Escalate Shared Library or Service Issue', 'Multiple users or one shared library affected may indicate library configuration, service health, or cloud admin issue.', 'Confirm scope, check service health, collect examples, and escalate.', 1, 'Collaboration/Cloud Admin or vendor handoff with affected users, files, library URL, and timestamps.', 'high'),
+    ('FIX_CLOUD_SYNC_REPAIR_RELINK_CLIENT', 'Repair or Relink Sync Client Safely', 'Local sync client may need repair, reset, relink, or reinstall, but unsynced files must be protected first.', 'Preserve unsynced files, then repair/relink/reset according to policy.', 1, 'Endpoint handoff if client reset/reinstall, profile repair, or OS file-system repair is required.', 'high'),
+    ('FIX_CLOUD_SYNC_NETWORK_PROXY_BLOCK', 'Investigate Network or Proxy Sync Block', 'Sync may fail only on one network, VPN, proxy, or filtered path.', 'Compare networks, check DNS/proxy/firewall/VPN/TLS inspection path, and escalate if blocked.', 1, 'Network handoff with sync endpoints, DNS/proxy findings, VPN behavior, affected users, and timestamps.', 'high'),
+]
+
+CLOUD_FILE_SYNC_ISSUE_SOLUTION_STEPS = {
+    'FIX_CLOUD_SYNC_RESUME_SIGNIN': {
+        'user': ['Open the sync app from the system tray or menu bar.', 'Check whether sync is paused.', 'Resume sync if available.', 'Sign in with your work account if prompted.', 'Wait for sync status to update.'],
+        'technician': ['Confirm the sync client is running.', 'Confirm the user is signed in with the correct work account.', 'Check for expired session or authentication prompts.', 'Confirm sync resumes and files start processing.', 'Escalate if sign-in fails due to MFA, Conditional Access, or policy.'],
+        'admin': ['Identity handoff: include account, sign-in prompt/error, MFA result, Conditional Access or compliance result, client name, and timestamp.']
+    },
+    'FIX_CLOUD_SYNC_LOCAL_DOWNLOAD_FILES_ON_DEMAND': {
+        'user': ['Confirm the file is visible in the web version.', 'Check whether the folder is selected for sync.', 'Mark the file or folder as available offline only if needed.', 'Wait for download to finish.', 'Report any sync error.'],
+        'technician': ['Compare the cloud web file with the local file path.', 'Check selective sync and files-on-demand settings.', 'Check local disk space.', 'Confirm the user has permission to the folder or library.', 'Document whether the issue is local sync setting or permission-related.'],
+        'admin': ['Collaboration/Endpoint handoff: include cloud URL, local path, files-on-demand/selected-sync state, permission check, disk space, and result.']
+    },
+    'FIX_CLOUD_SYNC_UPLOAD_ERROR': {
+        'user': ['Close the file if it is open.', 'Check that the file name does not contain unusual characters.', 'Keep the computer online.', 'Do not delete the local file before IT confirms it is safely uploaded.', 'Send IT the sync error screenshot.'],
+        'technician': ['Confirm the local file exists and is not uploaded.', 'Check file lock or open application.', 'Check file name, path length, file size, and unsupported characters.', 'Check cloud quota and local disk space.', 'Preserve unsynced local file before reset or relink actions.'],
+        'admin': ['Endpoint/Collaboration handoff: include local-only file risk, file path/name/size, lock state, quota state, cloud destination, and backup/preservation action.']
+    },
+    'FIX_CLOUD_SYNC_SUBMIT_ERROR_DETAILS': {
+        'user': ['Take a screenshot of the sync error.', 'Provide the file or folder name.', 'Provide the cloud location or shared library name.', 'Note when the issue started.'],
+        'technician': ['Record sync client, error text/code, local path, and cloud URL.', 'Determine file, folder, user, and device scope.', 'Check whether there are unsynced local changes.', 'Continue with quota, permission, path, network, or client repair path.'],
+        'admin': ['Escalation handoff: include sync client, error, local path, cloud URL, affected scope, timestamp, and unsynced-file risk.']
+    },
+    'FIX_CLOUD_SYNC_RESTORE_CLIENT_SESSION': {
+        'user': ['Open the sync app.', 'Sign in if prompted.', 'Do not approve unexpected MFA prompts.', 'Contact IT if sign-in fails.'],
+        'technician': ['Restart the sync client.', 'Confirm sign-in and MFA completion.', 'Check sign-in logs if authentication fails.', 'Check Conditional Access or device compliance if applicable.', 'Escalate to Identity if policy blocks sync client.'],
+        'admin': ['Identity/Security handoff: include sign-in log result, MFA status, Conditional Access result, compliance result, suspicious prompt details, and client name.']
+    },
+    'FIX_CLOUD_SYNC_STORAGE_LIMIT': {
+        'user': ['Check for low storage warnings.', 'Do not delete business files unless you are sure.', 'Ask IT before removing shared files.', 'Submit a screenshot of the storage warning.'],
+        'technician': ['Check local disk free space.', 'Check cloud quota if visible.', 'Use approved cleanup or quota process.', 'Confirm sync resumes after space is available.', 'Escalate if quota or policy change is needed.'],
+        'admin': ['Endpoint/Cloud Admin handoff: include local free space, cloud quota, cleanup attempted, quota/policy request, and sync retest result.']
+    },
+    'FIX_CLOUD_SYNC_FILE_PATH_LOCK_PERMISSION': {
+        'user': ['Close the affected file.', 'Do not rename shared files without confirming with coworkers.', 'Ask the folder owner to confirm access if needed.', 'Report the exact file path and error.'],
+        'technician': ['Check file name and path restrictions.', 'Check whether the file is locked by an application or user.', 'Check folder or library permissions.', 'Check file version conflict.', 'Escalate to Collaboration admin if permission or library issue persists.'],
+        'admin': ['Collaboration Admin handoff: include exact file path, permission state, file lock/conflict state, folder/library URL, affected users, and owner details.']
+    },
+    'FIX_CLOUD_SYNC_ESCALATE_LIBRARY_SERVICE': {
+        'user': ['Provide examples of affected files or folders.', 'Ask whether coworkers see the same issue.', 'Use the web version temporarily if available.'],
+        'technician': ['Confirm affected users and library/site.', 'Check cloud service health.', 'Check permissions and library sync status.', 'Capture examples and timestamps.', 'Escalate to Collaboration/Cloud Admin or vendor support path.'],
+        'admin': ['Collaboration/Cloud Admin handoff: include library/site URL, affected users, file examples, service-health result, permissions state, timestamps, and workaround.']
+    },
+    'FIX_CLOUD_SYNC_REPAIR_RELINK_CLIENT': {
+        'user': ['Do not delete the local sync folder.', 'Tell IT if there are files that exist only on your computer.', 'Keep the computer online during repair.', 'Wait for IT instructions.'],
+        'technician': ['Identify unsynced local files before reset or relink.', 'Back up or move unsynced files if needed.', 'Reset or relink sync client only according to company policy.', 'Reinstall or update sync client if needed.', 'Verify files sync both directions after repair.'],
+        'admin': ['Endpoint handoff: include unsynced-file preservation status, client version, reset/relink action, reinstall need, and post-repair sync validation.']
+    },
+    'FIX_CLOUD_SYNC_NETWORK_PROXY_BLOCK': {
+        'user': ['Tell IT whether you are on VPN, office network, home Wi-Fi, or hotspot.', 'Try another trusted network only if IT allows.', 'Provide the sync error screenshot.'],
+        'technician': ['Compare sync behavior on different networks.', 'Check DNS resolution for sync endpoints if appropriate.', 'Check proxy, firewall, VPN, or TLS inspection path.', 'Determine whether multiple users in one location are affected.', 'Escalate to Network team with evidence.'],
+        'admin': ['Network handoff: include provider/endpoints, DNS result, proxy/firewall/VPN/TLS inspection findings, network comparison, affected location/users, and timestamps.']
+    },
+}
+
+CLOUD_FILE_SYNC_ISSUE_USER_DIAGNOSTIC_NODES = [
+    ('ROOT', None, 'question', 'Cloud File Sync Issue', 'Start by checking sync session and where the file is correct.', 'Is sync paused or asking you to sign in?', None, None, None, 1),
+    ('SIGNIN', 'ROOT', 'solution', 'Resume Sync or Sign In to Cloud Sync Client', 'Sync is paused or client requires sign-in.', None, 'Yes', 'yes', 'FIX_CLOUD_SYNC_RESUME_SIGNIN', 1),
+    ('WEB_Q', 'ROOT', 'question', 'Cloud Web Version Check', 'Sync client is active; compare local copy and cloud web version.', 'Does the file appear in the cloud web version?', 'No', 'no', None, 2),
+    ('DOWNLOAD', 'WEB_Q', 'solution', 'Troubleshoot Local Download or Files-On-Demand', 'File exists in cloud but not locally.', None, 'Yes', 'yes', 'FIX_CLOUD_SYNC_LOCAL_DOWNLOAD_FILES_ON_DEMAND', 1),
+    ('UPLOAD_Q', 'WEB_Q', 'question', 'Upload Direction Check', 'File is not visible in cloud.', 'Is the file stuck uploading from your computer?', 'No', 'no', None, 2),
+    ('UPLOAD', 'UPLOAD_Q', 'solution', 'Troubleshoot File Upload Sync Error', 'Local file is not uploading.', None, 'Yes', 'yes', 'FIX_CLOUD_SYNC_UPLOAD_ERROR', 1),
+    ('DETAILS', 'UPLOAD_Q', 'solution', 'Submit Cloud Sync Error Details', 'More detail is needed to isolate the sync issue.', None, 'No / Not sure', 'unknown', 'FIX_CLOUD_SYNC_SUBMIT_ERROR_DETAILS', 2),
+]
+
+CLOUD_FILE_SYNC_ISSUE_TECH_DIAGNOSTIC_NODES = [
+    ('ROOT', None, 'question', 'Cloud File Sync Issue - IT Support Specialist', 'Start with client session, storage, file-specific errors, and scope.', 'Is the sync client running, signed in, and not paused?', None, None, None, 1),
+    ('SESSION', 'ROOT', 'solution', 'Restore Sync Client Session', 'Client is paused, stopped, signed out, or blocked by auth.', None, 'No', 'no', 'FIX_CLOUD_SYNC_RESTORE_CLIENT_SESSION', 1),
+    ('STORAGE_Q', 'ROOT', 'question', 'Storage Capacity Check', 'Client is active; check local and cloud capacity.', 'Is local disk space or cloud quota full?', 'Yes', 'yes', None, 2),
+    ('STORAGE', 'STORAGE_Q', 'solution', 'Resolve Local Disk or Cloud Storage Limit', 'Local disk or cloud quota blocks sync.', None, 'Yes', 'yes', 'FIX_CLOUD_SYNC_STORAGE_LIMIT', 1),
+    ('FILE_Q', 'STORAGE_Q', 'question', 'File-Specific Error Check', 'Storage is not the blocker; check names, locks, and permissions.', 'Is there a file-name/path, lock, or permission error?', 'No', 'no', None, 2),
+    ('FILE', 'FILE_Q', 'solution', 'Fix File, Path, Lock, or Permission Issue', 'File-specific restriction or permission issue found.', None, 'Yes', 'yes', 'FIX_CLOUD_SYNC_FILE_PATH_LOCK_PERMISSION', 1),
+    ('SCOPE_Q', 'FILE_Q', 'question', 'Scope Check', 'No clear file-specific error; check shared library or local client.', 'Are multiple users or the same library affected?', 'No', 'no', None, 2),
+    ('LIBRARY', 'SCOPE_Q', 'solution', 'Escalate Shared Library or Service Issue', 'Shared library, service health, or cloud admin issue suspected.', None, 'Yes', 'yes', 'FIX_CLOUD_SYNC_ESCALATE_LIBRARY_SERVICE', 1),
+    ('REPAIR', 'SCOPE_Q', 'solution', 'Repair or Relink Sync Client Safely', 'Likely local client issue after other checks.', None, 'No', 'no', 'FIX_CLOUD_SYNC_REPAIR_RELINK_CLIENT', 2),
+]
+
+def seed_cloud_file_sync_issue_content(cursor):
+    code_, title, category, severity, description = CLOUD_FILE_SYNC_ISSUE_PROBLEM
+    cursor.execute("""
+        INSERT INTO problem (problem_code, title, category, severity, description, is_active, updated_at)
+        VALUES (?, ?, ?, ?, ?, 1, CURRENT_TIMESTAMP)
+        ON CONFLICT(problem_code) DO UPDATE SET title=excluded.title, category=excluded.category, severity=excluded.severity, description=excluded.description, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, CLOUD_FILE_SYNC_ISSUE_PROBLEM)
+    problem_id = get_problem_id_for_tree_code(cursor, code_)
+    if not problem_id:
+        return
+    cursor.execute("""
+        INSERT INTO kb_article (problem_id, title, summary, difficulty, estimated_time, escalation_required, escalation_notes, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+        ON CONFLICT(problem_id) DO UPDATE SET title=excluded.title, summary=excluded.summary, difficulty=excluded.difficulty, estimated_time=excluded.estimated_time, escalation_required=excluded.escalation_required, escalation_notes=excluded.escalation_notes, updated_at=CURRENT_TIMESTAMP
+    """, (problem_id, CLOUD_FILE_SYNC_ISSUE_KB['title'], CLOUD_FILE_SYNC_ISSUE_KB['summary'], CLOUD_FILE_SYNC_ISSUE_KB['difficulty'], CLOUD_FILE_SYNC_ISSUE_KB['estimated_time'], CLOUD_FILE_SYNC_ISSUE_KB['escalation_required'], CLOUD_FILE_SYNC_ISSUE_KB['escalation_notes']))
+    kb_id = get_kb_article_id_by_problem_id(cursor, problem_id)
+    if kb_id:
+        cursor.execute('DELETE FROM kb_article_tag WHERE kb_article_id = ?', (kb_id,))
+        cursor.execute('DELETE FROM kb_article_symptom WHERE kb_article_id = ?', (kb_id,))
+        cursor.execute('DELETE FROM kb_article_cause WHERE kb_article_id = ?', (kb_id,))
+        cursor.execute('DELETE FROM kb_article_user_step WHERE kb_article_id = ?', (kb_id,))
+        cursor.execute('DELETE FROM kb_article_it_step WHERE kb_article_id = ?', (kb_id,))
+        insert_kb_child_rows(cursor, 'kb_article_tag', 'tag', kb_id, CLOUD_FILE_SYNC_ISSUE_KB['tags'])
+        insert_kb_child_rows(cursor, 'kb_article_symptom', 'symptom', kb_id, CLOUD_FILE_SYNC_ISSUE_KB['symptoms'])
+        insert_kb_child_rows(cursor, 'kb_article_cause', 'cause', kb_id, CLOUD_FILE_SYNC_ISSUE_KB['causes'])
+        insert_kb_child_rows(cursor, 'kb_article_user_step', 'step_text', kb_id, CLOUD_FILE_SYNC_ISSUE_KB['user_steps'])
+        insert_kb_child_rows(cursor, 'kb_article_it_step', 'step_text', kb_id, CLOUD_FILE_SYNC_ISSUE_KB['it_steps'])
+    cursor.executemany("""
+        INSERT INTO solution (solution_code, title, summary, resolution_steps, escalation_required, escalation_notes, priority_recommendation)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(solution_code) DO UPDATE SET
+            title=excluded.title, summary=excluded.summary, resolution_steps=excluded.resolution_steps,
+            escalation_required=excluded.escalation_required, escalation_notes=excluded.escalation_notes,
+            priority_recommendation=excluded.priority_recommendation, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, CLOUD_FILE_SYNC_ISSUE_SOLUTIONS)
+    for solution_code, audience_steps in CLOUD_FILE_SYNC_ISSUE_SOLUTION_STEPS.items():
+        solution_id = get_solution_id_by_code(cursor, solution_code)
+        if not solution_id:
+            continue
+        for audience, steps in audience_steps.items():
+            cursor.execute('DELETE FROM solution_step WHERE solution_id = ? AND audience = ?', (solution_id, audience))
+            cursor.executemany('INSERT INTO solution_step (solution_id, audience, step_text, sort_order) VALUES (?, ?, ?, ?)', [(solution_id, audience, step, idx) for idx, step in enumerate(steps, start=1)])
+    seed_cloud_file_sync_issue_tree(cursor, 'user', 'CLOUD_FILE_SYNC_ISSUE_USER', 'Cloud File Sync Issue - User Diagnostic', 'User-friendly diagnostic tree for paused/sign-in sync, web-vs-local comparison, upload errors, and sync details.', CLOUD_FILE_SYNC_ISSUE_USER_DIAGNOSTIC_NODES)
+    seed_cloud_file_sync_issue_tree(cursor, 'technician', 'CLOUD_FILE_SYNC_ISSUE_TECHNICIAN', 'Cloud File Sync Issue - IT Support Specialist Diagnostic', 'IT Support Specialist diagnostic tree for sync session, storage/quota, file restrictions, shared library/service scope, and safe client repair.', CLOUD_FILE_SYNC_ISSUE_TECH_DIAGNOSTIC_NODES)
+
+def seed_cloud_file_sync_issue_tree(cursor, audience, tree_code, title, description, nodes):
+    problem_id = get_problem_id_for_tree_code(cursor, 'CLOUD_FILE_SYNC_ISSUE')
+    cursor.execute("""
+        INSERT INTO diagnostic_tree (problem_id, diagnostic_tree_code, base_tree_code, audience, title, description, is_active, updated_at)
+        VALUES (?, ?, 'CLOUD_FILE_SYNC_ISSUE', ?, ?, ?, 1, CURRENT_TIMESTAMP)
+        ON CONFLICT(diagnostic_tree_code) DO UPDATE SET
+            problem_id=excluded.problem_id, base_tree_code=excluded.base_tree_code, audience=excluded.audience,
+            title=excluded.title, description=excluded.description, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, (problem_id, tree_code, audience, title, description))
+    tree_id = get_diagnostic_tree_id_by_code(cursor, tree_code)
+    if not tree_id:
+        return
+    cursor.execute('UPDATE diagnostic_node SET is_active = 0, updated_at = CURRENT_TIMESTAMP WHERE diagnostic_tree_id = ?', (tree_id,))
+    for node_key, parent_key, node_type, node_title, node_desc, prompt, condition_label, condition_value, solution_code, sort_order in nodes:
+        parent_id = get_diagnostic_node_id_by_tree_and_key(cursor, tree_id, parent_key) if parent_key else None
+        solution_id = get_solution_id_by_code(cursor, solution_code) if solution_code else None
+        cursor.execute("""
+            INSERT INTO diagnostic_node (
+                diagnostic_tree_id, parent_diagnostic_node_id, problem_id, diagnostic_tree_code,
+                node_key, node_type, title, description, prompt_text,
+                condition_label, condition_value, solution_id, sort_order, is_active, updated_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, CURRENT_TIMESTAMP)
+            ON CONFLICT(diagnostic_tree_code, node_key) DO UPDATE SET
+                diagnostic_tree_id=excluded.diagnostic_tree_id,
+                parent_diagnostic_node_id=excluded.parent_diagnostic_node_id,
+                problem_id=excluded.problem_id,
+                node_type=excluded.node_type,
+                title=excluded.title,
+                description=excluded.description,
+                prompt_text=excluded.prompt_text,
+                condition_label=excluded.condition_label,
+                condition_value=excluded.condition_value,
+                solution_id=excluded.solution_id,
+                sort_order=excluded.sort_order,
+                is_active=1,
+                updated_at=CURRENT_TIMESTAMP
+        """, (tree_id, parent_id, problem_id, tree_code, node_key, node_type, node_title, node_desc, prompt, condition_label, condition_value, solution_id, sort_order))
+
+
 def initialize_database():
     """Create SQLite tables if they do not already exist."""
     connection = get_db_connection()
@@ -9696,6 +9931,7 @@ def initialize_database():
     seed_computer_no_power_content(cursor)
     seed_sound_audio_not_working_content(cursor)
     seed_cloud_service_access_issue_content(cursor)
+    seed_cloud_file_sync_issue_content(cursor)
     seed_existing_issue_role_alignment(cursor)
 
     cursor.execute("""
