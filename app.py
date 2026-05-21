@@ -604,7 +604,7 @@ MVP_CONTENT_FOCUS_ENABLED = True
 MVP_ACTIVE_PROBLEM_CODES = {"PRINTER_FAILURE", "PASSWORD_RESET_REQUEST", "ACCOUNT_LOCKED", "MULTI_FACTOR_AUTHENTICATION_ISSUE", "VPN_CONNECTION_FAILURE", "SHARED_DRIVE_NETWORK_DRIVE_ACCESS_ISSUE", "REMOTE_DESKTOP_CONNECTION_ISSUE", "SLOW_COMPUTER_PERFORMANCE", "APPLICATION_NOT_OPENING", "APPLICATION_CRASHING_FREEZING", "OPERATING_SYSTEM_UPDATE_ISSUE", "DEVICE_RUNNING_OUT_OF_STORAGE", "PHISHING_EMAIL_REPORTED", "MALWARE_OR_VIRUS_SUSPECTED", "EMAIL_ATTACHMENT_NOT_OPENING", "CALENDAR_SYNC_ISSUE", "SOFTWARE_INSTALLATION_REQUEST", "BROWSER_ISSUE", "CERTIFICATE_SECURITY_WARNING", "MOBILE_EMAIL_SETUP_ISSUE", "VIDEO_CONFERENCING_ISSUE", "KEYBOARD_OR_MOUSE_NOT_WORKING", "MONITOR_DISPLAY_NOT_WORKING", "DOCKING_STATION_NOT_WORKING", "WIFI_CONNECTION_ISSUE", "ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE", "COMPUTER_WILL_NOT_START_NO_POWER", "SOUND_AUDIO_NOT_WORKING", "CLOUD_SERVICE_ACCESS_ISSUE", "CLOUD_FILE_SYNC_ISSUE"}
 MVP_CONTENT_FOCUS_NOTE = (
     "The visible MVP currently focuses on a small set of high-quality troubleshooting examples: "
-    "Printer Failure, Password Reset Request, Account Locked, Multi-factor Authentication Issue, VPN Connection Failure, Shared Drive / Network Drive Access Issue, Remote Desktop Connection Issue, Slow Computer Performance, Application Not Opening, Application Crashing / Freezing, Operating System Update Issue, Device Running Out of Storage, Phishing Email Reported, Malware or Virus Suspected, Email Attachment Not Opening, Calendar Sync Issue, Software Installation Request, Browser Issue, Certificate / Security Warning, Mobile Email Setup Issue, Video Conferencing Issue, Keyboard or Mouse Not Working, Monitor / Display Not Working, Docking Station Not Working, Wi-Fi Connection Issue, Ethernet / Wired Network Connection Issue, Computer Will Not Start / No Power, Sound / Audio Not Working, Cloud Service Access Issue, and Cloud File Sync Issue. Other sample issues are hidden until they "
+    "Printer Failure, Password Reset Request, Account Locked, Multi-factor Authentication Issue, VPN Connection Failure, Shared Drive / Network Folder Access Issue, Remote Desktop Connection Issue, Slow Computer Performance, Application Not Opening, Application Crashing / Freezing, Operating System Update Issue, Device Running Out of Storage, Phishing Email Reported, Malware or Virus Suspected, Email Attachment Not Opening, Calendar Sync Issue, Software Installation Request, Browser Issue, Certificate / Security Warning, Mobile Email Setup Issue, Video Conferencing Issue, Keyboard or Mouse Not Working, Monitor / Display Not Working, Docking Station Not Working, Wi-Fi Connection Issue, Ethernet / Wired Network Connection Issue, Computer Will Not Start / No Power, Sound / Audio Not Working, Cloud Service Access Issue, and Cloud File Sync Issue. Other sample issues are hidden until they "
     "are expanded with detailed symptoms, causes, user steps, and technician steps."
 )
 
@@ -3333,148 +3333,162 @@ def seed_vpn_connection_failure_tree(cursor, audience, tree_code, title, descrip
 # -----------------------------
 SHARED_DRIVE_ACCESS_PROBLEM = (
     'SHARED_DRIVE_NETWORK_DRIVE_ACCESS_ISSUE',
-    'Shared Drive / Network Drive Access Issue',
+    'Shared Drive / Network Folder Access Issue',
     'Network, Remote Access & Storage',
     'medium',
-    'User cannot access a shared drive, mapped network drive, file server folder, or shared company location.',
+    'User cannot access a mapped drive, shared folder, department folder, home drive, file server path, DFS path, or network storage location.',
 )
 
 SHARED_DRIVE_ACCESS_KB = {
-    'title': 'Shared Drive / Network Drive Access Issue',
-    'summary': 'Use this guide when a mapped drive is missing, a shared drive has a red X, a folder shows Access Denied, or a network path cannot be found.',
+    'title': 'Shared Drive / Network Folder Access Issue',
+    'summary': 'Use this guide when a mapped drive, department share, home drive, file server path, DFS path, or network folder is disconnected, inaccessible, slow, missing files, or showing access errors.',
     'difficulty': 'Intermediate',
-    'estimated_time': '10-20 minutes',
+    'estimated_time': '10-30 minutes',
     'escalation_required': 1,
-    'escalation_notes': 'Escalate to Access Management/Identity for missing folder permissions or group membership, Systems/Server Team for file server/share/DFS problems, Network Team for DNS/routing/firewall/ACL or VPN-to-file-server reachability issues, and Endpoint/Desktop Support for mapped-drive policy, cached credentials, offline files, or user-profile problems.',
-    'tags': ['shared drive', 'network drive', 'mapped drive', 'file server', 'UNC path', 'SMB', 'VPN', 'DNS', 'access denied', 'permissions'],
+    'escalation_notes': 'Escalate to Systems/File Server/Storage for server/share/DFS/storage issues, Identity/Access Management for permissions and group membership, Network for DNS/VPN/SMB/firewall/routing issues, and Endpoint/Desktop Support for mapped-drive, cached credential, offline files, or client profile problems.',
+    'tags': ['shared drive', 'network folder', 'mapped drive', 'file server', 'SMB', 'DFS', 'VPN', 'permissions', 'DNS', 'access denied', 'UNC path'],
     'symptoms': [
-        'Shared drive is missing or shows a red X.',
-        'User cannot open a department folder or mapped network drive.',
-        'Access Denied appears for a specific folder or share.',
-        'Network Path Not Found appears when opening the drive or UNC path.',
-        'Shared drive works in the office but not from home or VPN.',
-        'User can access some folders but not a specific protected folder.',
-        'Files on the shared drive open slowly or repeatedly prompt for credentials.',
+        'Mapped drive shows a red X, is disconnected, or has disappeared.',
+        'Shared folder shows Access Denied or repeatedly asks for credentials.',
+        'Network path not found appears when opening a UNC path or mapped drive.',
+        'Shared drive works onsite but not from home or VPN.',
+        'Coworker can access the folder, but this user cannot.',
+        'Files are slow, missing, empty, read-only, or locked by another user.',
+        'One department share, home drive, file server path, or DFS path is unavailable.',
     ],
     'causes': [
-        'Common: user is not connected to VPN, VPN internal DNS is not working, network drive mapping is disconnected, file server hostname cannot resolve, mapped path is outdated, user lacks folder permission, saved credentials are old, file server/share is temporarily unavailable, user is on guest/public network, group membership has not refreshed, or restart/sign-out is needed after an access change.',
-        'Advanced: SMB traffic blocked by firewall or ACL, routing issue between VPN subnet and file server subnet, DNS suffix/search domain issue, DFS namespace referral issue, file server service down, NTFS/share permission mismatch, Group Policy drive mapping failure, Kerberos/authentication issue, time skew, offline files cache corruption, duplicate drive mapping using different credentials, file server quota/storage issue, or department share migration with old path still in use.',
+        'Common: VPN or corporate network is not connected, mapped drive is disconnected, UNC path is wrong or outdated, user lacks permissions, security group membership has not refreshed, password changed and saved credentials are stale, DNS cannot resolve the file server, file server/share is unavailable, user is accessing the wrong department folder, file is locked, offline files/cache is stale, or storage quota is reached.',
+        'Advanced: SMB service/server issue, DFS namespace or referral problem, file server cluster/failover issue, firewall or ACL blocks SMB traffic, VPN split tunnel does not include file server subnet, DNS suffix/search domain issue, Kerberos/NTLM authentication problem, clock/time skew, SMB version compatibility issue, port 445 blocked, file server disk/storage issue, endpoint security blocking network share access, or mapped-drive GPO/login script failure.',
     ],
     'user_steps': [
-        'Confirm you are connected to the company network or VPN.',
-        'Try opening another internal resource to confirm VPN or internal access works.',
-        'Sign out and sign back in if your access was recently changed.',
-        'Restart the computer if the shared drive still shows disconnected.',
-        'Confirm the exact drive letter or folder path you are trying to open.',
-        'Check whether coworkers can access the same shared location.',
-        'If you see Access Denied, request access or contact IT.',
-        'If you see Network Path Not Found, take a screenshot of the error.',
-        'Do not delete or rename shared folders while troubleshooting.',
-        'Submit a ticket with the folder path, error message, and whether VPN is connected.',
+        'Confirm you are connected to the company network or VPN if remote.',
+        'Try opening the folder again after reconnecting to VPN.',
+        'Restart File Explorer or restart the computer.',
+        'Confirm the shared folder path or drive letter is correct.',
+        'Try accessing the folder from a known shortcut or approved link.',
+        'Do not repeatedly enter random or old passwords if prompted.',
+        'Tell IT if you recently changed your password or received new permissions.',
+        'Ask whether coworkers can access the same folder.',
+        'Take a screenshot of the exact error message.',
+        'Submit a ticket with the drive letter/path, error message, and whether VPN is connected.',
     ],
     'it_steps': [
-        'Tier 1: Confirm the user, device name, location, network type, and whether the user is remote or onsite.',
-        'Tier 1: Ask for the exact error message: Access Denied, Network Path Not Found, disconnected drive/red X, credential prompt, or slow access.',
-        'Tier 1: Confirm whether the user is connected to VPN if remote and whether other internal resources work.',
-        'Tier 1: Confirm the exact drive letter and UNC path if known.',
-        'Tier 1: Ask whether other users can access the same share and whether the user recently changed team, role, department, or device.',
-        'Tier 1: Have the user sign out/in or restart after recent permission changes.',
-        'Tier 1: Determine whether the issue affects one folder, one share, or all network drives and capture screenshots and the exact path.',
-        'Tier 2: Test the file server by hostname and FQDN.',
-        'Tier 2: Test DNS resolution for the file server.',
-        'Tier 2: Test reachability to the file server by IP address where allowed.',
-        'Tier 2: Compare access by hostname versus IP to separate DNS from connectivity.',
-        'Tier 2: Test the UNC path directly, for example \\\\server\\share.',
-        'Tier 2: Confirm whether SMB/file-sharing traffic is reachable according to company tools and policy.',
-        'Tier 2: Check whether the user VPN adapter has correct IP, DNS, and routes.',
-        'Tier 2: Check whether the file server subnet is reachable from the user network or VPN segment.',
-        'Tier 2: Check for local subnet overlap if the user is remote.',
-        'Tier 2: Check mapped drive configuration and remove/re-map the drive if the path is outdated.',
-        'Tier 2: Check whether cached credentials are being used.',
-        'Tier 2: Confirm the user AD/security group membership or access group.',
-        'Tier 2: Distinguish between connectivity, DNS, authentication, authorization/permission, file server/share outage, and client mapping/cache issues before escalation.',
+        'Tier 1: Confirm the user, device name, location, VPN status, drive letter/path, and exact error message.',
+        'Tier 1: Determine whether the issue affects one user, one device, one mapped drive, one folder, multiple users, or the entire file server/share.',
+        'Tier 1: Confirm whether the user is on the corporate network or VPN.',
+        'Tier 1: Confirm the correct UNC path, such as \\\\server\\share, and test the UNC path directly instead of only the mapped drive.',
+        'Tier 1: Confirm whether the mapped drive is disconnected, missing, showing a red X, prompting for credentials, or returning Access Denied / Network Path Not Found.',
+        'Tier 1: Ask whether the user recently changed password, changed department, received new access, or got a new device.',
+        'Tier 1: Confirm whether coworkers with the same role can access the same folder.',
+        'Tier 1: Capture screenshot, path, drive letter, VPN status, error text, and affected scope.',
+        'Tier 2: Test DNS resolution for the file server or DFS namespace.',
+        'Tier 2: Test reachability to the file server or DFS namespace using approved tools.',
+        'Tier 2: Test access by hostname and IP if appropriate to separate DNS from network reachability.',
+        'Tier 2: Check whether VPN routes include the file server subnet and whether SMB/file sharing traffic is reachable according to policy.',
+        'Tier 2: Check user group membership, share permissions, and NTFS permissions where accessible.',
+        'Tier 2: Check whether recent group changes require sign-out/sign-in or token refresh.',
+        'Tier 2: Check Credential Manager or saved credentials conflict if allowed by policy.',
+        'Tier 2: Check whether offline files/cache is causing stale or inconsistent view.',
+        'Tier 2: Check whether multiple users are affected by the same server/share.',
+        'Tier 2: Check file server/share service health, storage capacity, quota, and recent changes if accessible.',
+        'Tier 2: Distinguish between VPN/network path, DNS/name resolution, permission/group membership, stale credentials, mapped-drive configuration, file lock/offline cache, and file server/storage outage.',
+        'Tier 2: Escalate with username, device, drive/path, server/share, error message, DNS/reachability results, permission/group status, VPN route status, affected scope, and timestamps.',
     ],
 }
 
 SHARED_DRIVE_ACCESS_SOLUTIONS = [
-    ('FIX_SHARED_DRIVE_CONNECT_VPN','Connect to VPN or Company Network','Shared drives usually require connection to the company network or VPN.','Connect to VPN or the company network, confirm internal access, and retry the shared drive before deeper troubleshooting.',0,'Escalate to VPN or Network support if the user cannot connect to VPN or internal resources remain unreachable.','medium'),
-    ('FIX_SHARED_DRIVE_PERMISSION_REQUEST','Request or Verify Shared Folder Permission','User can reach the share but does not have permission to access the folder.','Confirm the exact folder path, verify access requirements, and route an access request if approval is required.',1,'Escalate to Access Management or the folder owner if required group membership or approval is missing.','medium'),
-    ('FIX_SHARED_DRIVE_REMAP','Reconnect or Remap Network Drive','The mapped drive may be disconnected, stale, or pointing to an old path.','Test the UNC path, remove stale mappings if needed, and remap the drive to the correct path.',0,'Escalate if Group Policy or login script drive mapping is failing for multiple users.','medium'),
-    ('FIX_SHARED_DRIVE_CLEAR_CACHED_CREDENTIALS','Clear Saved Credentials and Sign In Again','Old or incorrect saved credentials may block access to the shared drive.','Remove old saved credentials, have the user sign out/in, and retest the UNC path.',0,'Escalate if repeated credential prompts continue or account lockout occurs.','medium'),
-    ('FIX_SHARED_DRIVE_DNS_RESOLUTION','Troubleshoot File Server DNS Resolution','The computer cannot resolve the file server hostname.','Test DNS resolution for the file server hostname/FQDN, compare VPN/onsite results, and flush DNS cache when appropriate.',1,'Escalate to Network/DNS team if DNS records, VPN DNS assignment, or multiple users are affected.','high'),
-    ('FIX_SHARED_DRIVE_SERVER_REACHABILITY','Escalate File Server Network Reachability Issue','The file server or share cannot be reached from the user network path.','Confirm DNS, test approved reachability, compare affected scope, and escalate with path, network, VPN status, and timestamps.',1,'Escalate to Network or Systems team if the server/share is unreachable or a routing/firewall/ACL/server issue is suspected.','high'),
-    ('FIX_SHARED_DRIVE_PERMISSION_CONFIG_ESCALATE','Escalate Permission or Share Configuration Issue','User appears to have access group membership, but folder access still fails.','Confirm group membership and path, compare with a known-good user if allowed, then escalate with evidence.',1,'Escalate to Systems or Access Management for NTFS/share permission mismatch, approval, or configuration review.','high'),
-    ('FIX_SHARED_DRIVE_SLOW_PERFORMANCE','Report Slow Shared Drive Performance','Shared drive is accessible but slow due to network latency, VPN, server load, file size, or sync issues.','Identify whether slowness affects one file, one share, VPN only, onsite too, or multiple users, then escalate with timing and scope.',1,'Escalate to Network or Systems team if multiple users, server load, VPN latency, or storage issues are suspected.','medium'),
+    ('FIX_SHARED_DRIVE_CONNECT_VPN_NETWORK','Connect to VPN or Company Network','Shared drives often require corporate network or VPN access.','Connect to VPN/company network, confirm internal access, and retry the shared path before deeper troubleshooting.',0,'Escalate to VPN/Network support if VPN connects but internal file-server resources remain unreachable.','medium'),
+    ('FIX_SHARED_DRIVE_PERMISSION_REVIEW','Request Shared Folder Permission Review','Access denied usually means the user lacks permission or group membership.','Confirm the folder, business reason, approval path, and required access group before changing permissions.',1,'Escalate to Identity/Access Management or folder owner for group membership, approval, or access-model review.','medium'),
+    ('FIX_SHARED_DRIVE_CREDENTIAL_PROMPT','Report Credential Prompt or Password Change','Password changes or saved credentials can cause repeated prompts or failed access.','Check recent password changes, saved credential conflicts, and authenticated sessions before remapping or escalating.',0,'Escalate to Identity if authentication prompts persist, account lockout occurs, or Kerberos/NTLM issue is suspected.','medium'),
+    ('FIX_SHARED_DRIVE_PATH_SERVER_UNREACHABLE','Report Shared Drive Path or Server Unreachable','Network path not found may indicate wrong path, DNS issue, VPN route issue, or server outage.','Confirm the path, test UNC access, check DNS/reachability, and identify affected scope.',1,'Escalate to Network or Systems if server/share/path is unavailable or multiple users are affected.','high'),
+    ('FIX_SHARED_DRIVE_RECONNECT_MAPPING','Reconnect or Report Mapped Drive Issue','A mapped drive may be disconnected, outdated, or pointing to an old path.','Test direct UNC path, recreate the mapping if the path is valid, and check login script/GPO if recurring.',0,'Escalate to Endpoint/Desktop or Systems if mapping policy or login script fails for multiple users.','medium'),
+    ('FIX_SHARED_DRIVE_SLOW_MISSING_LOCK','Report Slow Share, Missing Files, or File Lock','Slow access, missing files, or locked files may be caused by server load, permissions, offline files, or another user locking the file.','Identify the file/folder, determine whether one user or many are affected, and avoid overwriting data.',1,'Escalate to Systems/Storage if restore, quota, file lock, server health, or missing files require owner review.','medium'),
+    ('FIX_SHARED_DRIVE_DNS_NAME_RESOLUTION','Troubleshoot File Server DNS or Name Resolution','File server path fails because hostname or DFS namespace does not resolve.','Test DNS resolution for the file server/DFS name and compare onsite vs VPN behavior.',1,'Escalate to Network/DNS if records, search suffix, VPN DNS assignment, or DFS namespace resolution is failing.','high'),
+    ('FIX_SHARED_DRIVE_NETWORK_VPN_SMB_PATH','Troubleshoot Network, VPN, or SMB Path','Name resolves but SMB/file sharing path is blocked or unreachable.','Confirm server name resolves, test reachability using approved tools, and check VPN routes or SMB path restrictions.',1,'Escalate to Network/Systems with path, DNS result, VPN route, SMB reachability, affected users, and timestamps.','high'),
+    ('FIX_SHARED_DRIVE_VERIFY_PERMISSIONS_GROUPS','Verify Permissions and Group Membership','User can reach the server but lacks permission to the folder/share.','Verify required group membership, share/NTFS permissions, and approval process before granting access.',1,'Escalate to Identity/Access Management or folder owner if authorization or group membership is missing.','medium'),
+    ('FIX_SHARED_DRIVE_CLEAR_CREDENTIALS_MAPPING','Clear Stale Credentials or Recreate Mapping','Saved credentials or old mappings may cause prompts, wrong-user access, or connection failure.','Remove stale credentials/mappings according to policy, sign out/in, and recreate the mapping to the correct path.',0,'Escalate to Endpoint/Desktop if profile, credential manager, or mapped-drive session issues persist.','medium'),
+    ('FIX_SHARED_DRIVE_FILE_LOCK_CACHE_SERVER','Investigate File Lock, Offline Cache, or Server Issue','Access works but files appear locked, stale, missing, or slow.','Check file locks, offline files/cache, affected scope, and server/share health before restore or repair.',1,'Escalate to Systems/Storage for file lock, quota, restore, offline cache, or server-side investigation.','medium'),
 ]
 
 SHARED_DRIVE_ACCESS_SOLUTION_STEPS = {
-    'FIX_SHARED_DRIVE_CONNECT_VPN': {
-        'user': ['Connect to the company VPN if working remotely.','Wait until VPN shows connected.','Try opening the shared drive again.','If VPN will not connect, use the VPN troubleshooting flow.'],
-        'technician': ['Confirm whether the user is remote or onsite.','Confirm VPN status and internal network access.','Check whether other internal resources work.','Continue shared-drive troubleshooting after network access is confirmed.'],
-        'admin': ['Escalate to VPN or Network support if the user cannot establish VPN or cannot reach any internal resources after VPN connects.'],
+    'FIX_SHARED_DRIVE_CONNECT_VPN_NETWORK': {
+        'user': ['Connect to the company VPN if remote.', 'Wait until VPN shows connected.', 'Try opening the shared drive again.', 'Tell IT if VPN connects but the shared drive still fails.'],
+        'technician': ['Confirm VPN or corporate network status.', 'Confirm the file server/share requires internal access.', 'Check whether the user can reach other internal resources.', 'Continue with DNS, route, or SMB path checks if the share still fails.'],
+        'admin': ['Network handoff: include VPN profile/status, file server subnet, DNS result, route test, user location, and affected scope.']
     },
-    'FIX_SHARED_DRIVE_PERMISSION_REQUEST': {
-        'user': ['Confirm the folder path you need.','Ask your manager or folder owner to approve access if required.','Submit a ticket with the folder path and business reason.','Sign out and back in after access is granted.'],
-        'technician': ['Confirm the exact folder/share path.','Confirm whether the error is Access Denied.','Check the required access group or folder owner if known.','Verify whether the user is in the correct group.','Submit or route an access request if approval is required.','Ask the user to sign out/in after group membership changes.'],
-        'admin': ['Escalate to Access Management or the folder owner when approval, group membership, or protected-folder access is required.'],
+    'FIX_SHARED_DRIVE_PERMISSION_REVIEW': {
+        'user': ['Confirm the folder you need.', 'Explain the business reason for access.', 'Provide manager or folder owner approval if required.', 'Wait for IT or folder owner confirmation.'],
+        'technician': ['Confirm the exact folder/share path.', 'Check whether the user should have access.', 'Verify group membership or access role.', 'Route approval to folder owner if required.', 'Ask the user to sign out and back in after permission changes if needed.'],
+        'admin': ['Identity/folder-owner handoff: include user, folder path, required group, business reason, approval status, and peer access comparison.']
     },
-    'FIX_SHARED_DRIVE_REMAP': {
-        'user': ['Restart your computer.','Try opening the shared location again.','If you know the folder path, try opening it directly.','Contact IT if the drive is still missing or disconnected.'],
-        'technician': ['Confirm the drive letter and UNC path.','Test the UNC path directly.','Remove stale mappings if needed.','Re-map the drive to the correct path.','Check whether Group Policy or login script drive mapping should apply.'],
-        'admin': ['Escalate if drive mappings fail for multiple users or managed Group Policy/login script deployment appears broken.'],
+    'FIX_SHARED_DRIVE_CREDENTIAL_PROMPT': {
+        'user': ['Do not repeatedly enter old passwords.', 'Tell IT if you recently changed your password.', 'Capture a screenshot of the prompt.', 'Restart the computer if IT instructs you.'],
+        'technician': ['Confirm account status and recent password change.', 'Check for saved credential conflict if allowed by policy.', 'Remove or recreate mapping/credentials according to policy.', 'Confirm access after sign-out/sign-in or reboot.', 'Escalate if authentication prompts persist.'],
+        'admin': ['Identity/Endpoint handoff: include credential prompt behavior, password-change timing, saved credential cleanup performed, account status, and lockout risk.']
     },
-    'FIX_SHARED_DRIVE_CLEAR_CACHED_CREDENTIALS': {
-        'user': ['Sign out and sign back in.','If prompted, enter your current company username and password.','Do not repeatedly try old passwords.','Contact IT if the credential prompt returns.'],
-        'technician': ['Check whether Windows Credential Manager or saved credentials are being used.','Remove old saved credentials for the file server if appropriate.','Have the user sign out/in.','Retest the UNC path.','Watch for account lockout caused by repeated old-password attempts.'],
-        'admin': ['Escalate if credential prompts continue after cached credentials are cleared or if repeated lockouts suggest a wider authentication issue.'],
+    'FIX_SHARED_DRIVE_PATH_SERVER_UNREACHABLE': {
+        'user': ['Provide the shared drive path or drive letter.', 'Tell IT whether you are on VPN.', 'Ask whether coworkers can access the same drive.', 'Submit a screenshot of the error.'],
+        'technician': ['Confirm the path or drive mapping.', 'Test the UNC path directly.', 'Test DNS resolution for the file server or DFS namespace.', 'Check VPN route/internal reachability.', 'Escalate if the server/share/network path is unavailable.'],
+        'admin': ['Network/Systems handoff: include UNC path, drive letter, DNS result, reachability result, VPN state, affected users, and error screenshot.']
     },
-    'FIX_SHARED_DRIVE_DNS_RESOLUTION': {
-        'user': ['Confirm VPN is connected if remote.','Try again after reconnecting VPN.','Submit a ticket with the shared drive path and screenshot.'],
-        'technician': ['Test DNS resolution for the file server hostname and FQDN.','Compare DNS results while connected to VPN and from onsite network if possible.','Confirm DNS servers assigned to the VPN or network adapter.','Flush DNS cache if appropriate.','Escalate to Network/DNS team if multiple users or DNS records are affected.'],
-        'admin': ['Escalate to Network/DNS team with hostname, FQDN, DNS server used, VPN status, nslookup results, affected scope, and timestamps.'],
+    'FIX_SHARED_DRIVE_RECONNECT_MAPPING': {
+        'user': ['Confirm VPN/company network is connected.', 'Try opening the mapped drive again.', 'Restart the computer.', 'Report the drive letter and error.'],
+        'technician': ['Check mapped drive letter and target path.', 'Test direct UNC path.', 'Recreate mapping if path is valid.', 'Check login script/GPO mapping if applicable.', 'Escalate if mapping policy/script is failing.'],
+        'admin': ['Endpoint/GPO handoff: include drive letter, target UNC, mapping method, user/device scope, and whether UNC works directly.']
     },
-    'FIX_SHARED_DRIVE_SERVER_REACHABILITY': {
-        'user': ['Record the error message.','Note whether you are remote, onsite, or connected to VPN.','Ask whether coworkers have the same issue.','Submit a ticket with the folder path and screenshot.'],
-        'technician': ['Confirm DNS resolves the file server.','Test approved reachability to the file server.','Check whether the issue affects one user, one network segment, or multiple users.','Compare onsite versus VPN behavior if possible.','Escalate to Network or Systems team with DNS results, path, user network, VPN status, timestamps, and affected scope.'],
-        'admin': ['Escalate to Network or Systems team when the file server/share is unreachable, the VPN subnet cannot reach the server subnet, SMB appears blocked, or multiple users are affected.'],
+    'FIX_SHARED_DRIVE_SLOW_MISSING_LOCK': {
+        'user': ['Do not overwrite files if unsure.', 'Note the file/folder name and time.', 'Ask whether coworkers see the same issue.', 'Submit screenshot or error text.'],
+        'technician': ['Confirm whether file is missing, locked, or slow.', 'Check whether issue is one file/folder or entire share.', 'Check offline files/cache if enabled.', 'Check permissions and file ownership if needed.', 'Escalate if server/storage issue or restore is needed.'],
+        'admin': ['Systems/Storage handoff: include file/folder path, lock/missing/slow symptom, offline cache status, affected users, and restore/quota need.']
     },
-    'FIX_SHARED_DRIVE_PERMISSION_CONFIG_ESCALATE': {
-        'user': ['Provide the exact folder path.','Provide the error screenshot.','Confirm whether coworkers with the same role can access it.','Wait for IT or the folder owner to verify access.'],
-        'technician': ['Confirm the user group membership.','Confirm the folder/share path.','Compare access with another user in the same group if allowed.','Check whether sign-out/in or group token refresh is needed.','Escalate to Systems/Access Management with path, username, group membership, error, and approval details.'],
-        'admin': ['Escalate to Systems or Access Management for NTFS/share permission mismatch, group membership mismatch, DFS/share configuration, or protected-folder approval review.'],
+    'FIX_SHARED_DRIVE_DNS_NAME_RESOLUTION': {
+        'user': ['Provide the exact path if known.', 'Tell IT whether you are onsite or remote/VPN.', 'Wait for IT to test the connection.'],
+        'technician': ['Test DNS resolution for server/DFS name.', 'Compare onsite versus VPN DNS behavior.', 'Check DNS suffix/search domain if relevant.', 'Test access by expected hostname/path.', 'Escalate if DNS or namespace issue is suspected.'],
+        'admin': ['DNS/Network handoff: include server or DFS name, resolver/DNS servers, onsite vs VPN results, suffix/search-domain findings, and affected scope.']
     },
-    'FIX_SHARED_DRIVE_SLOW_PERFORMANCE': {
-        'user': ['Try opening a smaller file from the same share.','Note whether the issue happens only on VPN or also onsite.','Record the time of the slowdown.','Submit a ticket if the issue continues.'],
-        'technician': ['Confirm whether the issue is one file, one folder, one share, or all shares.','Compare VPN versus onsite performance if possible.','Check basic network latency to internal resources.','Ask whether multiple users are affected.','Escalate with timestamps, file path, file size, network type, and affected scope.'],
-        'admin': ['Escalate to Network or Systems team if performance affects multiple users, a department share, VPN path, server load, or storage subsystem.'],
+    'FIX_SHARED_DRIVE_NETWORK_VPN_SMB_PATH': {
+        'user': ['Stay connected to VPN/company network for testing.', 'Report whether other internal resources work.', 'Use an approved workaround if IT provides one.'],
+        'technician': ['Confirm server name resolves.', 'Test reachability to file server/share path using approved tools.', 'Check VPN routes to the file server subnet.', 'Check firewall, ACL, or SMB path suspicion.', 'Escalate to Network or Systems with path and test results.'],
+        'admin': ['Network/Systems handoff: include VPN route, file server subnet, SMB/path test, firewall/ACL suspicion, user location, and affected scope.']
+    },
+    'FIX_SHARED_DRIVE_VERIFY_PERMISSIONS_GROUPS': {
+        'user': ['Provide business reason for access.', 'Identify the folder owner if known.', 'Wait for approval before access is granted.'],
+        'technician': ['Check share and NTFS permission model if accessible.', 'Verify required group membership.', 'Confirm approval process.', 'Apply or request group change according to policy.', 'Confirm access after token refresh/sign-out.'],
+        'admin': ['Identity/Systems handoff: include share/NTFS findings, required group, approval status, token refresh step, and peer access comparison.']
+    },
+    'FIX_SHARED_DRIVE_CLEAR_CREDENTIALS_MAPPING': {
+        'user': ['Tell IT if your password recently changed.', 'Do not keep retrying old credentials.', 'Restart when instructed.'],
+        'technician': ['Check for existing mapped sessions to the same server.', 'Clear saved credentials according to policy.', 'Remove old mapping and recreate with correct path.', 'Ask user to sign out and back in if needed.', 'Document resolution.'],
+        'admin': ['Endpoint handoff: include mapped sessions, saved credential cleanup, recreated UNC mapping, sign-out/reboot result, and remaining prompt behavior.']
+    },
+    'FIX_SHARED_DRIVE_FILE_LOCK_CACHE_SERVER': {
+        'user': ['Do not overwrite or delete files.', 'Report exact file/folder names.', 'Provide the time issue started.', 'Ask coworkers whether they see the same issue.'],
+        'technician': ['Check if file is locked by another user/process.', 'Check offline files/cache status.', 'Check whether issue affects multiple users/folders.', 'Check server/share health if accessible.', 'Escalate to Systems/Storage if restore, quota, or server issue is suspected.'],
+        'admin': ['Systems/Storage handoff: include file path, lock owner/process if known, offline cache status, affected scope, quota/storage status, and restore need.']
     },
 }
 
 SHARED_DRIVE_USER_DIAGNOSTIC_NODES = [
-    ('ROOT_SHARED_DRIVE_USER',None,'category','Shared Drive / Network Drive Access Issue','User cannot access a shared drive, mapped network drive, file server folder, or shared company location.',None,None,None,None,1),
-    ('Q_SHARED_VPN_CONNECTED_USER','ROOT_SHARED_DRIVE_USER','question','Check Company Network or VPN',None,'Are you connected to the company network or VPN?',None,None,None,1),
-    ('S_SHARED_CONNECT_VPN_USER','Q_SHARED_VPN_CONNECTED_USER','solution','Connect to VPN or Company Network',None,None,'Are you connected to the company network or VPN?','No','FIX_SHARED_DRIVE_CONNECT_VPN',1),
-    ('Q_SHARED_ERROR_TYPE_USER','Q_SHARED_VPN_CONNECTED_USER','question','Identify Shared Drive Error',None,'What error do you see?','Are you connected to the company network or VPN?','Yes',None,2),
-    ('S_SHARED_PERMISSION_USER','Q_SHARED_ERROR_TYPE_USER','solution','Request or Verify Shared Folder Permission',None,None,'What error do you see?','Access denied','FIX_SHARED_DRIVE_PERMISSION_REQUEST',1),
-    ('S_SHARED_SERVER_REACHABILITY_USER','Q_SHARED_ERROR_TYPE_USER','solution','Report Network Path or File Server Reachability Issue',None,None,'What error do you see?','Network path not found','FIX_SHARED_DRIVE_SERVER_REACHABILITY',2),
-    ('S_SHARED_REMAP_USER','Q_SHARED_ERROR_TYPE_USER','solution','Reconnect or Remap Network Drive',None,None,'What error do you see?','Drive disconnected / red X','FIX_SHARED_DRIVE_REMAP',3),
-    ('S_SHARED_CACHED_CREDS_USER','Q_SHARED_ERROR_TYPE_USER','solution','Clear Saved Credentials and Sign In Again',None,None,'What error do you see?','Credentials prompt','FIX_SHARED_DRIVE_CLEAR_CACHED_CREDENTIALS',4),
-    ('S_SHARED_SLOW_USER','Q_SHARED_ERROR_TYPE_USER','solution','Report Slow Shared Drive Performance',None,None,'What error do you see?','Slow access','FIX_SHARED_DRIVE_SLOW_PERFORMANCE',5),
+    ('ROOT_SHARED_DRIVE_USER', None, 'question', 'Shared Drive / Network Folder Access Issue', 'Start by checking corporate network/VPN status and the visible error.', 'Are you connected to VPN or the company network?', None, None, None, 1),
+    ('VPN', 'ROOT_SHARED_DRIVE_USER', 'solution', 'Connect to VPN or Company Network', 'Shared drives require internal network access.', None, 'No / Not sure', 'no', 'FIX_SHARED_DRIVE_CONNECT_VPN_NETWORK', 1),
+    ('ERROR_Q', 'ROOT_SHARED_DRIVE_USER', 'question', 'Identify Shared Folder Error', 'User is on internal network; determine the error.', 'What error do you see?', 'Yes', 'yes', None, 2),
+    ('ACCESS_DENIED', 'ERROR_Q', 'solution', 'Request Shared Folder Permission Review', 'Access denied indicates missing permission or group membership.', None, 'Access denied', 'access_denied', 'FIX_SHARED_DRIVE_PERMISSION_REVIEW', 1),
+    ('CREDS', 'ERROR_Q', 'solution', 'Report Credential Prompt or Password Change', 'Credential prompt may be caused by stale saved credentials or password change.', None, 'Username/password prompt', 'credentials', 'FIX_SHARED_DRIVE_CREDENTIAL_PROMPT', 2),
+    ('PATH', 'ERROR_Q', 'solution', 'Report Shared Drive Path or Server Unreachable', 'Path not found may indicate wrong path, DNS, VPN route, or server issue.', None, 'Network path not found', 'path_not_found', 'FIX_SHARED_DRIVE_PATH_SERVER_UNREACHABLE', 3),
+    ('MAPPING', 'ERROR_Q', 'solution', 'Reconnect or Report Mapped Drive Issue', 'Red X or disconnected drive may require remapping.', None, 'Red X / disconnected drive', 'red_x', 'FIX_SHARED_DRIVE_RECONNECT_MAPPING', 4),
+    ('SLOW', 'ERROR_Q', 'solution', 'Report Slow Share, Missing Files, or File Lock', 'Slow, missing, or locked files require scoped investigation.', None, 'Slow/missing files', 'slow_missing', 'FIX_SHARED_DRIVE_SLOW_MISSING_LOCK', 5),
 ]
 
 SHARED_DRIVE_TECH_DIAGNOSTIC_NODES = [
-    ('ROOT_SHARED_DRIVE_TECH',None,'category','Shared Drive / Network Drive Access Issue - IT Support Specialist Diagnostic','IT Support Specialist diagnostic tree for shared drive permissions, DNS, reachability, VPN, and mapping issues.',None,None,None,None,1),
-    ('Q_SHARED_REMOTE_VPN_TECH','ROOT_SHARED_DRIVE_TECH','question','Confirm VPN or Onsite Access',None,'Is the user remote and connected to VPN?',None,None,None,1),
-    ('S_SHARED_CONNECT_VPN_TECH','Q_SHARED_REMOTE_VPN_TECH','solution','Connect User to VPN Before Testing Shared Drive',None,None,'Is the user remote and connected to VPN?','No','FIX_SHARED_DRIVE_CONNECT_VPN',1),
-    ('Q_SHARED_DNS_TECH','Q_SHARED_REMOTE_VPN_TECH','question','Check File Server DNS',None,'Does DNS resolve the file server hostname?','Is the user remote and connected to VPN?','Yes / Onsite',None,2),
-    ('S_SHARED_DNS_TECH','Q_SHARED_DNS_TECH','solution','Troubleshoot File Server DNS Resolution',None,None,'Does DNS resolve the file server hostname?','No','FIX_SHARED_DRIVE_DNS_RESOLUTION',1),
-    ('Q_SHARED_REACHABILITY_TECH','Q_SHARED_DNS_TECH','question','Check File Server Reachability',None,'Can the file server be reached by approved connectivity test?','Does DNS resolve the file server hostname?','Yes',None,2),
-    ('S_SHARED_REACHABILITY_TECH','Q_SHARED_REACHABILITY_TECH','solution','Escalate File Server Network Reachability Issue',None,None,'Can the file server be reached by approved connectivity test?','No','FIX_SHARED_DRIVE_SERVER_REACHABILITY',1),
-    ('Q_SHARED_ACCESS_DENIED_TECH','Q_SHARED_REACHABILITY_TECH','question','Separate Permissions from Connectivity',None,'Is the error Access Denied?','Can the file server be reached by approved connectivity test?','Yes',None,2),
-    ('Q_SHARED_GROUP_TECH','Q_SHARED_ACCESS_DENIED_TECH','question','Check Access Group',None,'Is the user in the required access group?','Is the error Access Denied?','Yes',None,1),
-    ('S_SHARED_PERMISSION_REQUEST_TECH','Q_SHARED_GROUP_TECH','solution','Verify or Request Shared Folder Permission',None,None,'Is the user in the required access group?','No / Not sure','FIX_SHARED_DRIVE_PERMISSION_REQUEST',1),
-    ('S_SHARED_PERMISSION_CONFIG_TECH','Q_SHARED_GROUP_TECH','solution','Escalate Permission or Share Configuration Issue',None,None,'Is the user in the required access group?','Yes','FIX_SHARED_DRIVE_PERMISSION_CONFIG_ESCALATE',2),
-    ('S_SHARED_REMAP_TECH','Q_SHARED_ACCESS_DENIED_TECH','solution','Reconnect or Recreate Mapped Drive',None,None,'Is the error Access Denied?','No','FIX_SHARED_DRIVE_REMAP',2),
+    ('ROOT_SHARED_DRIVE_TECH', None, 'question', 'Shared Drive / Network Folder Access Issue - IT Support Specialist', 'Start with direct UNC access, then DNS/network, permissions, credentials, and server/cache issues.', 'Does the UNC path work directly?', None, None, None, 1),
+    ('DNS_Q', 'ROOT_SHARED_DRIVE_TECH', 'question', 'Check File Server DNS', 'UNC path does not work; check name resolution first.', 'Does DNS resolve the file server or DFS namespace?', 'No', 'no', None, 1),
+    ('DNS', 'DNS_Q', 'solution', 'Troubleshoot File Server DNS or Name Resolution', 'Server or DFS name does not resolve.', None, 'No', 'no', 'FIX_SHARED_DRIVE_DNS_NAME_RESOLUTION', 1),
+    ('SMB', 'DNS_Q', 'solution', 'Troubleshoot Network, VPN, or SMB Path', 'Name resolves but SMB/path is blocked or unreachable.', None, 'Yes', 'yes', 'FIX_SHARED_DRIVE_NETWORK_VPN_SMB_PATH', 2),
+    ('PERM_Q', 'ROOT_SHARED_DRIVE_TECH', 'question', 'Check Authorization', 'UNC path works; check whether access is authorized.', 'Is the user authorized for the folder/share?', 'Yes', 'yes', None, 2),
+    ('PERM', 'PERM_Q', 'solution', 'Verify Permissions and Group Membership', 'User is not authorized or group membership is missing.', None, 'No', 'no', 'FIX_SHARED_DRIVE_VERIFY_PERMISSIONS_GROUPS', 1),
+    ('CREDS_Q', 'PERM_Q', 'question', 'Check Credentials and Mapping', 'Authorization appears valid; check credentials and mapped drive state.', 'Are stale credentials or mapped drive issues present?', 'Yes', 'yes', None, 2),
+    ('CLEAR', 'CREDS_Q', 'solution', 'Clear Stale Credentials or Recreate Mapping', 'Saved credentials or old mapping may be blocking access.', None, 'Yes', 'yes', 'FIX_SHARED_DRIVE_CLEAR_CREDENTIALS_MAPPING', 1),
+    ('CACHE', 'CREDS_Q', 'solution', 'Investigate File Lock, Offline Cache, or Server Issue', 'No credential/mapping issue found; investigate file/cache/server state.', None, 'No', 'no', 'FIX_SHARED_DRIVE_FILE_LOCK_CACHE_SERVER', 2),
 ]
 
 def seed_shared_drive_access_content(cursor):
