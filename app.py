@@ -586,6 +586,7 @@ PROBLEM_CODE_BY_ISSUE_TITLE = {
     "Ethernet / Wired Network Connection Issue": "ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE",
     "Computer Will Not Start / No Power": "COMPUTER_WILL_NOT_START_NO_POWER",
     "Sound / Audio Not Working": "SOUND_AUDIO_NOT_WORKING",
+    "Cloud Service Access Issue": "CLOUD_SERVICE_ACCESS_ISSUE",
 }
 
 
@@ -599,10 +600,10 @@ PROBLEM_CODE_BY_ISSUE_TITLE = {
 # the database for future expansion, but they are hidden from the visible MVP
 # until their content is upgraded to the same depth.
 MVP_CONTENT_FOCUS_ENABLED = True
-MVP_ACTIVE_PROBLEM_CODES = {"PRINTER_FAILURE", "PASSWORD_RESET_REQUEST", "ACCOUNT_LOCKED", "MULTI_FACTOR_AUTHENTICATION_ISSUE", "VPN_CONNECTION_FAILURE", "SHARED_DRIVE_NETWORK_DRIVE_ACCESS_ISSUE", "REMOTE_DESKTOP_CONNECTION_ISSUE", "SLOW_COMPUTER_PERFORMANCE", "APPLICATION_NOT_OPENING", "APPLICATION_CRASHING_FREEZING", "OPERATING_SYSTEM_UPDATE_ISSUE", "DEVICE_RUNNING_OUT_OF_STORAGE", "PHISHING_EMAIL_REPORTED", "MALWARE_OR_VIRUS_SUSPECTED", "EMAIL_ATTACHMENT_NOT_OPENING", "CALENDAR_SYNC_ISSUE", "SOFTWARE_INSTALLATION_REQUEST", "BROWSER_ISSUE", "CERTIFICATE_SECURITY_WARNING", "MOBILE_EMAIL_SETUP_ISSUE", "VIDEO_CONFERENCING_ISSUE", "KEYBOARD_OR_MOUSE_NOT_WORKING", "MONITOR_DISPLAY_NOT_WORKING", "DOCKING_STATION_NOT_WORKING", "WIFI_CONNECTION_ISSUE", "ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE", "COMPUTER_WILL_NOT_START_NO_POWER", "SOUND_AUDIO_NOT_WORKING"}
+MVP_ACTIVE_PROBLEM_CODES = {"PRINTER_FAILURE", "PASSWORD_RESET_REQUEST", "ACCOUNT_LOCKED", "MULTI_FACTOR_AUTHENTICATION_ISSUE", "VPN_CONNECTION_FAILURE", "SHARED_DRIVE_NETWORK_DRIVE_ACCESS_ISSUE", "REMOTE_DESKTOP_CONNECTION_ISSUE", "SLOW_COMPUTER_PERFORMANCE", "APPLICATION_NOT_OPENING", "APPLICATION_CRASHING_FREEZING", "OPERATING_SYSTEM_UPDATE_ISSUE", "DEVICE_RUNNING_OUT_OF_STORAGE", "PHISHING_EMAIL_REPORTED", "MALWARE_OR_VIRUS_SUSPECTED", "EMAIL_ATTACHMENT_NOT_OPENING", "CALENDAR_SYNC_ISSUE", "SOFTWARE_INSTALLATION_REQUEST", "BROWSER_ISSUE", "CERTIFICATE_SECURITY_WARNING", "MOBILE_EMAIL_SETUP_ISSUE", "VIDEO_CONFERENCING_ISSUE", "KEYBOARD_OR_MOUSE_NOT_WORKING", "MONITOR_DISPLAY_NOT_WORKING", "DOCKING_STATION_NOT_WORKING", "WIFI_CONNECTION_ISSUE", "ETHERNET_WIRED_NETWORK_CONNECTION_ISSUE", "COMPUTER_WILL_NOT_START_NO_POWER", "SOUND_AUDIO_NOT_WORKING", "CLOUD_SERVICE_ACCESS_ISSUE"}
 MVP_CONTENT_FOCUS_NOTE = (
     "The visible MVP currently focuses on a small set of high-quality troubleshooting examples: "
-    "Printer Failure, Password Reset Request, Account Locked, Multi-factor Authentication Issue, VPN Connection Failure, Shared Drive / Network Drive Access Issue, Remote Desktop Connection Issue, Slow Computer Performance, Application Not Opening, Application Crashing / Freezing, Operating System Update Issue, Device Running Out of Storage, Phishing Email Reported, Malware or Virus Suspected, Email Attachment Not Opening, Calendar Sync Issue, Software Installation Request, Browser Issue, Certificate / Security Warning, Mobile Email Setup Issue, Video Conferencing Issue, Keyboard or Mouse Not Working, Monitor / Display Not Working, Docking Station Not Working, Wi-Fi Connection Issue, Ethernet / Wired Network Connection Issue, Computer Will Not Start / No Power, and Sound / Audio Not Working. Other sample issues are hidden until they "
+    "Printer Failure, Password Reset Request, Account Locked, Multi-factor Authentication Issue, VPN Connection Failure, Shared Drive / Network Drive Access Issue, Remote Desktop Connection Issue, Slow Computer Performance, Application Not Opening, Application Crashing / Freezing, Operating System Update Issue, Device Running Out of Storage, Phishing Email Reported, Malware or Virus Suspected, Email Attachment Not Opening, Calendar Sync Issue, Software Installation Request, Browser Issue, Certificate / Security Warning, Mobile Email Setup Issue, Video Conferencing Issue, Keyboard or Mouse Not Working, Monitor / Display Not Working, Docking Station Not Working, Wi-Fi Connection Issue, Ethernet / Wired Network Connection Issue, Computer Will Not Start / No Power, Sound / Audio Not Working, and Cloud Service Access Issue. Other sample issues are hidden until they "
     "are expanded with detailed symptoms, causes, user steps, and technician steps."
 )
 
@@ -9405,6 +9406,256 @@ def seed_sound_audio_not_working_tree(cursor, audience, tree_code, title, descri
                 updated_at=CURRENT_TIMESTAMP
         """, (tree_id, parent_id, problem_id, tree_code, node_key, node_type, node_title, node_desc, prompt, condition_label, condition_value, solution_id, sort_order))
 
+
+CLOUD_SERVICE_ACCESS_ISSUE_PROBLEM = (
+    'CLOUD_SERVICE_ACCESS_ISSUE',
+    'Cloud Service Access Issue',
+    'Email, Calendar & Collaboration / Software & Applications',
+    'Medium',
+    'The user cannot access a cloud service such as Microsoft 365, Google Workspace, Slack, Dropbox, Salesforce, ServiceNow, Jira, or another business SaaS application.'
+)
+
+CLOUD_SERVICE_ACCESS_ISSUE_KB = {
+    'title': 'Cloud Service Access Issue',
+    'summary': 'Use this guide when Microsoft 365, Google Workspace, Slack, Salesforce, Dropbox, ServiceNow, Jira, or another SaaS/cloud app will not open, keeps asking for sign-in, shows access denied, or appears unavailable.',
+    'difficulty': 'Intermediate',
+    'estimated_time': '10-30 minutes',
+    'escalation_required': 0,
+    'escalation_notes': 'Escalate to Identity/Access Management when SSO, MFA, password, account lockout, Conditional Access, device compliance, or group/app assignment blocks access. Escalate to the Application Owner/SaaS Admin when the user lacks app role, license, entitlement, provisioning, or workspace permission. Escalate to Network when DNS, proxy, firewall, VPN, web filtering, TLS inspection, or a location-specific network path is suspected. Escalate to Security when suspicious sign-in activity, unexpected MFA prompts, phishing-related access issues, or account compromise risk appears.',
+    'tags': ['cloud service', 'SaaS', 'Microsoft 365', 'Google Workspace', 'SSO', 'MFA', 'Conditional Access', 'license', 'access denied', 'service outage', 'DNS', 'proxy'],
+    'symptoms': [
+        'User cannot access Microsoft 365, Google Workspace, Slack, Salesforce, ServiceNow, Jira, Dropbox, or another cloud application.',
+        'Cloud app keeps asking the user to sign in or shows a sign-in redirect loop.',
+        'User sees access denied, license missing, account not assigned, or app not available messages.',
+        'MFA prompt fails, never appears, or cannot be completed during cloud app sign-in.',
+        'Page keeps loading, times out, or shows service unavailable.',
+        'Service works in private/incognito mode, another browser, another device, or on a different network.',
+        'Multiple users cannot access the same cloud service, suggesting service outage, SSO, network, or vendor issue.'
+    ],
+    'causes': [
+        'Common causes include expired session, stale cookies, wrong account, password or MFA problem, missing license, missing app assignment, Conditional Access or device compliance block, service outage, DNS/proxy/firewall issue, VPN path issue, or SaaS vendor-side problem.',
+        'Advanced causes include SSO/SAML/OIDC misconfiguration, identity provider issue, Conditional Access policy change, SCIM provisioning failure, license group assignment failure, token/session issue after password or MFA reset, tenant-wide service health incident, DNS filtering, TLS inspection, SaaS backend degradation, federation issue, or time/date mismatch affecting authentication.'
+    ],
+    'user_steps': [
+        'Confirm you are using the correct work account.',
+        'Sign out of the cloud service and sign back in.',
+        'Try a private/incognito browser window.',
+        'Try another approved browser.',
+        'Check whether other websites and cloud services work.',
+        'Connect to VPN if the app requires VPN; if it should not require VPN, test off VPN only if company policy allows.',
+        'Watch for MFA prompts and approve only prompts you initiated.',
+        'Ask whether coworkers can access the same service.',
+        'Take a screenshot of the exact error message.',
+        'Submit a ticket with the app name, URL, error message, browser/device used, network type, and whether MFA appeared.'
+    ],
+    'it_steps': [
+        'Confirm the user, device, browser/app, cloud service name, URL, network type, VPN status, and exact error message.',
+        'Determine the scope: one user, one device, one browser, one cloud app, multiple users, or multiple cloud apps.',
+        'Confirm whether the user can access other cloud services and whether coworkers are affected.',
+        'Confirm the user is signing in with the correct work account.',
+        'Test private/incognito mode and another approved browser or device.',
+        'Clear site-specific cookies/cache if private mode works.',
+        'Check whether MFA prompt appears and is completed successfully.',
+        'Confirm account status such as locked, disabled, password expired, or MFA unavailable.',
+        'Confirm license, role, group membership, app assignment, or entitlement if accessible.',
+        'Check official or internal service-health/status pages when multiple users are affected.',
+        'Review sign-in logs or authentication failure reason if available.',
+        'Check Conditional Access result, device compliance result, and MFA result where available.',
+        'Check DNS resolution for the service URL if access fails by name.',
+        'Check proxy, firewall, VPN, web filter, or TLS inspection if issue is network-specific.',
+        'Compare office network, VPN, home network, and hotspot when appropriate.',
+        'Check SSO/SAML/OIDC configuration if many users cannot sign in to one SaaS app.',
+        'Check provisioning/sync status if the user should have access but the app says no account, license, or entitlement.',
+        'Identify whether the root cause is browser/session, identity/MFA, license/entitlement, Conditional Access/compliance, vendor outage, network path, or app-side issue.',
+        'Escalate with username, app URL, error code, sign-in result, license status, service status, network path, affected scope, and timestamps.'
+    ]
+}
+
+CLOUD_SERVICE_ACCESS_ISSUE_SOLUTIONS = [
+    ('FIX_CLOUD_BROAD_SIGNIN_ACCESS_ISSUE', 'Report Broad Cloud or Sign-In Access Issue', 'Multiple cloud apps failing may indicate identity, network, or service health issue.', 'Confirm affected apps/users, check identity/service health, and capture errors.', 1, 'Identity/Network/Service Owner handoff if multiple apps or users are affected.', 'high'),
+    ('FIX_CLOUD_CLEAR_BROWSER_SESSION_CACHE', 'Clear Browser Session or Cache for Cloud App', 'Stale cookies or expired sessions can cause sign-in loops or access failures.', 'Test private mode, clear site-specific cookies/cache, and retest sign-in.', 0, 'Endpoint/App Support handoff if browser profile or managed browser policy issue persists.', 'medium'),
+    ('FIX_CLOUD_SIGNIN_MFA_ISSUE', 'Report Cloud Sign-In or MFA Issue', 'User cannot complete authentication, MFA, or SSO flow.', 'Check work account, MFA prompt, sign-in error, and account/MFA state.', 0, 'Identity/Security handoff if Conditional Access, risk, or suspicious MFA is involved.', 'medium'),
+    ('FIX_CLOUD_LICENSE_APP_ACCESS_REVIEW', 'Request License or App Access Review', 'User may not have the license, role, group, or app entitlement required.', 'Review app access, business need, approval, license, role, and assignment.', 0, 'Application Owner/SaaS Admin handoff if access approval, entitlement, or app role is missing.', 'medium'),
+    ('FIX_CLOUD_SERVICE_NETWORK_ISSUE', 'Report Possible Cloud Service or Network Issue', 'Timeout or service unavailable errors may indicate outage or network path issue.', 'Check service health, compare networks/devices, and test DNS/proxy path.', 1, 'Network/SaaS Admin handoff if vendor status or network path suggests outage or block.', 'high'),
+    ('FIX_CLOUD_SUBMIT_ERROR_DETAILS', 'Submit Cloud App Error Details', 'IT needs the exact cloud service, URL, error, and scope to isolate the issue.', 'Collect URL, screenshot, error code, timestamp, browser, device, and network.', 0, 'Escalation handoff depends on collected evidence: Identity, Network, SaaS Admin, or Security.', 'medium'),
+    ('FIX_CLOUD_VENDOR_SERVICE_HEALTH_ESCALATE', 'Check Vendor Service Health and Escalate Outage', 'Multiple users affected may indicate vendor outage or tenant-wide service degradation.', 'Check vendor and internal status, confirm affected scope, and escalate outage.', 1, 'Service Owner/Vendor Support handoff with affected users, timestamps, and workaround status.', 'high'),
+    ('FIX_CLOUD_IDENTITY_MFA_CONDITIONAL_ACCESS', 'Troubleshoot Identity, MFA, or Conditional Access', 'Sign-in logs indicate authentication, MFA, policy, or compliance failure.', 'Review sign-in logs, MFA state, account status, Conditional Access, and compliance.', 1, 'Identity/Security handoff with sign-in log, policy result, MFA result, and risk evidence.', 'high'),
+    ('FIX_CLOUD_VERIFY_LICENSE_ROLE_ASSIGNMENT', 'Verify License, Role, or App Assignment', 'Access denied or license missing errors often require assignment review.', 'Check license, group/app role, provisioning, and app-owner approval status.', 0, 'Application Owner/SaaS Admin handoff if provisioning or role assignment requires app administration.', 'medium'),
+    ('FIX_CLOUD_ISOLATE_BROWSER_DEVICE_NETWORK', 'Isolate Browser, Device, or Network Path', 'Cloud service access may fail only on one browser, device, VPN, proxy, or network.', 'Compare browser, device, VPN, office network, home network, and hotspot behavior.', 0, 'Endpoint/Network handoff depending on whether the isolated path is device-specific or network-specific.', 'medium'),
+    ('FIX_CLOUD_ESCALATE_SAAS_VENDOR_ISSUE', 'Escalate SaaS App or Vendor-Side Issue', 'Access issue remains after identity, license, browser, and network checks.', 'Collect evidence and escalate to SaaS admin, application owner, or vendor support.', 1, 'SaaS Admin/Application Owner/Vendor handoff with completed identity/license/network checks and business impact.', 'high'),
+]
+
+CLOUD_SERVICE_ACCESS_ISSUE_SOLUTION_STEPS = {
+    'FIX_CLOUD_BROAD_SIGNIN_ACCESS_ISSUE': {
+        'user': ['Confirm which cloud apps fail.', 'Take screenshots of the errors.', 'Try another approved browser if possible.', 'Tell IT whether coworkers are affected.', 'Submit a ticket with app names and time of issue.'],
+        'technician': ['Confirm whether multiple apps or users are affected.', 'Check identity provider and service health.', 'Check network path if failures are location-specific.', 'Capture error codes and timestamps.', 'Escalate to Identity, Network, or Service Owner based on evidence.'],
+        'admin': ['Identity/Network/Service Owner handoff: include affected apps/users, error codes, timestamps, network path, service health result, and business impact.']
+    },
+    'FIX_CLOUD_CLEAR_BROWSER_SESSION_CACHE': {
+        'user': ['Try private/incognito mode.', 'Sign out and sign back in.', 'Try another approved browser.', 'Ask IT before clearing all browser data if unsure.'],
+        'technician': ['Confirm private/incognito mode behavior.', 'Clear site-specific cookies/cache where possible.', 'Check browser extensions or blocked third-party cookies.', 'Retest sign-in.', 'Document whether issue was browser/session-specific.'],
+        'admin': ['Endpoint/App Support handoff: include private-mode result, browser version, cookies/cache actions, extension findings, and managed browser policy suspicion.']
+    },
+    'FIX_CLOUD_SIGNIN_MFA_ISSUE': {
+        'user': ['Confirm you are using your work account.', 'Watch for MFA prompt.', 'Do not approve MFA prompts you did not initiate.', 'Take a screenshot of the sign-in error.', 'Contact IT if MFA does not work.'],
+        'technician': ['Check account status and MFA state.', 'Review sign-in logs if available.', 'Check Conditional Access or device compliance result.', 'Route to MFA/account troubleshooting if needed.', 'Escalate suspicious or unexpected prompts to Security.'],
+        'admin': ['Identity/Security handoff: include sign-in timestamp, account status, MFA result, Conditional Access result, device compliance result, and suspicious prompt details.']
+    },
+    'FIX_CLOUD_LICENSE_APP_ACCESS_REVIEW': {
+        'user': ['Confirm the cloud app name.', 'Provide the business reason for access.', 'Include manager or app-owner approval if required.', 'Wait for IT or app owner confirmation.'],
+        'technician': ['Check license assignment.', 'Check app role, group membership, or entitlement.', 'Confirm whether approval is required.', 'Assign or route access according to policy.', 'Ask user to sign out/in after assignment.'],
+        'admin': ['Application Owner/SaaS Admin handoff: include requested app, user, license state, role/group state, approval status, and business justification.']
+    },
+    'FIX_CLOUD_SERVICE_NETWORK_ISSUE': {
+        'user': ['Note the exact service and URL.', 'Record when the issue started.', 'Ask whether coworkers are affected.', 'Try another trusted network if IT allows.'],
+        'technician': ['Check service health/status page.', 'Compare behavior across users, networks, and devices.', 'Test DNS/proxy/firewall path where appropriate.', 'Check whether VPN changes behavior.', 'Escalate to Network or SaaS admin if issue is confirmed.'],
+        'admin': ['Network/SaaS Admin handoff: include URL, service-health result, affected scope, DNS/proxy/VPN observations, network tested, and timestamps.']
+    },
+    'FIX_CLOUD_SUBMIT_ERROR_DETAILS': {
+        'user': ['Take a screenshot of the error.', 'Copy the cloud app URL if safe.', 'Note the time and what you were trying to do.', 'Submit a ticket with the details.'],
+        'technician': ['Record URL, error code, timestamp, browser, and network.', 'Determine scope and recent changes.', 'Check whether the user has access.', 'Continue with identity, license, browser, network, or vendor path.'],
+        'admin': ['Escalation handoff: include URL, exact error, timestamp, browser/device, network, user action, and initial scope assessment.']
+    },
+    'FIX_CLOUD_VENDOR_SERVICE_HEALTH_ESCALATE': {
+        'user': ['Use approved workaround if available.', 'Avoid repeated login attempts if the service is down.', 'Wait for IT updates.'],
+        'technician': ['Confirm affected users and services.', 'Check Microsoft 365, Google Workspace, or vendor status page.', 'Check internal incident/outage notes.', 'Escalate to service owner or vendor support path.', 'Update users with workaround and status.'],
+        'admin': ['Service Owner/Vendor handoff: include vendor status result, affected services/users, outage timeline, error samples, workarounds, and business impact.']
+    },
+    'FIX_CLOUD_IDENTITY_MFA_CONDITIONAL_ACCESS': {
+        'user': ['Do not approve unexpected MFA prompts.', 'Confirm device and network used.', 'Provide screenshot of the sign-in error.', 'Follow IT instructions for MFA or account review.'],
+        'technician': ['Review sign-in logs and failure reason.', 'Check MFA state and account status.', 'Check Conditional Access policy result.', 'Check device compliance result if applicable.', 'Escalate to Identity/Security if policy or risk blocks access.'],
+        'admin': ['Identity/Security handoff: include sign-in log details, policy result, MFA state, device compliance state, risk flag, and remediation requested.']
+    },
+    'FIX_CLOUD_VERIFY_LICENSE_ROLE_ASSIGNMENT': {
+        'user': ['Provide the app name and business need.', 'Provide approval if already granted.', 'Sign out and back in after IT confirms assignment.'],
+        'technician': ['Check license assignment.', 'Check group/app role assignment.', 'Check provisioning/sync status if SaaS app is externally provisioned.', 'Route to app owner if approval is missing.', 'Retest after assignment or sync completes.'],
+        'admin': ['Application Owner/SaaS Admin handoff: include license state, app role/group assignment, provisioning/sync status, approval state, and retest timing.']
+    },
+    'FIX_CLOUD_ISOLATE_BROWSER_DEVICE_NETWORK': {
+        'user': ['Try another approved browser.', 'Try another device if available.', 'Tell IT whether you are on VPN, office network, home Wi-Fi, or hotspot.', 'Provide screenshots.'],
+        'technician': ['Compare browser, device, and network behavior.', 'Check DNS resolution and proxy behavior.', 'Check firewall/web filter/TLS inspection if network-specific.', 'Check device compliance if device-specific.', 'Escalate based on isolated path.'],
+        'admin': ['Endpoint/Network handoff: include browser/device/network matrix, DNS/proxy findings, VPN behavior, TLS inspection/web filter evidence, and compliance state.']
+    },
+    'FIX_CLOUD_ESCALATE_SAAS_VENDOR_ISSUE': {
+        'user': ['Provide examples of what fails.', 'Use alternate workflow if available.', 'Wait for app owner or vendor update.'],
+        'technician': ['Collect app URL, error code, logs/screenshots, affected user(s), and timestamps.', 'Confirm identity/license/network checks were completed.', 'Escalate to SaaS admin, app owner, or vendor support.', 'Track workaround, status, and business impact.'],
+        'admin': ['SaaS Admin/Vendor handoff: include completed checks, logs/screenshots, affected users, exact URL/error, timestamps, workaround, and business impact.']
+    },
+}
+
+CLOUD_SERVICE_ACCESS_ISSUE_USER_DIAGNOSTIC_NODES = [
+    ('ROOT', None, 'question', 'Cloud Service Access Issue', 'Start by checking whether this is broad cloud access or one app.', 'Can you access other cloud services?', None, None, None, 1),
+    ('BROAD', 'ROOT', 'solution', 'Report Broad Cloud or Sign-In Access Issue', 'Multiple cloud services are failing.', None, 'No', 'no', 'FIX_CLOUD_BROAD_SIGNIN_ACCESS_ISSUE', 1),
+    ('BROWSER_Q', 'ROOT', 'question', 'Browser Session Check', 'Other cloud services work; test whether browser session is the problem.', 'Does it work in private/incognito or another browser?', 'Yes', 'yes', None, 2),
+    ('CACHE', 'BROWSER_Q', 'solution', 'Clear Browser Session or Cache for Cloud App', 'Private/incognito or another browser works.', None, 'Yes', 'yes', 'FIX_CLOUD_CLEAR_BROWSER_SESSION_CACHE', 1),
+    ('ERROR_Q', 'BROWSER_Q', 'question', 'Cloud Error Type', 'Private/incognito did not resolve; classify the cloud app error.', 'What error do you see?', 'No', 'no', None, 2),
+    ('SIGNIN', 'ERROR_Q', 'solution', 'Report Cloud Sign-In or MFA Issue', 'Sign-in loop or MFA issue.', None, 'MFA/sign-in loop', 'signin_mfa', 'FIX_CLOUD_SIGNIN_MFA_ISSUE', 1),
+    ('ACCESS', 'ERROR_Q', 'solution', 'Request License or App Access Review', 'Access denied or license missing.', None, 'Access denied/license missing', 'access_license', 'FIX_CLOUD_LICENSE_APP_ACCESS_REVIEW', 2),
+    ('SERVICE', 'ERROR_Q', 'solution', 'Report Possible Cloud Service or Network Issue', 'Timeout or service unavailable.', None, 'Timeout/service unavailable', 'timeout_service', 'FIX_CLOUD_SERVICE_NETWORK_ISSUE', 3),
+    ('OTHER', 'ERROR_Q', 'solution', 'Submit Cloud App Error Details', 'Other cloud app error.', None, 'Other', 'other', 'FIX_CLOUD_SUBMIT_ERROR_DETAILS', 4),
+]
+
+CLOUD_SERVICE_ACCESS_ISSUE_TECH_DIAGNOSTIC_NODES = [
+    ('ROOT', None, 'question', 'Cloud Service Access Issue - IT Support Specialist', 'Start by determining scope.', 'Are multiple users affected?', None, None, None, 1),
+    ('OUTAGE', 'ROOT', 'solution', 'Check Vendor Service Health and Escalate Outage', 'Multiple users are affected.', None, 'Yes', 'yes', 'FIX_CLOUD_VENDOR_SERVICE_HEALTH_ESCALATE', 1),
+    ('SIGNIN_Q', 'ROOT', 'question', 'Sign-In Evidence', 'One user is affected; check identity logs and authentication path.', 'Do sign-in logs show authentication, MFA, or policy failure?', 'No', 'no', None, 2),
+    ('IDENTITY', 'SIGNIN_Q', 'solution', 'Troubleshoot Identity, MFA, or Conditional Access', 'Logs show auth/MFA/policy issue.', None, 'Yes', 'yes', 'FIX_CLOUD_IDENTITY_MFA_CONDITIONAL_ACCESS', 1),
+    ('LICENSE_Q', 'SIGNIN_Q', 'question', 'Entitlement Check', 'No auth failure known; verify access assignment.', 'Is the user licensed and assigned to the app?', 'No / Not checked', 'no_not_checked', None, 2),
+    ('ASSIGNMENT', 'LICENSE_Q', 'solution', 'Verify License, Role, or App Assignment', 'License or assignment is missing.', None, 'No', 'no', 'FIX_CLOUD_VERIFY_LICENSE_ROLE_ASSIGNMENT', 1),
+    ('PATH_Q', 'LICENSE_Q', 'question', 'Path Isolation', 'User is assigned; isolate browser, device, or network.', 'Does issue depend on browser/device/network?', 'Yes', 'yes', None, 2),
+    ('ISOLATE', 'PATH_Q', 'solution', 'Isolate Browser, Device, or Network Path', 'Issue depends on browser, device, VPN, proxy, or network path.', None, 'Yes', 'yes', 'FIX_CLOUD_ISOLATE_BROWSER_DEVICE_NETWORK', 1),
+    ('VENDOR', 'PATH_Q', 'solution', 'Escalate SaaS App or Vendor-Side Issue', 'No browser/device/network pattern after access checks.', None, 'No', 'no', 'FIX_CLOUD_ESCALATE_SAAS_VENDOR_ISSUE', 2),
+]
+
+def seed_cloud_service_access_issue_content(cursor):
+    """Seed Cloud Service Access Issue KB article, solutions, steps, and diagnostic trees."""
+    code_, title, category, severity, description = CLOUD_SERVICE_ACCESS_ISSUE_PROBLEM
+    cursor.execute("""
+        INSERT INTO problem (problem_code, title, category, severity, description)
+        VALUES (?, ?, ?, ?, ?)
+        ON CONFLICT(problem_code) DO UPDATE SET
+            title=excluded.title, category=excluded.category, severity=excluded.severity,
+            description=excluded.description, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, CLOUD_SERVICE_ACCESS_ISSUE_PROBLEM)
+    cursor.execute('SELECT problem_id FROM problem WHERE problem_code = ?', (code_,))
+    row = cursor.fetchone()
+    if not row:
+        return
+    problem_id = row['problem_id']
+    cursor.execute("""
+        INSERT INTO kb_article (problem_id, title, summary, difficulty, estimated_time, escalation_required, escalation_notes, is_active, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, 1, CURRENT_TIMESTAMP)
+        ON CONFLICT(problem_id) DO UPDATE SET
+            title=excluded.title, summary=excluded.summary, difficulty=excluded.difficulty,
+            estimated_time=excluded.estimated_time, escalation_required=excluded.escalation_required,
+            escalation_notes=excluded.escalation_notes, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, (problem_id, CLOUD_SERVICE_ACCESS_ISSUE_KB['title'], CLOUD_SERVICE_ACCESS_ISSUE_KB['summary'], CLOUD_SERVICE_ACCESS_ISSUE_KB['difficulty'], CLOUD_SERVICE_ACCESS_ISSUE_KB['estimated_time'], CLOUD_SERVICE_ACCESS_ISSUE_KB['escalation_required'], CLOUD_SERVICE_ACCESS_ISSUE_KB['escalation_notes']))
+    cursor.execute('SELECT kb_article_id FROM kb_article WHERE problem_id = ?', (problem_id,))
+    article = cursor.fetchone()
+    if article:
+        kb_id = article['kb_article_id']
+        delete_kb_child_rows(cursor, kb_id)
+        insert_kb_child_rows(cursor, 'kb_article_tag', 'tag', kb_id, CLOUD_SERVICE_ACCESS_ISSUE_KB['tags'])
+        insert_kb_child_rows(cursor, 'kb_article_symptom', 'symptom', kb_id, CLOUD_SERVICE_ACCESS_ISSUE_KB['symptoms'])
+        insert_kb_child_rows(cursor, 'kb_article_cause', 'cause', kb_id, CLOUD_SERVICE_ACCESS_ISSUE_KB['causes'])
+        insert_kb_child_rows(cursor, 'kb_article_user_step', 'step_text', kb_id, CLOUD_SERVICE_ACCESS_ISSUE_KB['user_steps'])
+        insert_kb_child_rows(cursor, 'kb_article_it_step', 'step_text', kb_id, CLOUD_SERVICE_ACCESS_ISSUE_KB['it_steps'])
+    cursor.executemany("""
+        INSERT INTO solution (solution_code, title, summary, resolution_steps, escalation_required, escalation_notes, priority_recommendation)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(solution_code) DO UPDATE SET
+            title=excluded.title, summary=excluded.summary, resolution_steps=excluded.resolution_steps,
+            escalation_required=excluded.escalation_required, escalation_notes=excluded.escalation_notes,
+            priority_recommendation=excluded.priority_recommendation, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, CLOUD_SERVICE_ACCESS_ISSUE_SOLUTIONS)
+    for solution_code, audience_steps in CLOUD_SERVICE_ACCESS_ISSUE_SOLUTION_STEPS.items():
+        solution_id = get_solution_id_by_code(cursor, solution_code)
+        if not solution_id:
+            continue
+        for audience, steps in audience_steps.items():
+            cursor.execute('DELETE FROM solution_step WHERE solution_id = ? AND audience = ?', (solution_id, audience))
+            cursor.executemany('INSERT INTO solution_step (solution_id, audience, step_text, sort_order) VALUES (?, ?, ?, ?)', [(solution_id, audience, step, idx) for idx, step in enumerate(steps, start=1)])
+    seed_cloud_service_access_issue_tree(cursor, 'user', 'CLOUD_SERVICE_ACCESS_ISSUE_USER', 'Cloud Service Access Issue - User Diagnostic', 'User-friendly diagnostic tree for broad cloud outages, browser/session issues, sign-in/MFA errors, access/license issues, and cloud/network service failures.', CLOUD_SERVICE_ACCESS_ISSUE_USER_DIAGNOSTIC_NODES)
+    seed_cloud_service_access_issue_tree(cursor, 'technician', 'CLOUD_SERVICE_ACCESS_ISSUE_TECHNICIAN', 'Cloud Service Access Issue - IT Support Specialist Diagnostic', 'IT Support Specialist diagnostic tree for service health, identity/MFA/Conditional Access, app assignment, browser/device/network isolation, and SaaS vendor escalation.', CLOUD_SERVICE_ACCESS_ISSUE_TECH_DIAGNOSTIC_NODES)
+
+def seed_cloud_service_access_issue_tree(cursor, audience, tree_code, title, description, nodes):
+    problem_id = get_problem_id_for_tree_code(cursor, 'CLOUD_SERVICE_ACCESS_ISSUE')
+    cursor.execute("""
+        INSERT INTO diagnostic_tree (problem_id, diagnostic_tree_code, base_tree_code, audience, title, description, is_active, updated_at)
+        VALUES (?, ?, 'CLOUD_SERVICE_ACCESS_ISSUE', ?, ?, ?, 1, CURRENT_TIMESTAMP)
+        ON CONFLICT(diagnostic_tree_code) DO UPDATE SET
+            problem_id=excluded.problem_id, base_tree_code=excluded.base_tree_code, audience=excluded.audience,
+            title=excluded.title, description=excluded.description, is_active=1, updated_at=CURRENT_TIMESTAMP
+    """, (problem_id, tree_code, audience, title, description))
+    tree_id = get_diagnostic_tree_id_by_code(cursor, tree_code)
+    if not tree_id:
+        return
+    cursor.execute('UPDATE diagnostic_node SET is_active = 0, updated_at = CURRENT_TIMESTAMP WHERE diagnostic_tree_id = ?', (tree_id,))
+    for node_key, parent_key, node_type, node_title, node_desc, prompt, condition_label, condition_value, solution_code, sort_order in nodes:
+        parent_id = get_diagnostic_node_id_by_tree_and_key(cursor, tree_id, parent_key) if parent_key else None
+        solution_id = get_solution_id_by_code(cursor, solution_code) if solution_code else None
+        cursor.execute("""
+            INSERT INTO diagnostic_node (
+                diagnostic_tree_id, parent_diagnostic_node_id, problem_id, diagnostic_tree_code,
+                node_key, node_type, title, description, prompt_text,
+                condition_label, condition_value, solution_id, sort_order, is_active, updated_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, CURRENT_TIMESTAMP)
+            ON CONFLICT(diagnostic_tree_code, node_key) DO UPDATE SET
+                diagnostic_tree_id=excluded.diagnostic_tree_id,
+                parent_diagnostic_node_id=excluded.parent_diagnostic_node_id,
+                problem_id=excluded.problem_id,
+                node_type=excluded.node_type,
+                title=excluded.title,
+                description=excluded.description,
+                prompt_text=excluded.prompt_text,
+                condition_label=excluded.condition_label,
+                condition_value=excluded.condition_value,
+                solution_id=excluded.solution_id,
+                sort_order=excluded.sort_order,
+                is_active=1,
+                updated_at=CURRENT_TIMESTAMP
+        """, (tree_id, parent_id, problem_id, tree_code, node_key, node_type, node_title, node_desc, prompt, condition_label, condition_value, solution_id, sort_order))
+
 def initialize_database():
     """Create SQLite tables if they do not already exist."""
     connection = get_db_connection()
@@ -9444,6 +9695,7 @@ def initialize_database():
     seed_ethernet_wired_network_issue_content(cursor)
     seed_computer_no_power_content(cursor)
     seed_sound_audio_not_working_content(cursor)
+    seed_cloud_service_access_issue_content(cursor)
     seed_existing_issue_role_alignment(cursor)
 
     cursor.execute("""
